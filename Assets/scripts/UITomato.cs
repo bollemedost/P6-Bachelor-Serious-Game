@@ -1,46 +1,100 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UITomato : MonoBehaviour
 {
-    public float duration = 0.6f;
+    public float throwDuration = 0.6f;
     public float arcHeight = 100f;
 
+    public float smashPause = 0.15f;
+
+    public float slideDuration = 0.8f;
+    public float slideDistance = 300f;
+
+    public Sprite flyingSprite;
+    public Sprite smashedSprite;
+
+    public float startScale = 0.3f;
+    public float endScale = 1.4f;
+
     RectTransform rectTransform;
+    Image image;
 
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        image = GetComponent<Image>();
     }
 
-    public void Throw(Vector2 targetAnchoredPos)
+    public void Throw(Vector3 targetWorldPos)
     {
-        StartCoroutine(AnimateThrow(targetAnchoredPos));
+        StartCoroutine(AnimateThrow(targetWorldPos));
     }
 
-    IEnumerator AnimateThrow(Vector2 target)
+    IEnumerator AnimateThrow(Vector3 targetWorldPos)
     {
-        Vector2 startPos = rectTransform.anchoredPosition;
+        Vector3 startPos = rectTransform.position;
 
-        float time = 0;
+        float time = 0f;
 
-        while (time < duration)
+        image.sprite = flyingSprite;
+        rectTransform.localScale = Vector3.one * startScale;
+
+        // ===== THROW ARC WITH SCALE =====
+        while (time < throwDuration)
         {
-            float t = time / duration;
+            float t = time / throwDuration;
 
-            Vector2 pos = Vector2.Lerp(startPos, target, t);
+            // Position (world space)
+            Vector3 pos = Vector3.Lerp(startPos, targetWorldPos, t);
 
-            // Arc movement
+            // Arc
             pos.y += arcHeight * Mathf.Sin(t * Mathf.PI);
 
-            rectTransform.anchoredPosition = pos;
+            rectTransform.position = pos;
+
+            // Scale (ease-in)
+            float scaleT = t * t;
+            float scale = Mathf.Lerp(startScale, endScale, scaleT);
+            rectTransform.localScale = Vector3.one * scale;
 
             time += Time.deltaTime;
             yield return null;
         }
 
-        rectTransform.anchoredPosition = target;
+        rectTransform.position = targetWorldPos;
+        rectTransform.localScale = Vector3.one * endScale;
 
-        Destroy(gameObject, 0.2f);
+        // ===== SMASH =====
+        image.sprite = smashedSprite;
+
+        yield return new WaitForSeconds(smashPause);
+
+        yield return StartCoroutine(SlideDown());
+
+        Destroy(gameObject);
+    }
+
+    IEnumerator SlideDown()
+    {
+        Vector3 start = rectTransform.position;
+        Vector3 end = start - new Vector3(0, slideDistance, 0);
+
+        float time = 0f;
+
+        while (time < slideDuration)
+        {
+            float t = time / slideDuration;
+
+            float easedT = t * t;
+
+            rectTransform.position = Vector3.Lerp(start, end, easedT);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        rectTransform.position = end;
     }
 }
