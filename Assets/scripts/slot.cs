@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class slot : MonoBehaviour, IDropHandler
@@ -8,7 +6,7 @@ public class slot : MonoBehaviour, IDropHandler
     public string correctItemID;
 
     public GameObject tomatoPrefab;
-    public RectTransform tomatoSpawnPoint; // UI spawn position
+    public RectTransform tomatoSpawnPoint;
     public bool acceptAnyItem = false;
 
     public void OnDrop(PointerEventData eventData)
@@ -18,22 +16,21 @@ public class slot : MonoBehaviour, IDropHandler
 
         GameObject dropped = eventData.pointerDrag;
         draggableItemSpeach draggable = dropped.GetComponent<draggableItemSpeach>();
+
         if (acceptAnyItem)
         {
             draggable.parentAfterDrag = transform;
             return;
         }
+
         if (draggable.itemID == correctItemID)
         {
-            //Correct
             draggable.parentAfterDrag = transform;
             draggable.LockItem();
         }
         else
         {
-            //Wrong
             draggable.parentAfterDrag = draggable.originalParent;
-
             ThrowTomato(dropped.GetComponent<RectTransform>());
         }
     }
@@ -43,11 +40,13 @@ public class slot : MonoBehaviour, IDropHandler
         GameObject tomato = Instantiate(tomatoPrefab, tomatoSpawnPoint.parent);
 
         RectTransform tomatoRect = tomato.GetComponent<RectTransform>();
-        tomatoRect.anchoredPosition = tomatoSpawnPoint.anchoredPosition;
+
+        // EXACT world position match
+        tomatoRect.position = tomatoSpawnPoint.position;
 
         UITomato uiTomato = tomato.GetComponent<UITomato>();
 
-        uiTomato.Throw(target.anchoredPosition);
+        uiTomato.Throw(target.position);
     }
 }
 
