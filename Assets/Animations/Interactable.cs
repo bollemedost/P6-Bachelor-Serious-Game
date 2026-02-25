@@ -38,11 +38,13 @@ public abstract class Interactable : MonoBehaviour
         if (player == null) return;
 
         Interactable closest = GetClosestInteractable();
-
         bool isClosest = closest == this;
 
         if (canvas != null)
-            canvas.SetActive(isClosest);
+        {
+            // ✅ Hide canvas if interacting
+            canvas.SetActive(isClosest && !IsCurrentlyInteracting());
+        }
 
         if (isClosest && Input.GetKeyDown(KeyCode.E))
         {
@@ -72,6 +74,12 @@ public abstract class Interactable : MonoBehaviour
         }
 
         return closest;
+    }
+
+    // 🔹 Allows child classes to block canvas while interacting
+    protected virtual bool IsCurrentlyInteracting()
+    {
+        return false;
     }
 
     public abstract void Interact();

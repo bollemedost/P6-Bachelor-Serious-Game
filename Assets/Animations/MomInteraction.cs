@@ -17,7 +17,7 @@ public class MomInteraction : Interactable
 
     [Header("Player Interaction Settings")]
     public Transform playerTransform;
-    public float interactionRadius = 2f;   // Radius player can move inside
+    public float interactionRadius = 2f;
 
     private Vector3 interactionCenter;
     private Vector3 originalPlayerPos;
@@ -47,18 +47,11 @@ public class MomInteraction : Interactable
         originalPlayerPos = playerTransform.position;
         originalPlayerRot = playerTransform.rotation;
 
-        // Set center to Mom's position
         interactionCenter = transform.position;
 
-        // Disable free roaming movement
-        MovementStateManager.canMove = true; // Keep true if you want movement INSIDE radius
-
-        // Switch cameras
+        // Camera switch
         momCam.Priority = 10;
         playerCam.Priority = 0;
-
-        if (canvas != null)
-            canvas.SetActive(false);
 
         if (audioSource.clip != null)
             audioSource.Play();
@@ -85,7 +78,10 @@ public class MomInteraction : Interactable
         if (offset.magnitude > interactionRadius)
         {
             Vector3 clampedPosition = interactionCenter + offset.normalized * interactionRadius;
-            playerTransform.position = new Vector3(clampedPosition.x, playerTransform.position.y, clampedPosition.z);
+            playerTransform.position = new Vector3(
+                clampedPosition.x,
+                playerTransform.position.y,
+                clampedPosition.z);
         }
     }
 
@@ -94,6 +90,7 @@ public class MomInteraction : Interactable
         // Player faces Mom
         Vector3 lookDir = transform.position - playerTransform.position;
         lookDir.y = 0;
+
         if (lookDir != Vector3.zero)
         {
             playerTransform.rotation = Quaternion.Slerp(
@@ -105,6 +102,7 @@ public class MomInteraction : Interactable
         // Mom faces Player
         Vector3 momLookDir = playerTransform.position - transform.position;
         momLookDir.y = 0;
+
         if (momLookDir != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(
@@ -131,7 +129,12 @@ public class MomInteraction : Interactable
             eventManager.CompleteEvent(eventID);
     }
 
-    // Draw radius in Scene view
+    // 🔥 This blocks the E canvas while interacting
+    protected override bool IsCurrentlyInteracting()
+    {
+        return isInteracting;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
