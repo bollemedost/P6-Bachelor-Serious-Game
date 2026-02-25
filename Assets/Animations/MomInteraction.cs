@@ -1,60 +1,86 @@
 using UnityEngine;
 using Cinemachine;
 
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(TalkingAnimations), typeof(AudioSource))]
 public class MomInteraction : Interactable
 {
     [Header("Event Settings")]
     public string eventID = "MomTalk";
+    public string[] prerequisiteEvents; // optional: events that must be completed before talking
     private EventManager eventManager;
 
     [Header("Cameras")]
     public CinemachineVirtualCamera playerCam;
     public CinemachineVirtualCamera momCam;
 
-    [Header("Audio")]
-    public AudioSource audioSource;
-
     [Header("Player Interaction Settings")]
     public Transform playerTransform;
     public float interactionRadius = 2f;
 
+    [Header("Talking Animations")]
+    public TalkingAnimations talkingAnimations; // Mom's talking animations
+
+    [Header("Audio")]
+    public AudioClip dialogueClip;       // Audio clip to play
+    private AudioSource audioSource;     // AudioSource component
+
     private Vector3 interactionCenter;
-    private Vector3 originalPlayerPos;
-    private Quaternion originalPlayerRot;
     private bool isInteracting = false;
 
     protected override void Start()
     {
         base.Start();
-
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-
         eventManager = Object.FindFirstObjectByType<EventManager>();
+
+        if (talkingAnimations == null)
+            talkingAnimations = GetComponent<TalkingAnimations>();
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
     }
 
     public override void Interact()
     {
-        if (!isInteracting)
+        if (!isInteracting && CanStartInteraction())
             StartInteraction();
+    }
+
+    private bool CanStartInteraction()
+    {
+        if (eventManager == null) return true;
+
+        foreach (var prereq in prerequisiteEvents)
+        {
+            if (!eventManager.IsEventCompleted(prereq))
+                return false; // prerequisites not completed
+        }
+
+        return true;
     }
 
     private void StartInteraction()
     {
         isInteracting = true;
-
-        originalPlayerPos = playerTransform.position;
-        originalPlayerRot = playerTransform.rotation;
-
         interactionCenter = transform.position;
 
-        // Camera switch
-        momCam.Priority = 10;
-        playerCam.Priority = 0;
+        // Switch cameras for cinematic view
+        if (playerCam != null && momCam != null)
+        {
+            momCam.Priority = 10;
+            playerCam.Priority = 0;
+        }
 
-        if (audioSource.clip != null)
+        // Start Mom's talking animation sequence
+        if (talkingAnimations != null)
+            talkingAnimations.PlaySequence();
+
+        // Play audio if assigned
+        if (dialogueClip != null && audioSource != null)
+        {
+            audioSource.clip = dialogueClip;
             audioSource.Play();
+        }
     }
 
     protected override void Update()
@@ -63,6 +89,7 @@ public class MomInteraction : Interactable
 
         if (!isInteracting) return;
 
+        // Escape cancels interaction
         if (Input.GetKeyDown(KeyCode.Escape))
             EndInteraction();
 
@@ -81,7 +108,8 @@ public class MomInteraction : Interactable
             playerTransform.position = new Vector3(
                 clampedPosition.x,
                 playerTransform.position.y,
-                clampedPosition.z);
+                clampedPosition.z
+            );
         }
     }
 
@@ -90,25 +118,25 @@ public class MomInteraction : Interactable
         // Player faces Mom
         Vector3 lookDir = transform.position - playerTransform.position;
         lookDir.y = 0;
-
         if (lookDir != Vector3.zero)
         {
             playerTransform.rotation = Quaternion.Slerp(
                 playerTransform.rotation,
                 Quaternion.LookRotation(lookDir),
-                Time.deltaTime * 5f);
+                Time.deltaTime * 5f
+            );
         }
 
         // Mom faces Player
         Vector3 momLookDir = playerTransform.position - transform.position;
         momLookDir.y = 0;
-
         if (momLookDir != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(momLookDir),
-                Time.deltaTime * 5f);
+                Time.deltaTime * 5f
+            );
         }
     }
 
@@ -116,20 +144,27 @@ public class MomInteraction : Interactable
     {
         isInteracting = false;
 
-        playerTransform.position = originalPlayerPos;
-        playerTransform.rotation = originalPlayerRot;
+        // Restore cameras
+        if (playerCam != null && momCam != null)
+        {
+            playerCam.Priority = 10;
+            momCam.Priority = 0;
+        }
 
-        playerCam.Priority = 10;
-        momCam.Priority = 0;
+        // Stop talking animation sequence if needed
+        if (talkingAnimations != null)
+            talkingAnimations.StopSequence();
 
-        if (audioSource.isPlaying)
+        // Stop audio if still playing
+        if (audioSource != null && audioSource.isPlaying)
             audioSource.Stop();
 
+        // Mark event complete
         if (eventManager != null)
             eventManager.CompleteEvent(eventID);
     }
 
-    // 🔥 This blocks the E canvas while interacting
+    // Blocks the E canvas while interacting
     protected override bool IsCurrentlyInteracting()
     {
         return isInteracting;

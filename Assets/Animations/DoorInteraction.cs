@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorInteraction : Interactable
 {
@@ -8,23 +9,22 @@ public class DoorInteraction : Interactable
     private EventManager eventManager;
 
     [Header("UI Canvases")]
-    public GameObject lockedCanvas;   // shows "Locked"
-    public GameObject interactCanvas; // shows "Press E"
+    public GameObject lockedCanvas;
+    public GameObject interactCanvas;
 
-    [Header("Animator Settings")]
-    public Animator doorAnimator;     // assign your Door's Animator
-    public string openTrigger = "Open"; // trigger in Animator for opening
+    [Header("Scene Transition")]
+    public string sceneToLoad;   // Name of the scene you want to load
 
     private bool isUnlocked = false;
 
     protected override void Start()
     {
         base.Start();
+
         eventManager = Object.FindFirstObjectByType<EventManager>();
         if (eventManager == null)
             Debug.LogError("No EventManager found in scene!");
 
-        // Hide both canvases at start
         if (lockedCanvas != null) lockedCanvas.SetActive(false);
         if (interactCanvas != null) interactCanvas.SetActive(false);
     }
@@ -37,14 +37,12 @@ public class DoorInteraction : Interactable
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        // Only show UI if player is close enough
         if (distance <= interactDistance)
         {
             UpdateCanvasState();
         }
         else
         {
-            // Hide both canvases when too far
             if (lockedCanvas != null) lockedCanvas.SetActive(false);
             if (interactCanvas != null) interactCanvas.SetActive(false);
         }
@@ -54,8 +52,8 @@ public class DoorInteraction : Interactable
     {
         if (eventManager == null) return;
 
-        // Check if all prerequisites are completed
         isUnlocked = true;
+
         foreach (var prereq in prerequisiteEvents)
         {
             if (!eventManager.IsEventCompleted(prereq))
@@ -65,7 +63,6 @@ public class DoorInteraction : Interactable
             }
         }
 
-        // Show correct canvas
         if (isUnlocked)
         {
             if (interactCanvas != null) interactCanvas.SetActive(true);
@@ -80,16 +77,23 @@ public class DoorInteraction : Interactable
 
     public override void Interact()
     {
-        if (!isUnlocked) return; // do nothing if locked
+        if (!isUnlocked) return;
         if (eventManager == null) return;
 
-        Debug.Log("DoorInteract: Player pressed E");
+        Debug.Log("DoorInteract: Loading new scene...");
 
-        // Play the door open animation
-        if (doorAnimator != null)
-            doorAnimator.SetTrigger(openTrigger);
-
-        // Mark event as completed
         eventManager.CompleteEvent(eventID);
+
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            if (!string.IsNullOrEmpty(sceneToLoad) && SceneTransition.Instance != null)
+            {
+                SceneTransition.Instance.FadeToScene(sceneToLoad);
+            }
+        else
+        {
+            Debug.LogWarning("Scene name not set in DoorInteraction!");
+        }
     }
+}
 }
