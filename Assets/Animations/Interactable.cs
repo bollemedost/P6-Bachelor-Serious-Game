@@ -1,40 +1,78 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class Interactable : MonoBehaviour
 {
     [Header("Common Settings")]
-    public GameObject canvas;          // the pop-up UI
-    public float interactDistance = 3f; // distance to show canvas / allow interaction
-    public string playerTag = "Player"; // tag of the player
+    public GameObject canvas;
+    public float interactDistance = 3f;
+    public string playerTag = "Player";
 
     protected Transform player;
+
+    // 🔥 Static list of all interactables
+    private static List<Interactable> allInteractables = new List<Interactable>();
+
+    protected virtual void Awake()
+    {
+        allInteractables.Add(this);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        allInteractables.Remove(this);
+    }
 
     protected virtual void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
-        if (playerObj != null) player = playerObj.transform;
+        if (playerObj != null)
+            player = playerObj.transform;
 
         if (canvas != null)
-            canvas.SetActive(false); // hide at start
+            canvas.SetActive(false);
     }
 
     protected virtual void Update()
     {
         if (player == null) return;
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        Interactable closest = GetClosestInteractable();
 
-        // Show or hide canvas based on proximity
+        bool isClosest = closest == this;
+
         if (canvas != null)
-            canvas.SetActive(distance <= interactDistance);
+            canvas.SetActive(isClosest);
 
-        // Check for interaction key
-        if (distance <= interactDistance && Input.GetKeyDown(KeyCode.E))
+        if (isClosest && Input.GetKeyDown(KeyCode.E))
         {
             Interact();
         }
     }
 
-    // Abstract method for object-specific behavior
+    private Interactable GetClosestInteractable()
+    {
+        float closestDistance = Mathf.Infinity;
+        Interactable closest = null;
+
+        foreach (Interactable interactable in allInteractables)
+        {
+            if (interactable.player == null) continue;
+
+            float distance = Vector3.Distance(
+                interactable.transform.position,
+                interactable.player.position
+            );
+
+            if (distance <= interactable.interactDistance && distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = interactable;
+            }
+        }
+
+        return closest;
+    }
+
     public abstract void Interact();
 }
