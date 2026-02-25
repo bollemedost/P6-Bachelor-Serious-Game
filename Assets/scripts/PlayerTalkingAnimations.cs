@@ -1,99 +1,102 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerTalkingAnimations : MonoBehaviour
 {
-    [Header("Animator Reference")]
-    public Animator animator;
+    private Animator animator;
 
-    // BODY animations = Layer 0
+    // ===== BODY ANIMATIONS (must match exact Animator state names) =====
     public enum BodyAnimationType
     {
-        Idle,
-        Idle2,
-        StandingIdle,
-        Talk1,
-        Talk2,
-        Talk3,
-        Talk4,
-        Talk5,
-        Cheer,
-        LookAtLiam,
-        LookAtEmma,
-        Laugh
+        Idle, Idle2, StandingIdle,
+        Talk1, Talk2, Talk3, Talk4, Talk5,
+        Cheer, LookAtLiam, LookAtEmma, Laugh
     }
 
     [System.Serializable]
     public struct AnimationStep
     {
-        [Tooltip("Time in seconds when this step should trigger")]
-        public float time;
+        public float time;            // When to trigger in seconds
         public BodyAnimationType bodyAnim;
     }
 
     [System.Serializable]
     public class TalkingEvent
     {
-        public string eventID;             // Unique ID for the event
-        public AnimationStep[] sequence;   // Animation sequence for this event
+        public string eventID;                 // Must match interaction's event ID
+        public AnimationStep[] sequence;       // Sequence of animations
     }
 
-    [Header("Event Sequences")]
+    [Header("Event-Based Sequences")]
     public TalkingEvent[] talkingEvents;
 
-    private Coroutine sequenceCoroutine;
+    private Coroutine currentSequence;
+    private bool isPlaying = false;
 
-    /// <summary>
-    /// Plays the animation sequence for a specific event ID
-    /// </summary>
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        EventManager.OnEventCompleted += HandleEventCompleted;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnEventCompleted -= HandleEventCompleted;
+    }
+
+    private void HandleEventCompleted(string eventID)
+    {
+        PlayEventSequence(eventID);
+    }
+
     public void PlayEventSequence(string eventID)
     {
-        if (animator == null)
-        {
-            Debug.LogWarning("PlayerTalkingAnimations: No Animator assigned!");
-            return;
-        }
+        if (isPlaying)
+            StopSequence();
 
-        // Find the event by ID
-        TalkingEvent talkingEvent = null;
+        TalkingEvent foundEvent = null;
+
         foreach (var evt in talkingEvents)
         {
             if (evt.eventID == eventID)
             {
-                talkingEvent = evt;
+                foundEvent = evt;
                 break;
             }
         }
 
-        if (talkingEvent == null)
+        if (foundEvent == null)
         {
-            Debug.LogWarning($"PlayerTalkingAnimations: EventID '{eventID}' not found!");
+            Debug.LogWarning($"No talking event found with ID: {eventID}");
             return;
         }
 
-        // Stop any running sequence
-        if (sequenceCoroutine != null)
-            StopCoroutine(sequenceCoroutine);
-
-        // Start the new sequence
-        sequenceCoroutine = StartCoroutine(RunSequence(talkingEvent.sequence));
+        currentSequence = StartCoroutine(RunSequence(foundEvent.sequence));
     }
 
-    /// <summary>
-    /// Stops the current sequence
-    /// </summary>
     public void StopSequence()
     {
-        if (sequenceCoroutine != null)
-            StopCoroutine(sequenceCoroutine);
+        if (currentSequence != null)
+            StopCoroutine(currentSequence);
 
-        sequenceCoroutine = null;
+        currentSequence = null;
+        isPlaying = false;
+
+        // Return to idle
+        animator.CrossFadeInFixedTime("Idle", 0.15f, 0);
     }
 
     private IEnumerator RunSequence(AnimationStep[] sequence)
     {
+        if (sequence == null || sequence.Length == 0)
+            yield break;
+
+        isPlaying = true;
         float timer = 0f;
         int index = 0;
 
@@ -101,7 +104,7 @@ public class PlayerTalkingAnimations : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer >= sequence[index].time)
+            while (index < sequence.Length && timer >= sequence[index].time)
             {
                 PlayBodyAnimation(sequence[index].bodyAnim);
                 index++;
@@ -110,12 +113,21 @@ public class PlayerTalkingAnimations : MonoBehaviour
             yield return null;
         }
 
-        sequenceCoroutine = null; // Sequence finished
+        isPlaying = false;
+        currentSequence = null;
     }
 
     private void PlayBodyAnimation(BodyAnimationType type)
     {
-        if (animator != null)
-            animator.CrossFade(type.ToString(), 0.1f, 0); // Layer 0
+        string stateName = type.ToString();
+
+        if (animator.HasState(0, Animator.StringToHash(stateName)))
+        {
+            animator.CrossFadeInFixedTime(stateName, 0.1f, 0);
+        }
+        else
+        {
+            Debug.LogWarning($"Animator state '{stateName}' does not exist!");
+        }
     }
 }

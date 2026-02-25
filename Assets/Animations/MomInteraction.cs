@@ -6,7 +6,7 @@ public class MomInteraction : Interactable
 {
     [Header("Event Settings")]
     public string eventID = "MomTalk";
-    public string[] prerequisiteEvents; // optional: events that must be completed before talking
+    public string[] prerequisiteEvents; 
     private EventManager eventManager;
 
     [Header("Cameras")]
@@ -18,11 +18,11 @@ public class MomInteraction : Interactable
     public float interactionRadius = 2f;
 
     [Header("Talking Animations")]
-    public TalkingAnimations talkingAnimations; // Mom's talking animations
+    public TalkingAnimations talkingAnimations;
 
     [Header("Audio")]
-    public AudioClip dialogueClip;       // Audio clip to play
-    private AudioSource audioSource;     // AudioSource component
+    public AudioClip dialogueClip;
+    private AudioSource audioSource;
 
     private Vector3 interactionCenter;
     private bool isInteracting = false;
@@ -53,7 +53,7 @@ public class MomInteraction : Interactable
         foreach (var prereq in prerequisiteEvents)
         {
             if (!eventManager.IsEventCompleted(prereq))
-                return false; // prerequisites not completed
+                return false;
         }
 
         return true;
@@ -64,32 +64,34 @@ public class MomInteraction : Interactable
         isInteracting = true;
         interactionCenter = transform.position;
 
-        // Switch cameras for cinematic view
+        // Switch cameras
         if (playerCam != null && momCam != null)
         {
             momCam.Priority = 10;
             playerCam.Priority = 0;
         }
 
-        // Start Mom's talking animation sequence
+        // Play Mom's talking animation
         if (talkingAnimations != null)
             talkingAnimations.PlaySequence();
 
-        // Play audio if assigned
+        // Play audio
         if (dialogueClip != null && audioSource != null)
         {
             audioSource.clip = dialogueClip;
             audioSource.Play();
         }
+
+        // Fire event so player reacts
+        if (eventManager != null)
+            eventManager.CompleteEvent(eventID);
     }
 
     protected override void Update()
     {
         base.Update();
-
         if (!isInteracting) return;
 
-        // Escape cancels interaction
         if (Input.GetKeyDown(KeyCode.Escape))
             EndInteraction();
 
@@ -119,25 +121,13 @@ public class MomInteraction : Interactable
         Vector3 lookDir = transform.position - playerTransform.position;
         lookDir.y = 0;
         if (lookDir != Vector3.zero)
-        {
-            playerTransform.rotation = Quaternion.Slerp(
-                playerTransform.rotation,
-                Quaternion.LookRotation(lookDir),
-                Time.deltaTime * 5f
-            );
-        }
+            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
 
         // Mom faces Player
         Vector3 momLookDir = playerTransform.position - transform.position;
         momLookDir.y = 0;
         if (momLookDir != Vector3.zero)
-        {
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(momLookDir),
-                Time.deltaTime * 5f
-            );
-        }
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(momLookDir), Time.deltaTime * 5f);
     }
 
     private void EndInteraction()
@@ -151,20 +141,15 @@ public class MomInteraction : Interactable
             momCam.Priority = 0;
         }
 
-        // Stop talking animation sequence if needed
+        // Stop Mom animation
         if (talkingAnimations != null)
             talkingAnimations.StopSequence();
 
-        // Stop audio if still playing
+        // Stop audio
         if (audioSource != null && audioSource.isPlaying)
             audioSource.Stop();
-
-        // Mark event complete
-        if (eventManager != null)
-            eventManager.CompleteEvent(eventID);
     }
 
-    // Blocks the E canvas while interacting
     protected override bool IsCurrentlyInteracting()
     {
         return isInteracting;
