@@ -28,7 +28,6 @@ public class MovementStateManager : MonoBehaviour
 
     public static bool canMove = true;
 
-    // ================= INPUT SETUP =================
     void Awake()
     {
         controls = new PlayerControls();
@@ -37,7 +36,6 @@ public class MovementStateManager : MonoBehaviour
     void OnEnable()
     {
         controls.Enable();
-
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
     }
@@ -46,7 +44,6 @@ public class MovementStateManager : MonoBehaviour
     {
         controls.Disable();
     }
-    // =================================================
 
     void Start()
     {
@@ -59,6 +56,21 @@ public class MovementStateManager : MonoBehaviour
 
     void Update()
     {
+        if (!canMove)
+        {
+            // Block all movement and reset velocity
+            dir = Vector3.zero;
+            velocity = Vector3.zero;
+
+            if (anim != null)
+            {
+                anim.SetFloat("hzInput", 0);
+                anim.SetFloat("vInput", 0);
+            }
+
+            return; // Skip movement logic
+        }
+
         GetDirectionAndMove();
         ApplyGravity();
 
@@ -67,7 +79,6 @@ public class MovementStateManager : MonoBehaviour
         anim.SetFloat("vInput", localDir.z);
 
         currentState.UpdateState(this);
-        if (!canMove) return;
     }
 
     public void SwitchState(MovementBaseState state)
@@ -95,13 +106,7 @@ public class MovementStateManager : MonoBehaviour
         {
             Vector3 lookDir = dir.normalized;
             lookDir.y = 0;
-
-            Quaternion targetRot = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(lookDir),
-                10f * Time.deltaTime
-            );
-
+            Quaternion targetRot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), 10f * Time.deltaTime);
             transform.rotation = targetRot;
         }
 

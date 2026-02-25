@@ -2615,6 +2615,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4187361873712528, guid: dc83d82e59754f34ea737a544b53fc9a, type: 3}
   m_PrefabInstance: {fileID: 363901750}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &394248377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 394248378}
+  m_Layer: 0
+  m_Name: PlayerInteractionPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &394248378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394248377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.03, y: 0, z: 0.655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1248441319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &399159717
 GameObject:
   m_ObjectHideFlags: 0
@@ -12644,7 +12675,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 100, y: 100, z: 30}
+    m_Scale: {x: 20, y: 100, z: 30}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -16737,7 +16768,7 @@ Transform:
   m_GameObject: {fileID: 1174161043}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 13.5, y: 20.7, z: 0}
+  m_LocalPosition: {x: 34.39, y: 8.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17544,7 +17575,8 @@ MonoBehaviour:
   playerCam: {fileID: 1560167481}
   momCam: {fileID: 1040148060}
   playerTransform: {fileID: 242623835}
-  interactionRadius: 1
+  playerInteractionPoint: {fileID: 394248378}
+  interactionRadius: 2
   talkingAnimations: {fileID: 1248441321}
   dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
 --- !u!82 &1248441317
@@ -17688,6 +17720,7 @@ Transform:
   - {fileID: 666065516}
   - {fileID: 101682527}
   - {fileID: 1040148061}
+  - {fileID: 394248378}
   m_Father: {fileID: 1327621737}
   m_LocalEulerAnglesHint: {x: 0, y: 39.1, z: 0}
 --- !u!136 &1248441320
@@ -20381,7 +20414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadePanel: {fileID: 775602482}
-  fadeDuration: 1
+  fadeDuration: 0.5
 --- !u!4 &1614814047
 Transform:
   m_ObjectHideFlags: 0

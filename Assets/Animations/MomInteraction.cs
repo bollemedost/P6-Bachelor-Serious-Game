@@ -15,6 +15,7 @@ public class MomInteraction : Interactable
 
     [Header("Player Interaction Settings")]
     public Transform playerTransform;
+    public Transform playerInteractionPoint; // New: exact position player should snap to
     public float interactionRadius = 2f;
 
     [Header("Talking Animations")]
@@ -24,7 +25,6 @@ public class MomInteraction : Interactable
     public AudioClip dialogueClip;
     private AudioSource audioSource;
 
-    private Vector3 interactionCenter;
     private bool isInteracting = false;
 
     protected override void Start()
@@ -62,7 +62,13 @@ public class MomInteraction : Interactable
     private void StartInteraction()
     {
         isInteracting = true;
-        interactionCenter = transform.position;
+
+        // LOCK PLAYER MOVEMENT
+        MovementStateManager.canMove = false;
+
+        // SNAP PLAYER TO TARGET POSITION
+        if (playerInteractionPoint != null && playerTransform != null)
+            playerTransform.position = playerInteractionPoint.position;
 
         // Switch cameras
         if (playerCam != null && momCam != null)
@@ -71,18 +77,18 @@ public class MomInteraction : Interactable
             playerCam.Priority = 0;
         }
 
-        // Play Mom's talking animation
+        // Start talking animation
         if (talkingAnimations != null)
             talkingAnimations.PlaySequence();
 
-        // Play audio
+        // Play dialogue audio
         if (dialogueClip != null && audioSource != null)
         {
             audioSource.clip = dialogueClip;
             audioSource.Play();
         }
 
-        // Fire event so player reacts
+        // Fire event for player reaction
         if (eventManager != null)
             eventManager.CompleteEvent(eventID);
     }
@@ -95,24 +101,7 @@ public class MomInteraction : Interactable
         if (Input.GetKeyDown(KeyCode.Escape))
             EndInteraction();
 
-        ClampPlayerInsideRadius();
         FaceEachOther();
-    }
-
-    private void ClampPlayerInsideRadius()
-    {
-        Vector3 offset = playerTransform.position - interactionCenter;
-        offset.y = 0;
-
-        if (offset.magnitude > interactionRadius)
-        {
-            Vector3 clampedPosition = interactionCenter + offset.normalized * interactionRadius;
-            playerTransform.position = new Vector3(
-                clampedPosition.x,
-                playerTransform.position.y,
-                clampedPosition.z
-            );
-        }
     }
 
     private void FaceEachOther()
@@ -134,6 +123,9 @@ public class MomInteraction : Interactable
     {
         isInteracting = false;
 
+        // UNLOCK PLAYER MOVEMENT
+        MovementStateManager.canMove = true;
+
         // Restore cameras
         if (playerCam != null && momCam != null)
         {
@@ -141,12 +133,11 @@ public class MomInteraction : Interactable
             momCam.Priority = 0;
         }
 
-        // Stop Mom animation
+        // Stop animations and audio
         if (talkingAnimations != null)
             talkingAnimations.StopSequence();
 
-        // Stop audio
-        if (audioSource != null && audioSource.isPlaying)
+        if (audioSource.isPlaying)
             audioSource.Stop();
     }
 
