@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
 public class NPCInteraction : Interactable
@@ -30,6 +31,11 @@ public class NPCInteraction : Interactable
     public Transform playerTransform;
     public Transform playerInteractionPoint;
 
+    private NPCEvent currentNPCEvent;
+
+    // Track if this NPC has already been interacted with
+    private bool interactionCompleted = false;
+
     protected override void Start()
     {
         base.Start();
@@ -39,14 +45,14 @@ public class NPCInteraction : Interactable
 
     public override void Interact()
     {
-        if (!isInteracting)
+        if (!isInteracting && !interactionCompleted)
             StartInteraction();
     }
 
     private void StartInteraction()
     {
-        NPCEvent evt = GetEvent(currentEvent);
-        if (evt == null)
+        currentNPCEvent = GetEvent(currentEvent);
+        if (currentNPCEvent == null)
         {
             Debug.LogWarning($"No NPCEvent found for {currentEvent?.name}");
             return;
@@ -69,36 +75,47 @@ public class NPCInteraction : Interactable
             playerCam.Priority = 0;
         }
 
+        // Hide interaction canvas immediately
+        if (canvas != null)
+            canvas.SetActive(false);
+
         // Play animation
-        if (evt.talkingSequence != null)
-            evt.talkingSequence.PlaySequence();
+        if (currentNPCEvent.talkingSequence != null)
+            currentNPCEvent.talkingSequence.PlaySequence();
 
         // Play audio
-        if (evt.dialogueClip != null)
+        if (currentNPCEvent.dialogueClip != null)
         {
-            audioSource.clip = evt.dialogueClip;
+            audioSource.clip = currentNPCEvent.dialogueClip;
             audioSource.Play();
         }
 
         // Fire event
         if (eventManager != null)
-            eventManager.CompleteEvent(evt.gameEvent);
+            eventManager.CompleteEvent(currentNPCEvent.gameEvent);
+
+        // Start coroutine to monitor when interaction finishes
+        StartCoroutine(WaitForInteractionEnd());
     }
 
-    protected override void Update()
+    private IEnumerator WaitForInteractionEnd()
     {
-        base.Update();
-
-        if (!isInteracting) return;
-
-        // Smooth rotation every frame
-        FaceEachOther();
-
-        // Exit on Escape
-        if (Input.GetKeyDown(KeyCode.Escape))
+        while (isInteracting)
         {
-            EndInteraction();
+            // Keep player facing NPC
+            FaceEachOther();
+
+            // Check if both audio and animation finished
+            bool audioFinished = audioSource == null || !audioSource.isPlaying;
+            bool animationFinished = currentNPCEvent.talkingSequence == null || !currentNPCEvent.talkingSequence.IsPlaying;
+
+            if (audioFinished && animationFinished)
+                break;
+
+            yield return null;
         }
+
+        EndInteraction();
     }
 
     private void FaceEachOther()
@@ -121,6 +138,7 @@ public class NPCInteraction : Interactable
     private void EndInteraction()
     {
         isInteracting = false;
+        interactionCompleted = true;
 
         // Unlock movement and rotation
         MovementStateManager.canMove = true;
@@ -133,16 +151,19 @@ public class NPCInteraction : Interactable
             npcCam.Priority = 0;
         }
 
-        NPCEvent evt = GetEvent(currentEvent);
-        if (evt != null)
+        // Stop animation and audio
+        if (currentNPCEvent != null)
         {
-            // Stop animation and audio
-            if (evt.talkingSequence != null)
-                evt.talkingSequence.StopSequence();
+            if (currentNPCEvent.talkingSequence != null)
+                currentNPCEvent.talkingSequence.StopSequence();
 
             if (audioSource.isPlaying)
                 audioSource.Stop();
         }
+
+        // Ensure interaction canvas remains hidden
+        if (canvas != null)
+            canvas.SetActive(false);
     }
 
     private NPCEvent GetEvent(GameEvent gameEvent)
@@ -157,6 +178,7 @@ public class NPCInteraction : Interactable
 
     protected override bool IsCurrentlyInteracting()
     {
-        return isInteracting;
+        // This tells the base Interactable to hide the canvas
+        return isInteracting || interactionCompleted;
     }
 }
