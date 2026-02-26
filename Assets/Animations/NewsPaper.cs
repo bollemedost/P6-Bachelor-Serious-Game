@@ -31,15 +31,12 @@ public class NewsPaper : Interactable
 
     protected override void Update()
     {
-        base.Update();
+        base.Update(); // Keep base handling E toggle and canvas
 
-        // 🔒 Force canvas OFF while zoomed
-        if (isZoomed && canvas != null)
-            canvas.SetActive(false);
-
-        if (!isZoomed || camTransform == null)
+        if (!isZoomed || camTransform == null) 
             return;
 
+        // Scroll zoom
         float scroll = Input.mouseScrollDelta.y;
 
         if (scroll > 0.01f)
@@ -52,36 +49,31 @@ public class NewsPaper : Interactable
             isScrollingForward = false;
         }
 
-        // Smooth return to original position
         if (!isScrollingForward)
         {
             targetPos = Vector3.Lerp(camTransform.position, originalPos, Time.deltaTime * zoomSpeed);
         }
 
         camTransform.position = targetPos;
-
-        // Exit zoom with ESC
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ZoomOut();
-        }
     }
 
     public override void Interact()
     {
-        if (!isZoomed)
-            ZoomIn();
+        ZoomIn();
+    }
+
+    protected override void StopInteraction()
+    {
+        ZoomOut();
     }
 
     private void ZoomIn()
     {
         isZoomed = true;
 
-        // Switch cameras
         newspaperCam.Priority = 10;
         playerCam.Priority = 0;
 
-        // Hide canvas immediately
         if (canvas != null)
             canvas.SetActive(false);
 
@@ -95,12 +87,15 @@ public class NewsPaper : Interactable
     {
         isZoomed = false;
 
-        // Switch cameras back
         playerCam.Priority = 10;
         newspaperCam.Priority = 0;
 
-        // Reset camera position
         if (camTransform != null)
             camTransform.position = originalPos;
+    }
+
+    protected override bool IsCurrentlyInteracting()
+    {
+        return isZoomed;
     }
 }

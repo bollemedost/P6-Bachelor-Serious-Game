@@ -37,18 +37,23 @@ public abstract class Interactable : MonoBehaviour
     {
         if (player == null) return;
 
+        // Only consider the closest interactable
         Interactable closest = GetClosestInteractable();
         bool isClosest = closest == this;
 
         if (canvas != null)
         {
-            // ✅ Hide canvas if interacting
+            // Show canvas if player is close and not interacting
             canvas.SetActive(isClosest && !IsCurrentlyInteracting());
         }
 
+        // Toggle interaction with E if closest
         if (isClosest && Input.GetKeyDown(KeyCode.E))
         {
-            Interact();
+            if (IsCurrentlyInteracting())
+                StopInteraction();
+            else
+                Interact();
         }
     }
 
@@ -76,10 +81,16 @@ public abstract class Interactable : MonoBehaviour
         return closest;
     }
 
-    // 🔹 Allows child classes to block canvas while interacting
+    // 🔹 Child classes can override to indicate active interaction
     protected virtual bool IsCurrentlyInteracting()
     {
         return false;
+    }
+
+    // 🔹 Optional stop interaction for toggling
+    protected virtual void StopInteraction()
+    {
+        // Child classes override
     }
 
     public abstract void Interact();

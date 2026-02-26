@@ -3,6 +3,7 @@ using Cinemachine;
 
 public class WindowInteraction : Interactable
 {
+    [Header("Cameras")]
     public CinemachineVirtualCamera playerCam;
     public CinemachineVirtualCamera windowCam;
 
@@ -10,21 +11,23 @@ public class WindowInteraction : Interactable
 
     protected override void Update()
     {
-        base.Update();
+        base.Update(); // Handles E toggle and canvas
 
+        // Additional logic if needed while interacting
         if (!isActive)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ExitWindow();
-        }
+        // You can add window-specific logic here
     }
 
     public override void Interact()
     {
-        if (!isActive)
-            EnterWindow();
+        EnterWindow();
+    }
+
+    protected override void StopInteraction()
+    {
+        ExitWindow();
     }
 
     private void EnterWindow()
@@ -47,5 +50,10 @@ public class WindowInteraction : Interactable
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    protected override bool IsCurrentlyInteracting()
+    {
+        return isActive;
     }
 }
