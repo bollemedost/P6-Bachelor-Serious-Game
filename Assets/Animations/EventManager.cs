@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    private HashSet<string> completedEvents = new HashSet<string>();
+    private HashSet<GameEvent> completedEvents = new HashSet<GameEvent>();
 
-    // Event fired when an event is completed
-    public static event Action<string> OnEventCompleted;
+    public static event Action<GameEvent> OnEventCompleted;
 
-    public bool IsEventCompleted(string eventID)
+    public bool IsEventCompleted(GameEvent gameEvent)
     {
-        return completedEvents.Contains(eventID);
+        return completedEvents.Contains(gameEvent);
     }
 
-    public void CompleteEvent(string eventID)
+    public void CompleteEvent(GameEvent gameEvent)
     {
-        if (!completedEvents.Contains(eventID))
-        {
-            completedEvents.Add(eventID);
-            Debug.Log($"Event completed: {eventID}");
+        if (gameEvent == null) return;
 
-            // Notify listeners
-            OnEventCompleted?.Invoke(eventID);
+        if (!completedEvents.Contains(gameEvent))
+        {
+            completedEvents.Add(gameEvent);
+            Debug.Log($"Event completed: {gameEvent.name}");
+
+            OnEventCompleted?.Invoke(gameEvent);
         }
     }
 }

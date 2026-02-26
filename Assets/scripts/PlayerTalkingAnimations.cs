@@ -6,29 +6,43 @@ public class PlayerTalkingAnimations : MonoBehaviour
 {
     private Animator animator;
 
-    // ===== BODY ANIMATIONS (must match exact Animator state names) =====
+    // ===== BODY ANIMATIONS (Must match Animator state names exactly) =====
     public enum BodyAnimationType
     {
-        Idle, Idle2, StandingIdle,
-        Talk1, Talk2, Talk3, Talk4, Talk5,
-        Cheer, LookAtLiam, LookAtEmma, Laugh
+        Idle,
+        Idle2,
+        StandingIdle,
+        Talk1,
+        Talk2,
+        Talk3,
+        Talk4,
+        Talk5,
+        Cheer,
+        LookAtLiam,
+        LookAtEmma,
+        Laugh
     }
 
     [System.Serializable]
     public struct AnimationStep
     {
-        public float time;            // When to trigger in seconds
+        [Tooltip("Time in seconds when this step triggers")]
+        public float time;
+
         public BodyAnimationType bodyAnim;
     }
 
     [System.Serializable]
     public class TalkingEvent
     {
-        public string eventID;                 // Must match interaction's event ID
-        public AnimationStep[] sequence;       // Sequence of animations
+        [Header("Event That Triggers This Sequence")]
+        public GameEvent gameEvent;
+
+        [Header("Animation Timeline")]
+        public AnimationStep[] sequence;
     }
 
-    [Header("Event-Based Sequences")]
+    [Header("Event-Based Talking Sequences")]
     public TalkingEvent[] talkingEvents;
 
     private Coroutine currentSequence;
@@ -49,34 +63,30 @@ public class PlayerTalkingAnimations : MonoBehaviour
         EventManager.OnEventCompleted -= HandleEventCompleted;
     }
 
-    private void HandleEventCompleted(string eventID)
+    private void HandleEventCompleted(GameEvent completedEvent)
     {
-        PlayEventSequence(eventID);
+        PlayEventSequence(completedEvent);
     }
 
-    public void PlayEventSequence(string eventID)
+    public void PlayEventSequence(GameEvent gameEvent)
     {
+        if (gameEvent == null)
+            return;
+
+        // Stop any currently playing sequence
         if (isPlaying)
             StopSequence();
 
-        TalkingEvent foundEvent = null;
-
         foreach (var evt in talkingEvents)
         {
-            if (evt.eventID == eventID)
+            if (evt.gameEvent == gameEvent)
             {
-                foundEvent = evt;
-                break;
+                currentSequence = StartCoroutine(RunSequence(evt.sequence));
+                return;
             }
         }
 
-        if (foundEvent == null)
-        {
-            Debug.LogWarning($"No talking event found with ID: {eventID}");
-            return;
-        }
-
-        currentSequence = StartCoroutine(RunSequence(foundEvent.sequence));
+        // No sequence found for this event (not an error)
     }
 
     public void StopSequence()
@@ -87,8 +97,7 @@ public class PlayerTalkingAnimations : MonoBehaviour
         currentSequence = null;
         isPlaying = false;
 
-        // Return to idle
-        animator.CrossFadeInFixedTime("Idle", 0.15f, 0);
+        PlayBodyAnimation(BodyAnimationType.Idle);
     }
 
     private IEnumerator RunSequence(AnimationStep[] sequence)
@@ -97,6 +106,7 @@ public class PlayerTalkingAnimations : MonoBehaviour
             yield break;
 
         isPlaying = true;
+
         float timer = 0f;
         int index = 0;
 
@@ -115,19 +125,23 @@ public class PlayerTalkingAnimations : MonoBehaviour
 
         isPlaying = false;
         currentSequence = null;
+
+        // Return to idle after finishing
+        PlayBodyAnimation(BodyAnimationType.Idle);
     }
 
     private void PlayBodyAnimation(BodyAnimationType type)
     {
         string stateName = type.ToString();
+        int stateHash = Animator.StringToHash(stateName);
 
-        if (animator.HasState(0, Animator.StringToHash(stateName)))
+        if (animator.HasState(0, stateHash))
         {
-            animator.CrossFadeInFixedTime(stateName, 0.1f, 0);
+            animator.CrossFadeInFixedTime(stateHash, 0.1f, 0);
         }
         else
         {
-            Debug.LogWarning($"Animator state '{stateName}' does not exist!");
+            Debug.LogWarning($"Animator state '{stateName}' not found on {gameObject.name}");
         }
     }
 }

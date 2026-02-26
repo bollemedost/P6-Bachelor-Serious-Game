@@ -26,7 +26,9 @@ public class MovementStateManager : MonoBehaviour
 
     [SerializeField] Transform camTransform;
 
-    public static bool canMove = true;
+    // --- NEW STATIC FLAGS ---
+    public static bool canMove = true;   // Lock movement during interactions
+    public static bool canRotate = true; // Lock rotation during interactions
 
     void Awake()
     {
@@ -102,7 +104,8 @@ public class MovementStateManager : MonoBehaviour
 
         dir = camForward * vInput + camRight * hzInput;
 
-        if (dir.magnitude > 0.1f)
+        // --- Only rotate if allowed ---
+        if (dir.magnitude > 0.1f && canRotate)
         {
             Vector3 lookDir = dir.normalized;
             lookDir.y = 0;

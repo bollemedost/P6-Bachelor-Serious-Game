@@ -1,7 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 
-[RequireComponent(typeof(TalkingAnimations), typeof(AudioSource))]
+/*[RequireComponent(typeof(TalkingAnimations), typeof(AudioSource))]
 public class MomInteraction : Interactable
 {
     [Header("Event Settings")]
@@ -151,4 +151,4 @@ public class MomInteraction : Interactable
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, interactionRadius);
     }
-}
+}*/

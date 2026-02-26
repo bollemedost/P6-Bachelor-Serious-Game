@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class DoorInteraction : Interactable
 {
     [Header("Event Settings")]
-    public string eventID = "DoorOpened";
-    public string[] prerequisiteEvents = { "MomTalk" };
+    public GameEvent doorEvent;                     // The event fired when door is used
+    public GameEvent[] prerequisiteEvents;         // Events that must be completed before door unlocks
     private EventManager eventManager;
 
     [Header("UI Canvases")]
@@ -52,8 +52,8 @@ public class DoorInteraction : Interactable
     {
         if (eventManager == null) return;
 
+        // Check all prerequisite events
         isUnlocked = true;
-
         foreach (var prereq in prerequisiteEvents)
         {
             if (!eventManager.IsEventCompleted(prereq))
@@ -63,6 +63,7 @@ public class DoorInteraction : Interactable
             }
         }
 
+        // Update UI
         if (isUnlocked)
         {
             if (interactCanvas != null) interactCanvas.SetActive(true);
@@ -82,18 +83,23 @@ public class DoorInteraction : Interactable
 
         Debug.Log("DoorInteract: Loading new scene...");
 
-        eventManager.CompleteEvent(eventID);
+        // Fire the door event
+        if (doorEvent != null)
+        {
+            eventManager.CompleteEvent(doorEvent);
+        }
 
+        // Load the scene using SceneTransition if available
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
-            if (!string.IsNullOrEmpty(sceneToLoad) && SceneTransition.Instance != null)
+            if (SceneTransition.Instance != null)
             {
                 SceneTransition.Instance.FadeToScene(sceneToLoad);
             }
-        else
-        {
-            Debug.LogWarning("Scene name not set in DoorInteraction!");
+            else
+            {
+                Debug.LogWarning("SceneTransition instance not found!");
+            }
         }
     }
-}
 }

@@ -17545,9 +17545,9 @@ GameObject:
   - component: {fileID: 1248441319}
   - component: {fileID: 1248441318}
   - component: {fileID: 1248441317}
-  - component: {fileID: 1248441316}
   - component: {fileID: 1248441320}
   - component: {fileID: 1248441321}
+  - component: {fileID: 1248441322}
   m_Layer: 0
   m_Name: MomMixamo
   m_TagString: Untagged
@@ -17555,30 +17555,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1248441316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248441315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122e14dd7c7a74c43be62c77b9c78bfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 101682523}
-  interactDistance: 0.7
-  playerTag: Player
-  eventID: MomTalk
-  prerequisiteEvents: []
-  playerCam: {fileID: 1560167481}
-  momCam: {fileID: 1040148060}
-  playerTransform: {fileID: 242623835}
-  playerInteractionPoint: {fileID: 394248378}
-  interactionRadius: 2
-  talkingAnimations: {fileID: 1248441321}
-  dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
 --- !u!82 &1248441317
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17764,6 +17740,30 @@ MonoBehaviour:
     bodyAnim: 3
   - time: 5
     bodyAnim: 0
+--- !u!114 &1248441322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248441315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b18327f5d503034daa455dc4f88e10c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 101682523}
+  interactDistance: 3
+  playerTag: Player
+  npcEvents:
+  - gameEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+    dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
+    talkingSequence: {fileID: 1248441321}
+  currentEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+  playerCam: {fileID: 1560167481}
+  npcCam: {fileID: 1040148060}
+  playerTransform: {fileID: 242623835}
+  playerInteractionPoint: {fileID: 242623835}
 --- !u!1001 &1253665545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18643,9 +18643,9 @@ MonoBehaviour:
   canvas: {fileID: 2094679947}
   interactDistance: 1.5
   playerTag: Player
-  eventID: DoorOpened
+  doorEvent: {fileID: 11400000, guid: 966f37d89a0489549a5629b4cb733215, type: 2}
   prerequisiteEvents:
-  - MomTalk
+  - {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
   lockedCanvas: {fileID: 1743930527}
   interactCanvas: {fileID: 2094679947}
   sceneToLoad: Scene2Street1896
@@ -19957,7 +19957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   talkingEvents:
-  - eventID: MomTalk
+  - gameEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
     sequence:
     - time: 0
       bodyAnim: 3
@@ -20414,7 +20414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadePanel: {fileID: 775602482}
-  fadeDuration: 0.5
+  fadeDuration: 0.1
 --- !u!4 &1614814047
 Transform:
   m_ObjectHideFlags: 0
