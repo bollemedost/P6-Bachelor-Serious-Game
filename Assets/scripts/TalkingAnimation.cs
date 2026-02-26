@@ -39,6 +39,14 @@ public class TalkingAnimations : MonoBehaviour
     private Coroutine sequenceCoroutine;
 
     /// <summary>
+    /// Indicates if an animation sequence is currently playing
+    /// </summary>
+    public bool IsPlaying
+    {
+        get { return sequenceCoroutine != null; }
+    }
+
+    /// <summary>
     /// Starts the animation sequence from the beginning
     /// </summary>
     public void PlaySequence()
