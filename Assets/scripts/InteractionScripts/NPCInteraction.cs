@@ -5,23 +5,40 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class NPCInteraction : Interactable
 {
+    // ===============================
+    // TIMESTAMP IMAGE STRUCTURE
+    // ===============================
+
+    [System.Serializable]
+    public class TimedDialogueImage
+    {
+        [Tooltip("Time in seconds when this image appears")]
+        public float timeStamp;
+
+        [Tooltip("Drag your pre-made dialogue image GameObject here")]
+        public GameObject dialogueImageObject;
+    }
+
     [System.Serializable]
     public class NPCEvent
     {
-        public GameEvent gameEvent;          // ScriptableObject reference
+        public GameEvent gameEvent;
         public AudioClip dialogueClip;
         public TalkingAnimations talkingSequence;
+
+        [Header("Dialogue Image Timeline")]
+        public TimedDialogueImage[] timedImages;
     }
+
+    // ===============================
+    // INSPECTOR FIELDS
+    // ===============================
 
     [Header("Events Available For This NPC")]
     public NPCEvent[] npcEvents;
 
     [Header("Event To Trigger Right Now")]
     public GameEvent currentEvent;
-
-    private EventManager eventManager;
-    private AudioSource audioSource;
-    private bool isInteracting = false;
 
     [Header("Cameras")]
     public CinemachineVirtualCamera playerCam;
@@ -31,16 +48,33 @@ public class NPCInteraction : Interactable
     public Transform playerTransform;
     public Transform playerInteractionPoint;
 
+    [Header("Dialogue Canvas")]
+    public GameObject dialogueCanvas;
+
+    // ===============================
+    // PRIVATE VARIABLES
+    // ===============================
+
+    private EventManager eventManager;
+    private AudioSource audioSource;
     private NPCEvent currentNPCEvent;
 
-    // Track if this NPC has already been interacted with
+    private bool isInteracting = false;
     private bool interactionCompleted = false;
+
+    // ===============================
+    // UNITY METHODS
+    // ===============================
 
     protected override void Start()
     {
         base.Start();
+
         eventManager = FindFirstObjectByType<EventManager>();
         audioSource = GetComponent<AudioSource>();
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(false);
     }
 
     public override void Interact()
@@ -49,9 +83,19 @@ public class NPCInteraction : Interactable
             StartInteraction();
     }
 
+    protected override bool IsCurrentlyInteracting()
+    {
+        return isInteracting || interactionCompleted;
+    }
+
+    // ===============================
+    // INTERACTION LOGIC
+    // ===============================
+
     private void StartInteraction()
     {
         currentNPCEvent = GetEvent(currentEvent);
+
         if (currentNPCEvent == null)
         {
             Debug.LogWarning($"No NPCEvent found for {currentEvent?.name}");
@@ -60,7 +104,7 @@ public class NPCInteraction : Interactable
 
         isInteracting = true;
 
-        // Lock player movement and rotation
+        // Lock player
         MovementStateManager.canMove = false;
         MovementStateManager.canRotate = false;
 
@@ -75,9 +119,13 @@ public class NPCInteraction : Interactable
             playerCam.Priority = 0;
         }
 
-        // Hide interaction canvas immediately
+        // Hide interaction canvas
         if (canvas != null)
             canvas.SetActive(false);
+
+        // Show dialogue canvas
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(true);
 
         // Play animation
         if (currentNPCEvent.talkingSequence != null)
@@ -91,23 +139,58 @@ public class NPCInteraction : Interactable
         }
 
         // Fire event
-        if (eventManager != null)
+        if (eventManager != null && currentNPCEvent.gameEvent != null)
             eventManager.CompleteEvent(currentNPCEvent.gameEvent);
 
-        // Start coroutine to monitor when interaction finishes
-        StartCoroutine(WaitForInteractionEnd());
+        StartCoroutine(HandleDialogueTimeline());
     }
 
-    private IEnumerator WaitForInteractionEnd()
+    private IEnumerator HandleDialogueTimeline()
     {
+        int currentIndex = 0;
+
+        // Disable all images at start
+        if (currentNPCEvent.timedImages != null)
+        {
+            foreach (var entry in currentNPCEvent.timedImages)
+            {
+                if (entry.dialogueImageObject != null)
+                    entry.dialogueImageObject.SetActive(false);
+            }
+        }
+
         while (isInteracting)
         {
-            // Keep player facing NPC
             FaceEachOther();
 
-            // Check if both audio and animation finished
+            if (currentNPCEvent.timedImages != null &&
+                currentIndex < currentNPCEvent.timedImages.Length &&
+                audioSource != null)
+            {
+                float currentTime = audioSource.time;
+
+                if (currentTime >= currentNPCEvent.timedImages[currentIndex].timeStamp)
+                {
+                    // Hide previous image
+                    if (currentIndex > 0)
+                    {
+                        var previous = currentNPCEvent.timedImages[currentIndex - 1];
+                        if (previous.dialogueImageObject != null)
+                            previous.dialogueImageObject.SetActive(false);
+                    }
+
+                    // Show current image
+                    var current = currentNPCEvent.timedImages[currentIndex];
+                    if (current.dialogueImageObject != null)
+                        current.dialogueImageObject.SetActive(true);
+
+                    currentIndex++;
+                }
+            }
+
             bool audioFinished = audioSource == null || !audioSource.isPlaying;
-            bool animationFinished = currentNPCEvent.talkingSequence == null || !currentNPCEvent.talkingSequence.IsPlaying;
+            bool animationFinished = currentNPCEvent.talkingSequence == null ||
+                                     !currentNPCEvent.talkingSequence.IsPlaying;
 
             if (audioFinished && animationFinished)
                 break;
@@ -118,29 +201,12 @@ public class NPCInteraction : Interactable
         EndInteraction();
     }
 
-    private void FaceEachOther()
-    {
-        if (playerTransform == null) return;
-
-        // Player faces NPC
-        Vector3 lookDir = transform.position - playerTransform.position;
-        lookDir.y = 0;
-        if (lookDir != Vector3.zero)
-            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
-
-        // NPC faces Player
-        Vector3 npcLookDir = playerTransform.position - transform.position;
-        npcLookDir.y = 0;
-        if (npcLookDir != Vector3.zero)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(npcLookDir), Time.deltaTime * 5f);
-    }
-
     private void EndInteraction()
     {
         isInteracting = false;
         interactionCompleted = true;
 
-        // Unlock movement and rotation
+        // Unlock player
         MovementStateManager.canMove = true;
         MovementStateManager.canRotate = true;
 
@@ -151,19 +217,54 @@ public class NPCInteraction : Interactable
             npcCam.Priority = 0;
         }
 
-        // Stop animation and audio
-        if (currentNPCEvent != null)
-        {
-            if (currentNPCEvent.talkingSequence != null)
-                currentNPCEvent.talkingSequence.StopSequence();
+        // Stop animation
+        if (currentNPCEvent != null && currentNPCEvent.talkingSequence != null)
+            currentNPCEvent.talkingSequence.StopSequence();
 
-            if (audioSource.isPlaying)
-                audioSource.Stop();
+        // Stop audio
+        if (audioSource != null && audioSource.isPlaying)
+            audioSource.Stop();
+
+        // Hide dialogue canvas
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(false);
+
+        // Disable all images
+        if (currentNPCEvent != null && currentNPCEvent.timedImages != null)
+        {
+            foreach (var entry in currentNPCEvent.timedImages)
+            {
+                if (entry.dialogueImageObject != null)
+                    entry.dialogueImageObject.SetActive(false);
+            }
         }
 
-        // Ensure interaction canvas remains hidden
+        // Ensure interaction prompt stays hidden
         if (canvas != null)
             canvas.SetActive(false);
+    }
+
+    private void FaceEachOther()
+    {
+        if (playerTransform == null) return;
+
+        // Player faces NPC
+        Vector3 lookDir = transform.position - playerTransform.position;
+        lookDir.y = 0;
+        if (lookDir != Vector3.zero)
+            playerTransform.rotation = Quaternion.Slerp(
+                playerTransform.rotation,
+                Quaternion.LookRotation(lookDir),
+                Time.deltaTime * 5f);
+
+        // NPC faces Player
+        Vector3 npcLookDir = playerTransform.position - transform.position;
+        npcLookDir.y = 0;
+        if (npcLookDir != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(npcLookDir),
+                Time.deltaTime * 5f);
     }
 
     private NPCEvent GetEvent(GameEvent gameEvent)
@@ -174,11 +275,5 @@ public class NPCInteraction : Interactable
                 return evt;
         }
         return null;
-    }
-
-    protected override bool IsCurrentlyInteracting()
-    {
-        // This tells the base Interactable to hide the canvas
-        return isInteracting || interactionCompleted;
     }
 }
