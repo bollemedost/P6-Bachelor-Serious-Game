@@ -20,7 +20,9 @@ public class PlayerTalkingAnimations : MonoBehaviour
         Cheer,
         LookAtLiam,
         LookAtEmma,
-        Laugh
+        Laugh,
+        PickUpCoin1,
+        PickUpCoin2,
     }
 
     [System.Serializable]
@@ -130,7 +132,7 @@ public class PlayerTalkingAnimations : MonoBehaviour
         PlayBodyAnimation(BodyAnimationType.Idle);
     }
 
-    private void PlayBodyAnimation(BodyAnimationType type)
+    public void PlayBodyAnimation(BodyAnimationType type)
     {
         string stateName = type.ToString();
         int stateHash = Animator.StringToHash(stateName);
