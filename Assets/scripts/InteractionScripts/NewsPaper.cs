@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using System.Collections;
 
 public class NewsPaper : Interactable
 {
@@ -10,6 +11,13 @@ public class NewsPaper : Interactable
     [Header("Scroll Zoom Settings")]
     public float zoomAmount = 0.2f;
     public float zoomSpeed = 5f;
+
+    [Header("Player UI")]
+    public CanvasGroup playerUICanvasGroup; // assign your UI CanvasGroup here
+
+    [Header("Fade Settings")]
+    public float fadeDuration = 0.5f;
+    public float fadeDelay = 0.3f;
 
     private bool isZoomed = false;
     private Transform camTransform;
@@ -31,7 +39,7 @@ public class NewsPaper : Interactable
 
     protected override void Update()
     {
-        base.Update(); // Keep base handling E toggle and canvas
+        base.Update(); // Handles E toggle and canvas
 
         if (!isZoomed || camTransform == null) 
             return;
@@ -74,6 +82,10 @@ public class NewsPaper : Interactable
         newspaperCam.Priority = 10;
         playerCam.Priority = 0;
 
+        // Hide UI immediately
+        if (playerUICanvasGroup != null)
+            playerUICanvasGroup.alpha = 0f;
+
         if (canvas != null)
             canvas.SetActive(false);
 
@@ -92,10 +104,32 @@ public class NewsPaper : Interactable
 
         if (camTransform != null)
             camTransform.position = originalPos;
+
+        // Fade UI back in
+        if (playerUICanvasGroup != null)
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
+        }
     }
 
     protected override bool IsCurrentlyInteracting()
     {
         return isZoomed;
+    }
+
+    private IEnumerator FadeInUI(CanvasGroup cg, float delay, float duration)
+    {
+        yield return new WaitForSeconds(delay);
+
+        float elapsed = 0f;
+        float startAlpha = cg.alpha;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
+            yield return null;
+        }
+        cg.alpha = 1f;
     }
 }

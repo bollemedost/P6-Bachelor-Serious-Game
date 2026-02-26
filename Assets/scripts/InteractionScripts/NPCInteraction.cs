@@ -51,6 +51,13 @@ public class NPCInteraction : Interactable
     [Header("Dialogue Canvas")]
     public GameObject dialogueCanvas;
 
+    [Header("Player UI Canvas Group (for fade)")]
+    public CanvasGroup playerUICanvasGroup;
+
+    [Header("UI Fade Settings")]
+    public float fadeDuration = 0.5f;
+    public float fadeDelay = 0.3f;
+
     // ===============================
     // PRIVATE VARIABLES
     // ===============================
@@ -103,6 +110,10 @@ public class NPCInteraction : Interactable
         }
 
         isInteracting = true;
+
+        // Hide player UI instantly
+        if (playerUICanvasGroup != null)
+            playerUICanvasGroup.alpha = 0f;
 
         // Lock player
         MovementStateManager.canMove = false;
@@ -239,6 +250,13 @@ public class NPCInteraction : Interactable
             }
         }
 
+        // Fade player UI back in
+        if (playerUICanvasGroup != null)
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
+        }
+
         // Ensure interaction prompt stays hidden
         if (canvas != null)
             canvas.SetActive(false);
@@ -275,5 +293,20 @@ public class NPCInteraction : Interactable
                 return evt;
         }
         return null;
+    }
+
+    private IEnumerator FadeInUI(CanvasGroup cg, float delay, float duration)
+    {
+        yield return new WaitForSeconds(delay);
+
+        float elapsed = 0f;
+        float startAlpha = cg.alpha;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
+            yield return null;
+        }
+        cg.alpha = 1f;
     }
 }

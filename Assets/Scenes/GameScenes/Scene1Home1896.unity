@@ -17545,6 +17545,9 @@ MonoBehaviour:
   playerTransform: {fileID: 242623835}
   playerInteractionPoint: {fileID: 242623835}
   dialogueCanvas: {fileID: 0}
+  playerUICanvasGroup: {fileID: 0}
+  fadeDuration: 0.5
+  fadeDelay: 0.3
 --- !u!1 &1258785557
 GameObject:
   m_ObjectHideFlags: 0
@@ -19490,6 +19493,7 @@ GameObject:
   - component: {fileID: 1595699399}
   - component: {fileID: 1595699398}
   - component: {fileID: 1595699397}
+  - component: {fileID: 1595699400}
   m_Layer: 7
   m_Name: PlayerCanvass
   m_TagString: Untagged
@@ -19584,6 +19588,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &1595699400
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595699395}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1603287862
 GameObject:
   m_ObjectHideFlags: 0
@@ -36597,6 +36613,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 242623835}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: playerUICanvasGroup
+      value: 
+      objectReference: {fileID: 1595699400}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -38566,9 +38586,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: playerUI
+      value: 
+      objectReference: {fileID: 1595699395}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: fadeDelay
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 1560167481}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: playerUICanvasGroup
+      value: 
+      objectReference: {fileID: 1595699400}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -57715,9 +57747,17 @@ PrefabInstance:
       value: Newspaper
       objectReference: {fileID: 0}
     - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+      propertyPath: fadeDelay
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 1560167481}
+    - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+      propertyPath: playerUICanvasGroup
+      value: 
+      objectReference: {fileID: 1595699400}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
