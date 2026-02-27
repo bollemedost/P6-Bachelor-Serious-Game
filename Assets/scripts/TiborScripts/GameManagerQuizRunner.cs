@@ -22,6 +22,14 @@ public class GameManagerQuizRunner : MonoBehaviour
     public TMP_Text progressText;
     public GameObject finishedPanel;
 
+    [Header("Year label above player (TMP)")]
+    [Tooltip("Drag your Player > YearLabel > Text (TMP) here")]
+    public TMP_Text playerYearText;
+
+    [Header("Gate option reveal")]
+    [Tooltip("If true: only current gate's option texts are shown. Next gate appears after correct answer.")]
+    public bool revealNextGateOptions = true;
+
     [Header("Debug")]
     public bool debugLogs = true;
 
@@ -46,7 +54,12 @@ public class GameManagerQuizRunner : MonoBehaviour
             gates[i].Setup(this, i);
         }
 
+        // ✅ Hide/show option text above gates at start
+        if (revealNextGateOptions)
+            ApplyGateOptionVisibility();
+
         UpdateUI();
+        UpdatePlayerYearLabel(); // set starting label
     }
 
     public bool CheckAnswer(int gateIndex, Side chosenSide)
@@ -70,7 +83,13 @@ public class GameManagerQuizRunner : MonoBehaviour
         if (chosenSide == correct)
         {
             currentIndex++;
+
             UpdateUI();
+            UpdatePlayerYearLabel(); // update to next year label
+
+            // ✅ Reveal the next gate's options
+            if (revealNextGateOptions)
+                ApplyGateOptionVisibility();
 
             if (debugLogs)
                 Debug.Log($"[GameManager] ✅ Correct! Progress now {currentIndex}/{questions.Length}");
@@ -92,12 +111,56 @@ public class GameManagerQuizRunner : MonoBehaviour
             progressText.text = $"Correct: {currentIndex}/{questions.Length}";
     }
 
+    void UpdatePlayerYearLabel()
+    {
+        if (playerYearText == null) return;
+        if (questions == null || questions.Length == 0) return;
+
+        if (currentIndex >= questions.Length)
+        {
+            playerYearText.text = "Finished!";
+            if (debugLogs) Debug.Log("[GameManager] PlayerYearText set to 'Finished!'");
+            return;
+        }
+
+        string nextLabel = questions[currentIndex].dateLabel;
+        playerYearText.text = nextLabel;
+
+        if (debugLogs)
+            Debug.Log($"[GameManager] PlayerYearText set to '{nextLabel}' (currentIndex={currentIndex})");
+    }
+
+    void ApplyGateOptionVisibility()
+    {
+        if (gates == null || gates.Length == 0) return;
+
+        for (int i = 0; i < gates.Length; i++)
+        {
+            if (gates[i] == null) continue;
+
+            // Show only current gate's options (the one we are solving right now)
+            bool shouldShow = (i == currentIndex);
+
+            // If finished, hide all
+            if (currentIndex >= questions.Length) shouldShow = false;
+
+            gates[i].SetOptionsVisible(shouldShow);
+        }
+
+        if (debugLogs)
+            Debug.Log($"[GameManager] Gate options visibility updated. currentIndex={currentIndex}");
+    }
+
     void FinishGame()
     {
         if (debugLogs) Debug.Log("[GameManager] 🎉 Finished all questions!");
 
         if (finishedPanel != null)
             finishedPanel.SetActive(true);
+
+        // Hide all gate options when done
+        if (revealNextGateOptions)
+            ApplyGateOptionVisibility();
 
         var player = FindFirstObjectByType<PlayerRunnerT>();
         if (player != null)
