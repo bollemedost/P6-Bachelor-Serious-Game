@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InteractLoadSceneT : MonoBehaviour
@@ -70,4 +70,4 @@ public class InteractLoadSceneT : MonoBehaviour
         if (other.CompareTag(playerTag))
             playerInTrigger = false;
     }
-}
+}*/
