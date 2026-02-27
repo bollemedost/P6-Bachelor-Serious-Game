@@ -23,12 +23,13 @@ public class GameManagerQuizRunner : MonoBehaviour
     public GameObject finishedPanel;
 
     [Header("Year label above player (TMP)")]
-    [Tooltip("Drag your Player > YearLabel > Text (TMP) here")]
     public TMP_Text playerYearText;
 
     [Header("Gate option reveal")]
-    [Tooltip("If true: only current gate's option texts are shown. Next gate appears after correct answer.")]
     public bool revealNextGateOptions = true;
+
+    [Header("On Finish")]
+    public bool returnToPreviousSceneOnFinish = true;
 
     [Header("Debug")]
     public bool debugLogs = true;
@@ -54,12 +55,11 @@ public class GameManagerQuizRunner : MonoBehaviour
             gates[i].Setup(this, i);
         }
 
-        // ✅ Hide/show option text above gates at start
         if (revealNextGateOptions)
             ApplyGateOptionVisibility();
 
         UpdateUI();
-        UpdatePlayerYearLabel(); // set starting label
+        UpdatePlayerYearLabel();
     }
 
     public bool CheckAnswer(int gateIndex, Side chosenSide)
@@ -67,7 +67,6 @@ public class GameManagerQuizRunner : MonoBehaviour
         if (debugLogs)
             Debug.Log($"[GameManager] CheckAnswer gateIndex={gateIndex} chosenSide={chosenSide} currentIndex={currentIndex}");
 
-        // Must answer in order
         if (gateIndex != currentIndex)
         {
             if (debugLogs)
@@ -77,17 +76,13 @@ public class GameManagerQuizRunner : MonoBehaviour
 
         Side correct = questions[currentIndex].correctSide;
 
-        if (debugLogs)
-            Debug.Log($"[GameManager] Correct side for gate {currentIndex} is {correct}");
-
         if (chosenSide == correct)
         {
             currentIndex++;
 
             UpdateUI();
-            UpdatePlayerYearLabel(); // update to next year label
+            UpdatePlayerYearLabel();
 
-            // ✅ Reveal the next gate's options
             if (revealNextGateOptions)
                 ApplyGateOptionVisibility();
 
@@ -119,15 +114,10 @@ public class GameManagerQuizRunner : MonoBehaviour
         if (currentIndex >= questions.Length)
         {
             playerYearText.text = "Finished!";
-            if (debugLogs) Debug.Log("[GameManager] PlayerYearText set to 'Finished!'");
             return;
         }
 
-        string nextLabel = questions[currentIndex].dateLabel;
-        playerYearText.text = nextLabel;
-
-        if (debugLogs)
-            Debug.Log($"[GameManager] PlayerYearText set to '{nextLabel}' (currentIndex={currentIndex})");
+        playerYearText.text = questions[currentIndex].dateLabel;
     }
 
     void ApplyGateOptionVisibility()
@@ -138,17 +128,11 @@ public class GameManagerQuizRunner : MonoBehaviour
         {
             if (gates[i] == null) continue;
 
-            // Show only current gate's options (the one we are solving right now)
             bool shouldShow = (i == currentIndex);
-
-            // If finished, hide all
             if (currentIndex >= questions.Length) shouldShow = false;
 
             gates[i].SetOptionsVisible(shouldShow);
         }
-
-        if (debugLogs)
-            Debug.Log($"[GameManager] Gate options visibility updated. currentIndex={currentIndex}");
     }
 
     void FinishGame()
@@ -158,10 +142,17 @@ public class GameManagerQuizRunner : MonoBehaviour
         if (finishedPanel != null)
             finishedPanel.SetActive(true);
 
-        // Hide all gate options when done
         if (revealNextGateOptions)
             ApplyGateOptionVisibility();
 
+        // ✅ Return to the scene where you interacted with cube (and restore position)
+        if (returnToPreviousSceneOnFinish && ReturnToPreviousSceneT.HasReturnPoint())
+        {
+            ReturnToPreviousSceneT.ReturnNow();
+            return;
+        }
+
+        // fallback (original idea): stop player movement
         var player = FindFirstObjectByType<PlayerRunnerT>();
         if (player != null)
             player.enabled = false;
