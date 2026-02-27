@@ -288,16 +288,30 @@ public class NPCInteraction : Interactable
                 {
                     float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
+                    // 🚶 PLAYER TOO FAR → WAIT & FACE PLAYER
                     if (distanceToPlayer > playerFollowDistance)
                     {
                         if (animator != null)
                             animator.SetBool(walkBoolName, false);
+
+                        // Face player while waiting
+                        Vector3 lookDir = playerTransform.position - transform.position;
+                        lookDir.y = 0;
+
+                        if (lookDir != Vector3.zero)
+                        {
+                            transform.rotation = Quaternion.Slerp(
+                                transform.rotation,
+                                Quaternion.LookRotation(lookDir),
+                                Time.deltaTime * 5f);
+                        }
 
                         yield return null;
                         continue;
                     }
                 }
 
+                // 🚶 CONTINUE WALKING
                 if (animator != null)
                     animator.SetBool(walkBoolName, true);
 
