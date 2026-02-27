@@ -1,26 +1,24 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DoorInteraction : Interactable
 {
     [Header("Event Settings")]
-    public GameEvent doorEvent;                     // The event fired when door is used
-    public GameEvent[] prerequisiteEvents;         // Events that must be completed before door unlocks
+    public GameEvent doorEvent;                 // Event triggered when door is used
+    public GameEvent[] prerequisiteEvents;      // Events that must be completed before door unlocks
     private EventManager eventManager;
 
     [Header("UI Canvases")]
-    public GameObject lockedCanvas;
-    public GameObject interactCanvas;
+    public GameObject lockedCanvas;             // Shown when door locked
+    public GameObject interactCanvas;           // Shown when player can interact
 
     [Header("Scene Transition")]
-    public string sceneToLoad;   // Name of the scene you want to load
+    public string sceneToLoad;                  // Scene to load
 
     private bool isUnlocked = false;
 
     protected override void Start()
     {
         base.Start();
-
         eventManager = Object.FindFirstObjectByType<EventManager>();
         if (eventManager == null)
             Debug.LogError("No EventManager found in scene!");
@@ -38,9 +36,7 @@ public class DoorInteraction : Interactable
         float distance = Vector3.Distance(transform.position, player.position);
 
         if (distance <= interactDistance)
-        {
             UpdateCanvasState();
-        }
         else
         {
             if (lockedCanvas != null) lockedCanvas.SetActive(false);
@@ -78,27 +74,21 @@ public class DoorInteraction : Interactable
 
     public override void Interact()
     {
-        if (!isUnlocked) return;
-        if (eventManager == null) return;
-
-        Debug.Log("DoorInteract: Loading new scene...");
+        if (!isUnlocked || eventManager == null) return;
 
         // Fire the door event
         if (doorEvent != null)
-        {
             eventManager.CompleteEvent(doorEvent);
-        }
 
-        // Load the scene using SceneTransition if available
+        // Trigger scene transition
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
             if (SceneTransition.Instance != null)
-            {
                 SceneTransition.Instance.FadeToScene(sceneToLoad);
-            }
             else
             {
-                Debug.LogWarning("SceneTransition instance not found!");
+                Debug.LogWarning("SceneTransition instance not found, loading scene directly.");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
             }
         }
     }
