@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class TimedAudio
 {
     public AudioClip clip;
-    public float time;
+    public float time; // Time after interaction starts
 }
 
 public class ZoneTriggerInteraction : MonoBehaviour
@@ -16,12 +16,14 @@ public class ZoneTriggerInteraction : MonoBehaviour
     [SerializeField] private string playerTriggerName = "Wave";
     [SerializeField] private string playerUpperBodyLayerName = "UpperBody";
     [SerializeField] private float playerAnimationDuration = 2f;
+    [SerializeField] private float playerEarlyExitTime = 0.2f; // Goes back to base layer slightly early
+    [SerializeField] private float playerLayerFadeTime = 0.15f; // Smooth fade out duration
 
     [Header("NPC Animation Settings")]
     [SerializeField] private Animator npcAnimator;
     [SerializeField] private string npcTriggerName = "Wave";
     [SerializeField] private float npcDelay = 0f;
-    [SerializeField] private float npcAnimationDuration = 2f; // NEW
+    [SerializeField] private float npcAnimationDuration = 2f;
 
     [Header("Audio Settings")]
     [SerializeField] private AudioSource audioSource;
@@ -45,7 +47,7 @@ public class ZoneTriggerInteraction : MonoBehaviour
         float interactionStartTime = Time.time;
 
         // =====================
-        // PLAYER ANIMATION (UNCHANGED)
+        // PLAYER ANIMATION
         // =====================
         int layerIndex = -1;
 
@@ -68,12 +70,7 @@ public class ZoneTriggerInteraction : MonoBehaviour
                 yield return new WaitForSeconds(npcDelay);
 
             npcAnimator.SetTrigger(npcTriggerName);
-
-            // Wait for NPC animation duration
             yield return new WaitForSeconds(npcAnimationDuration);
-
-            // Optional: Force return to Idle if needed
-            // npcAnimator.Play("Idle");
         }
 
         // =====================
@@ -85,12 +82,15 @@ public class ZoneTriggerInteraction : MonoBehaviour
         }
 
         // =====================
-        // RESET PLAYER LAYER
+        // RESET PLAYER LAYER (fade slightly early)
         // =====================
         if (layerIndex >= 0)
         {
-            yield return new WaitForSeconds(playerAnimationDuration);
-            playerAnimator.SetLayerWeight(layerIndex, 0f);
+            float adjustedDuration = Mathf.Max(0f, playerAnimationDuration - playerEarlyExitTime);
+            yield return new WaitForSeconds(adjustedDuration);
+
+            // Smooth fade out
+            StartCoroutine(FadeOutLayer(playerAnimator, layerIndex, playerLayerFadeTime));
         }
     }
 
@@ -106,5 +106,21 @@ public class ZoneTriggerInteraction : MonoBehaviour
             if (ta.clip != null)
                 audioSource.PlayOneShot(ta.clip);
         }
+    }
+
+    private IEnumerator FadeOutLayer(Animator anim, int layerIndex, float fadeTime)
+    {
+        float startWeight = anim.GetLayerWeight(layerIndex);
+        float timer = 0f;
+
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+            float weight = Mathf.Lerp(startWeight, 0f, timer / fadeTime);
+            anim.SetLayerWeight(layerIndex, weight);
+            yield return null;
+        }
+
+        anim.SetLayerWeight(layerIndex, 0f);
     }
 }

@@ -18234,6 +18234,7 @@ MonoBehaviour:
   uiCanvasGroups:
   - {fileID: 1595699400}
   - {fileID: 1978114916}
+  - {fileID: 2824492854636063671}
   uiFadeDuration: 0.5
   uiFadeDelay: 1.2
 --- !u!114 &1840034290
@@ -24386,7 +24387,7 @@ GameObject:
   - component: {fileID: 1978114913}
   - component: {fileID: 1978114916}
   m_Layer: 5
-  m_Name: InteractE (3)
+  m_Name: InteractE1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35867,7 +35868,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2529234509385451831, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1389074
+      value: 1.111
       objectReference: {fileID: 0}
     - target: {fileID: 2529234509385451831, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35931,7 +35932,7 @@ PrefabInstance:
       objectReference: {fileID: 1560167481}
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: interactDistance
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: playerUICanvasGroup
@@ -35952,8 +35953,28 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5055727365489629765, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1595242607}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4577675606215346397, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2824492854636063671}
   m_SourcePrefab: {fileID: 100100000, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+--- !u!1 &2824492854636063670 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4577675606215346397, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+  m_PrefabInstance: {fileID: 2824492854636063669}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &2824492854636063671
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2824492854636063670}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2882756326484349722
 GameObject:
   m_ObjectHideFlags: 0
@@ -43969,7 +43990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1978114911}
-  interactDistance: 3
+  interactDistance: 1.5
   playerTag: Player
   animator: {fileID: 4543549934735542746}
   animationTriggerName: Reveal
