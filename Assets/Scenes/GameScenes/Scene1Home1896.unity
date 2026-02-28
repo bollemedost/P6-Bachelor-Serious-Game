@@ -1005,13 +1005,12 @@ Transform:
   m_GameObject: {fileID: 242623831}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.31, y: 0.19, z: -19.59}
+  m_LocalPosition: {x: 9.324, y: 0.094, z: -19.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 543450652198756643}
   - {fileID: 1560167479}
-  - {fileID: 1595699396}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &250537148
@@ -2270,6 +2269,8 @@ MonoBehaviour:
   cinematicCam: {fileID: 406438779}
   gameplayCam: {fileID: 1560167481}
   introDuration: 2
+  blendDuration: 1.5
+  rotationUnlockDelay: 0.1
 --- !u!114 &406438779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16800,6 +16801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   talkingEvents:
   - gameEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
     sequence:
@@ -17255,7 +17257,7 @@ RectTransform:
   - {fileID: 2138373979}
   - {fileID: 1688997013}
   - {fileID: 1770522647}
-  m_Father: {fileID: 242623835}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18229,6 +18231,11 @@ MonoBehaviour:
   fadeCanvasGroup: {fileID: 342800553}
   fadeDuration: 2
   startDelay: 0.1
+  uiCanvasGroups:
+  - {fileID: 1595699400}
+  - {fileID: 1978114916}
+  uiFadeDuration: 0.5
+  uiFadeDelay: 1.2
 --- !u!114 &1840034290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24377,6 +24384,7 @@ GameObject:
   - component: {fileID: 1978114915}
   - component: {fileID: 1978114914}
   - component: {fileID: 1978114913}
+  - component: {fileID: 1978114916}
   m_Layer: 5
   m_Name: InteractE (3)
   m_TagString: Untagged
@@ -24467,6 +24475,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &1978114916
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978114911}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1997210423
 GameObject:
   m_ObjectHideFlags: 0
@@ -35909,6 +35929,10 @@ PrefabInstance:
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 1560167481}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: interactDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: playerUICanvasGroup
       value: 
@@ -57286,3 +57310,4 @@ SceneRoots:
   - {fileID: 1905546972}
   - {fileID: 1840034293}
   - {fileID: 406438780}
+  - {fileID: 1595699396}

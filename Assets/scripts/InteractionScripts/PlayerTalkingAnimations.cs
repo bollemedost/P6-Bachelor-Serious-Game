@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerTalkingAnimations : MonoBehaviour
 {
-    private Animator animator;
+    public Animator animator;
 
     // ===== BODY ANIMATIONS (Must match Animator state names exactly) =====
     public enum BodyAnimationType
@@ -23,6 +23,7 @@ public class PlayerTalkingAnimations : MonoBehaviour
         Laugh,
         PickUpCoin1,
         PickUpCoin2,
+        Interact,
     }
 
     [System.Serializable]
@@ -50,7 +51,7 @@ public class PlayerTalkingAnimations : MonoBehaviour
     private Coroutine currentSequence;
     private bool isPlaying = false;
 
-    private void Awake()
+    public void Awake()
     {
         animator = GetComponent<Animator>();
     }

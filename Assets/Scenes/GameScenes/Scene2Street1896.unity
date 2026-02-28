@@ -3396,6 +3396,10 @@ MonoBehaviour:
   fadeCanvasGroup: {fileID: 1975003115}
   fadeDuration: 1
   startDelay: 0.1
+  uiCanvasGroups:
+  - {fileID: 1166722643}
+  uiFadeDuration: 0.5
+  uiFadeDelay: 0.2
 --- !u!114 &306414929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31203,6 +31207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   talkingEvents:
   - gameEvent: {fileID: 11400000, guid: 915ed39d43e5b9146bae2a1862e87bf4, type: 2}
     sequence:
