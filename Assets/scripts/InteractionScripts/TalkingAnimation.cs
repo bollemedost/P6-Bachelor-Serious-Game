@@ -21,7 +21,8 @@ public class TalkingAnimations : MonoBehaviour
         Cheer,
         LookAtLiam,
         LookAtEmma,
-        Laugh
+        Laugh,
+        Wave,
     }
 
     [System.Serializable]

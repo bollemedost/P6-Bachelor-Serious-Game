@@ -5,17 +5,23 @@ using System.Collections.Generic;
 [System.Serializable]
 public class TimedAudio
 {
-    public AudioClip clip;   // Audio clip to play
-    public float time;       // Time (in seconds) after animation starts
+    public AudioClip clip;
+    public float time;
 }
 
 public class ZoneTriggerInteraction : MonoBehaviour
 {
-    [Header("Animation Settings")]
-    [SerializeField] private Animator animator;
-    [SerializeField] private string waveTriggerName = "Wave";
-    [SerializeField] private string upperBodyLayerName = "UpperBody";
-    [SerializeField] private float waveDuration = 2f; // total duration of the wave animation
+    [Header("Player Animation Settings")]
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private string playerTriggerName = "Wave";
+    [SerializeField] private string playerUpperBodyLayerName = "UpperBody";
+    [SerializeField] private float playerAnimationDuration = 2f;
+
+    [Header("NPC Animation Settings")]
+    [SerializeField] private Animator npcAnimator;
+    [SerializeField] private string npcTriggerName = "Wave";
+    [SerializeField] private float npcDelay = 0f;
+    [SerializeField] private float npcAnimationDuration = 2f; // NEW
 
     [Header("Audio Settings")]
     [SerializeField] private AudioSource audioSource;
@@ -30,43 +36,75 @@ public class ZoneTriggerInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             hasTriggered = true;
-
-            int layerIndex = animator.GetLayerIndex(upperBodyLayerName);
-
-            // Enable upper body layer
-            animator.SetLayerWeight(layerIndex, 1f);
-
-            // Trigger wave animation
-            animator.SetTrigger(waveTriggerName);
-
-            // Start coroutine to play timed audios
-            if (audioSource != null && timedAudios.Count > 0)
-            {
-                StartCoroutine(PlayTimedAudios());
-            }
-
-            // Disable upper body layer after animation ends
-            StartCoroutine(DisableLayerAfterTime(layerIndex, waveDuration));
+            StartCoroutine(HandleInteraction());
         }
     }
 
-    private IEnumerator DisableLayerAfterTime(int layerIndex, float duration)
+    private IEnumerator HandleInteraction()
     {
-        yield return new WaitForSeconds(duration);
-        animator.SetLayerWeight(layerIndex, 0f); // return to base animation
+        float interactionStartTime = Time.time;
+
+        // =====================
+        // PLAYER ANIMATION (UNCHANGED)
+        // =====================
+        int layerIndex = -1;
+
+        if (playerAnimator != null)
+        {
+            layerIndex = playerAnimator.GetLayerIndex(playerUpperBodyLayerName);
+
+            if (layerIndex >= 0)
+                playerAnimator.SetLayerWeight(layerIndex, 1f);
+
+            playerAnimator.SetTrigger(playerTriggerName);
+        }
+
+        // =====================
+        // NPC ANIMATION
+        // =====================
+        if (npcAnimator != null)
+        {
+            if (npcDelay > 0f)
+                yield return new WaitForSeconds(npcDelay);
+
+            npcAnimator.SetTrigger(npcTriggerName);
+
+            // Wait for NPC animation duration
+            yield return new WaitForSeconds(npcAnimationDuration);
+
+            // Optional: Force return to Idle if needed
+            // npcAnimator.Play("Idle");
+        }
+
+        // =====================
+        // AUDIO
+        // =====================
+        if (audioSource != null && timedAudios.Count > 0)
+        {
+            StartCoroutine(PlayTimedAudios(interactionStartTime));
+        }
+
+        // =====================
+        // RESET PLAYER LAYER
+        // =====================
+        if (layerIndex >= 0)
+        {
+            yield return new WaitForSeconds(playerAnimationDuration);
+            playerAnimator.SetLayerWeight(layerIndex, 0f);
+        }
     }
 
-    private IEnumerator PlayTimedAudios()
+    private IEnumerator PlayTimedAudios(float startTime)
     {
-        float startTime = Time.time;
-
         foreach (var ta in timedAudios)
         {
             float waitTime = ta.time - (Time.time - startTime);
+
             if (waitTime > 0)
                 yield return new WaitForSeconds(waitTime);
 
-            audioSource.PlayOneShot(ta.clip);
+            if (ta.clip != null)
+                audioSource.PlayOneShot(ta.clip);
         }
     }
 }
