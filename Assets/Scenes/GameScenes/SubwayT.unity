@@ -179,6 +179,7 @@ MonoBehaviour:
   finishedPanel: {fileID: 0}
   playerYearText: {fileID: 1425842091}
   revealNextGateOptions: 1
+  returnToPreviousSceneOnFinish: 1
   debugLogs: 1
 --- !u!4 &15561432
 Transform:
@@ -1807,6 +1808,51 @@ Transform:
   - {fileID: 358411507}
   - {fileID: 531080651}
   m_Father: {fileID: 232149382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &893923344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893923346}
+  - component: {fileID: 893923345}
+  m_Layer: 0
+  m_Name: MiniGameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &893923345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893923344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1872717b89ae6e4ca2029cb997f1fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minigameEvent: {fileID: 11400000, guid: d72b762df53642f49aa2e2510c05ecc3, type: 2}
+--- !u!4 &893923346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893923344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.198155, y: -2.6627908, z: 9.22987}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &935371979
 GameObject:
@@ -4488,3 +4534,4 @@ SceneRoots:
   - {fileID: 580295713}
   - {fileID: 15561432}
   - {fileID: 1777423840}
+  - {fileID: 893923346}
