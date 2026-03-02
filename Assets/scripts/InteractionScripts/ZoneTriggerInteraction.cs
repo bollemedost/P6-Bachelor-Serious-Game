@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class TimedAudio
@@ -16,8 +16,8 @@ public class ZoneTriggerInteraction : MonoBehaviour
     [SerializeField] private string playerTriggerName = "Wave";
     [SerializeField] private string playerUpperBodyLayerName = "UpperBody";
     [SerializeField] private float playerAnimationDuration = 2f;
-    [SerializeField] private float playerEarlyExitTime = 0.2f; // Goes back to base layer slightly early
-    [SerializeField] private float playerLayerFadeTime = 0.15f; // Smooth fade out duration
+    [SerializeField] private float playerEarlyExitTime = 0.2f; // fade slightly early
+    [SerializeField] private float playerLayerFadeTime = 0.15f; // smooth fade duration
 
     [Header("NPC Animation Settings")]
     [SerializeField] private Animator npcAnimator;
@@ -44,13 +44,16 @@ public class ZoneTriggerInteraction : MonoBehaviour
 
     private IEnumerator HandleInteraction()
     {
-        float interactionStartTime = Time.time;
+        // =====================
+        // START TIMED AUDIO
+        // =====================
+        if (audioSource != null && timedAudios.Count > 0)
+            StartCoroutine(PlayTimedAudios());
 
         // =====================
         // PLAYER ANIMATION
         // =====================
         int layerIndex = -1;
-
         if (playerAnimator != null)
         {
             layerIndex = playerAnimator.GetLayerIndex(playerUpperBodyLayerName);
@@ -74,14 +77,6 @@ public class ZoneTriggerInteraction : MonoBehaviour
         }
 
         // =====================
-        // AUDIO
-        // =====================
-        if (audioSource != null && timedAudios.Count > 0)
-        {
-            StartCoroutine(PlayTimedAudios(interactionStartTime));
-        }
-
-        // =====================
         // RESET PLAYER LAYER (fade slightly early)
         // =====================
         if (layerIndex >= 0)
@@ -94,16 +89,14 @@ public class ZoneTriggerInteraction : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayTimedAudios(float startTime)
+    private IEnumerator PlayTimedAudios()
     {
         foreach (var ta in timedAudios)
         {
-            float waitTime = ta.time - (Time.time - startTime);
+            if (ta.time > 0f)
+                yield return new WaitForSeconds(ta.time);
 
-            if (waitTime > 0)
-                yield return new WaitForSeconds(waitTime);
-
-            if (ta.clip != null)
+            if (ta.clip != null && audioSource != null)
                 audioSource.PlayOneShot(ta.clip);
         }
     }
