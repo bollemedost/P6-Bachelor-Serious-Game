@@ -3,8 +3,8 @@ using UnityEngine;
 public class HomelessManInteraction : Interactable
 {
     [Header("Event Settings")]
-    public GameEvent giveHomelessManMoneyEvent; // Event completed when enough coins given
-    public GameEvent[] prerequisiteEvents;      // Events that must be completed before interaction unlocks
+    public GameEvent giveHomelessManMoneyEvent;
+    public GameEvent[] prerequisiteEvents;
     private EventManager eventManager;
 
     [Header("UI Canvases")]
@@ -12,7 +12,11 @@ public class HomelessManInteraction : Interactable
     public GameObject interactCanvas;
 
     [Header("Coin Settings")]
-    public int requiredCoins = 5; // Amount player must give
+    public int requiredCoins = 5;
+
+    [Header("Audio")]
+    public AudioSource audioSource;     // Assign in inspector
+    public AudioClip giveMoneyClip;     // Sound to play when giving money
 
     private bool isUnlocked = false;
 
@@ -24,7 +28,6 @@ public class HomelessManInteraction : Interactable
         if (lockedCanvas != null) lockedCanvas.SetActive(false);
         if (interactCanvas != null) interactCanvas.SetActive(false);
     }
-    
 
     protected override void Update()
     {
@@ -80,18 +83,21 @@ public class HomelessManInteraction : Interactable
             // Deduct coins
             CoinManager.Instance.AddCoin(-requiredCoins);
 
+            // Play give sound
+            if (audioSource != null && giveMoneyClip != null)
+            {
+                audioSource.PlayOneShot(giveMoneyClip);
+            }
+
             // Complete the event
             if (giveHomelessManMoneyEvent != null && eventManager != null)
                 eventManager.CompleteEvent(giveHomelessManMoneyEvent);
 
             Debug.Log($"Player gave {requiredCoins} coins to homeless man!");
-
-            // Optional: Play an animation or sound here
         }
         else
         {
             Debug.Log($"Not enough coins! You need {requiredCoins} coins.");
-            // Optional: show UI feedback
         }
     }
 
