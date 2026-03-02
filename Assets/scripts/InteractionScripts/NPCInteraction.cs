@@ -5,10 +5,6 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public class NPCInteraction : Interactable
 {
-    // ===============================
-    // TIMESTAMP IMAGE STRUCTURE
-    // ===============================
-
     [System.Serializable]
     public class TimedDialogueImage
     {
@@ -19,17 +15,14 @@ public class NPCInteraction : Interactable
     [System.Serializable]
     public class NPCEvent
     {
-        public GameEvent gameEvent;
+        public GameEvent gameEvent;             // Triggered at start
+        public GameEvent finishedEvent;         // Optional, triggered after dialogue finishes
         public AudioClip dialogueClip;
         public TalkingAnimations talkingSequence;
 
         [Header("Dialogue Image Timeline")]
         public TimedDialogueImage[] timedImages;
     }
-
-    // ===============================
-    // INSPECTOR FIELDS
-    // ===============================
 
     [Header("Events Available For This NPC")]
     public NPCEvent[] npcEvents;
@@ -48,33 +41,22 @@ public class NPCInteraction : Interactable
     [Header("Dialogue Canvas")]
     public GameObject dialogueCanvas;
 
-    [Header("Player UI Canvas Group (for fade)")]
+    [Header("Player UI Canvas Group")]
     public CanvasGroup playerUICanvasGroup;
 
     [Header("UI Fade Settings")]
     public float fadeDuration = 0.5f;
     public float fadeDelay = 0.3f;
 
-    // ===============================
-    // WALK AFTER INTERACTION
-    // ===============================
-
     [Header("Walk After Interaction")]
     public bool walkAfterInteraction = false;
-
-    [Tooltip("Delay before NPC starts walking")]
     public float walkStartDelay = 1f;
-
     public Transform[] waypoints;
     public float moveSpeed = 2f;
     public float waypointStopDistance = 0.2f;
     public float playerFollowDistance = 5f;
     public Animator animator;
     public string walkBoolName = "isWalking";
-
-    // ===============================
-    // PRIVATE VARIABLES
-    // ===============================
 
     private EventManager eventManager;
     private AudioSource audioSource;
@@ -84,15 +66,10 @@ public class NPCInteraction : Interactable
     private bool interactionCompleted = false;
     private bool isWalking = false;
 
-    // ===============================
-    // UNITY METHODS
-    // ===============================
-
     protected override void Start()
     {
         base.Start();
-
-        eventManager = FindFirstObjectByType<EventManager>();
+        eventManager = Object.FindFirstObjectByType<EventManager>();
         audioSource = GetComponent<AudioSource>();
 
         if (dialogueCanvas != null)
@@ -110,14 +87,9 @@ public class NPCInteraction : Interactable
         return isInteracting || interactionCompleted || isWalking;
     }
 
-    // ===============================
-    // INTERACTION LOGIC
-    // ===============================
-
     private void StartInteraction()
     {
         currentNPCEvent = GetEvent(currentEvent);
-
         if (currentNPCEvent == null)
         {
             Debug.LogWarning($"No NPCEvent found for {currentEvent?.name}");
@@ -126,39 +98,49 @@ public class NPCInteraction : Interactable
 
         isInteracting = true;
 
-        if (playerUICanvasGroup != null)
-            playerUICanvasGroup.alpha = 0f;
-
+        // Disable player movement
         MovementStateManager.canMove = false;
         MovementStateManager.canRotate = false;
 
+        // Move player to interaction point
         if (playerInteractionPoint != null && playerTransform != null)
             playerTransform.position = playerInteractionPoint.position;
 
+        // Camera switch
         if (playerCam != null && npcCam != null)
         {
             npcCam.Priority = 10;
             playerCam.Priority = 0;
         }
 
+        // Hide player UI immediately
+        if (playerUICanvasGroup != null)
+            playerUICanvasGroup.alpha = 0f;
+
+        // Hide regular canvas
         if (canvas != null)
             canvas.SetActive(false);
 
+        // Show dialogue canvas
         if (dialogueCanvas != null)
             dialogueCanvas.SetActive(true);
 
+        // Play talking animations
         if (currentNPCEvent.talkingSequence != null)
             currentNPCEvent.talkingSequence.PlaySequence();
 
+        // Play dialogue audio
         if (currentNPCEvent.dialogueClip != null)
         {
             audioSource.clip = currentNPCEvent.dialogueClip;
             audioSource.Play();
         }
 
+        // Trigger start event
         if (eventManager != null && currentNPCEvent.gameEvent != null)
             eventManager.CompleteEvent(currentNPCEvent.gameEvent);
 
+        // Start dialogue timeline
         StartCoroutine(HandleDialogueTimeline());
     }
 
@@ -184,7 +166,6 @@ public class NPCInteraction : Interactable
                 audioSource != null)
             {
                 float currentTime = audioSource.time;
-
                 if (currentTime >= currentNPCEvent.timedImages[currentIndex].timeStamp)
                 {
                     if (currentIndex > 0)
@@ -203,8 +184,7 @@ public class NPCInteraction : Interactable
             }
 
             bool audioFinished = audioSource == null || !audioSource.isPlaying;
-            bool animationFinished = currentNPCEvent.talkingSequence == null ||
-                                     !currentNPCEvent.talkingSequence.IsPlaying;
+            bool animationFinished = currentNPCEvent.talkingSequence == null || !currentNPCEvent.talkingSequence.IsPlaying;
 
             if (audioFinished && animationFinished)
                 break;
@@ -220,24 +200,30 @@ public class NPCInteraction : Interactable
         isInteracting = false;
         interactionCompleted = true;
 
+        // Enable player movement
         MovementStateManager.canMove = true;
         MovementStateManager.canRotate = true;
 
+        // Camera switch back
         if (playerCam != null && npcCam != null)
         {
             playerCam.Priority = 10;
             npcCam.Priority = 0;
         }
 
+        // Stop animations
         if (currentNPCEvent != null && currentNPCEvent.talkingSequence != null)
             currentNPCEvent.talkingSequence.StopSequence();
 
+        // Stop audio
         if (audioSource != null && audioSource.isPlaying)
             audioSource.Stop();
 
+        // Hide dialogue canvas immediately
         if (dialogueCanvas != null)
             dialogueCanvas.SetActive(false);
 
+        // Hide timed images
         if (currentNPCEvent != null && currentNPCEvent.timedImages != null)
         {
             foreach (var entry in currentNPCEvent.timedImages)
@@ -247,6 +233,7 @@ public class NPCInteraction : Interactable
             }
         }
 
+        // Fade player UI back in
         if (playerUICanvasGroup != null)
         {
             StopAllCoroutines();
@@ -256,16 +243,16 @@ public class NPCInteraction : Interactable
         if (canvas != null)
             canvas.SetActive(false);
 
-        // ✅ START WALK WITH DELAY
+        // Trigger finished event if assigned
+        if (eventManager != null && currentNPCEvent != null && currentNPCEvent.finishedEvent != null)
+            eventManager.CompleteEvent(currentNPCEvent.finishedEvent);
+
+        // Walk after interaction
         if (walkAfterInteraction && waypoints != null && waypoints.Length > 0)
-        {
             StartCoroutine(StartWalkWithDelay());
-        }
     }
 
-    // ===============================
-    // WALKING LOGIC
-    // ===============================
+    // =============================== WALKING LOGIC ===============================
 
     private IEnumerator StartWalkWithDelay()
     {
@@ -287,46 +274,29 @@ public class NPCInteraction : Interactable
                 if (playerTransform != null)
                 {
                     float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-                    // 🚶 PLAYER TOO FAR → WAIT & FACE PLAYER
                     if (distanceToPlayer > playerFollowDistance)
                     {
                         if (animator != null)
                             animator.SetBool(walkBoolName, false);
 
-                        // Face player while waiting
                         Vector3 lookDir = playerTransform.position - transform.position;
                         lookDir.y = 0;
-
                         if (lookDir != Vector3.zero)
-                        {
-                            transform.rotation = Quaternion.Slerp(
-                                transform.rotation,
-                                Quaternion.LookRotation(lookDir),
-                                Time.deltaTime * 5f);
-                        }
+                            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
 
                         yield return null;
                         continue;
                     }
                 }
 
-                // 🚶 CONTINUE WALKING
                 if (animator != null)
                     animator.SetBool(walkBoolName, true);
 
                 Vector3 direction = (target.position - transform.position).normalized;
                 transform.position += direction * moveSpeed * Time.deltaTime;
-
                 direction.y = 0;
-
                 if (direction != Vector3.zero)
-                {
-                    transform.rotation = Quaternion.Slerp(
-                        transform.rotation,
-                        Quaternion.LookRotation(direction),
-                        Time.deltaTime * 5f);
-                }
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5f);
 
                 yield return null;
             }
@@ -336,13 +306,9 @@ public class NPCInteraction : Interactable
             animator.SetBool(walkBoolName, false);
 
         isWalking = false;
-
-        Debug.Log("NPC finished walking.");
     }
 
-    // ===============================
-    // HELPER METHODS
-    // ===============================
+    // =============================== HELPER METHODS ===============================
 
     private void FaceEachOther()
     {
@@ -350,25 +316,13 @@ public class NPCInteraction : Interactable
 
         Vector3 lookDir = transform.position - playerTransform.position;
         lookDir.y = 0;
-
         if (lookDir != Vector3.zero)
-        {
-            playerTransform.rotation = Quaternion.Slerp(
-                playerTransform.rotation,
-                Quaternion.LookRotation(lookDir),
-                Time.deltaTime * 5f);
-        }
+            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
 
         Vector3 npcLookDir = playerTransform.position - transform.position;
         npcLookDir.y = 0;
-
         if (npcLookDir != Vector3.zero)
-        {
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(npcLookDir),
-                Time.deltaTime * 5f);
-        }
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(npcLookDir), Time.deltaTime * 5f);
     }
 
     private NPCEvent GetEvent(GameEvent gameEvent)
@@ -383,6 +337,8 @@ public class NPCInteraction : Interactable
 
     private IEnumerator FadeInUI(CanvasGroup cg, float delay, float duration)
     {
+        if (cg == null) yield break;
+
         yield return new WaitForSeconds(delay);
 
         float elapsed = 0f;
@@ -396,5 +352,7 @@ public class NPCInteraction : Interactable
         }
 
         cg.alpha = 1f;
+        cg.interactable = true;
+        cg.blocksRaycasts = true;
     }
 }

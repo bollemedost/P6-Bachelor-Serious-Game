@@ -8445,7 +8445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyCanvasGroup: {fileID: 1621154632}
-  coinText: {fileID: 0}
+  coinText: {fileID: 1734597692}
   fadeDuration: 0.5
 --- !u!4 &616930096
 Transform:
@@ -14477,11 +14477,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ed451579fbc064b8a40408f6fb8e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startObjectiveEvent: {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
+  startObjectiveEvent: {fileID: 11400000, guid: 6301fa7306f488b4181757791cd7190e, type: 2}
   completeObjectiveEvent: {fileID: 11400000, guid: 240b2cd614ebedc4883591a132b6aac9, type: 2}
   objectiveCanvas: {fileID: 972285194}
+  objectiveCanvasGroup: {fileID: 972285199}
   objectiveText: {fileID: 982448824}
-  objectiveDescription: xxxxx
+  objectiveDescription: "\"Find penge til den hjeml\xF8se mand\""
+  fadeDuration: 0.5
+  fadeDelay: 0.1
+  objectiveSound: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
 --- !u!4 &736795526
 Transform:
   m_ObjectHideFlags: 0
@@ -45284,6 +45288,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
+    finishedEvent: {fileID: 11400000, guid: 6301fa7306f488b4181757791cd7190e, type: 2}
     dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
     talkingSequence: {fileID: 5866666020583890491}
     timedImages:
@@ -45922,7 +45927,7 @@ PrefabInstance:
     - target: {fileID: 7173979850561569345, guid: e79511997858d1e4c9de7c01859df804, type: 3}
       propertyPath: playerInteractionPoint
       value: 
-      objectReference: {fileID: 569178096}
+      objectReference: {fileID: 6959986299009195118}
     - target: {fileID: 7173979850561569345, guid: e79511997858d1e4c9de7c01859df804, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[0].dialogueImageObject
       value: 
@@ -45955,6 +45960,11 @@ PrefabInstance:
 --- !u!224 &6959986299009195117 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8541679309198415040, guid: e79511997858d1e4c9de7c01859df804, type: 3}
+  m_PrefabInstance: {fileID: 6959986299009195116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6959986299009195118 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 132651727381050909, guid: e79511997858d1e4c9de7c01859df804, type: 3}
   m_PrefabInstance: {fileID: 6959986299009195116}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6961716715631229419
