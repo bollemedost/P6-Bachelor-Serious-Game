@@ -6,8 +6,9 @@ public class SceneTransition : MonoBehaviour
 {
     public static SceneTransition Instance;
 
-    public CanvasGroup fadePanel;
-    public float fadeDuration = 1f;
+    [Header("Fade Settings")]
+    public CanvasGroup fadePanel;        // Assign a CanvasGroup on a full-screen black panel
+    public float fadeDuration = 1f;      // Duration for fade in/out
 
     private void Awake()
     {
@@ -16,6 +17,10 @@ public class SceneTransition : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // Ensure fadePanel starts fully transparent
+            if (fadePanel != null)
+                fadePanel.alpha = 0f;
         }
         else
         {
@@ -23,23 +28,36 @@ public class SceneTransition : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Call this to transition to a new scene
+    /// </summary>
     public void FadeToScene(string sceneName)
     {
+        if (fadePanel == null)
+        {
+            Debug.LogWarning("Fade Panel not assigned!");
+            SceneManager.LoadScene(sceneName); // fallback
+            return;
+        }
+
         StartCoroutine(FadeAndLoad(sceneName));
     }
 
     private IEnumerator FadeAndLoad(string sceneName)
     {
-        // Ease in: fade to black
+        // Fade to black
         yield return StartCoroutine(Fade(0f, 1f, fadeDuration, EaseInOutQuad));
 
-        // Load new scene
+        // Load the scene
         SceneManager.LoadScene(sceneName);
 
-        // Optional: wait a frame
+        // Wait a frame to ensure scene fully loads
         yield return null;
 
-        // Ease out: fade from black
+        // Optional tiny delay for smoothness
+        yield return new WaitForSeconds(0.05f);
+
+        // Fade back from black
         yield return StartCoroutine(Fade(1f, 0f, fadeDuration, EaseInOutQuad));
     }
 
@@ -58,9 +76,9 @@ public class SceneTransition : MonoBehaviour
         fadePanel.alpha = endAlpha;
     }
 
-    // Ease in/out quadratic
+    // Ease in/out quadratic function for smoother fade
     private float EaseInOutQuad(float t)
     {
-        return t < 0.5f ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        return t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
     }
 }

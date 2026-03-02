@@ -26,9 +26,12 @@ public class MovementStateManager : MonoBehaviour
 
     [SerializeField] Transform camTransform;
 
-    // --- NEW STATIC FLAGS ---
+    // --- STATIC FLAGS ---
     public static bool canMove = true;   // Lock movement during interactions
     public static bool canRotate = true; // Lock rotation during interactions
+
+    // --- PRIVATE LOCK FLAG ---
+    private bool isLocked = false;
 
     void Awake()
     {
@@ -58,11 +61,13 @@ public class MovementStateManager : MonoBehaviour
 
     void Update()
     {
-        if (!canMove)
+        // --- ALWAYS APPLY GRAVITY ---
+        ApplyGravity();
+
+        // --- BLOCK MOVEMENT & ROTATION IF LOCKED OR CAN'T MOVE ---
+        if (!canMove || isLocked)
         {
-            // Block all movement and reset velocity
             dir = Vector3.zero;
-            velocity = Vector3.zero;
 
             if (anim != null)
             {
@@ -70,11 +75,11 @@ public class MovementStateManager : MonoBehaviour
                 anim.SetFloat("vInput", 0);
             }
 
-            return; // Skip movement logic
+            return; // Skip walking & rotation only
         }
 
+        // Normal movement
         GetDirectionAndMove();
-        ApplyGravity();
 
         Vector3 localDir = transform.InverseTransformDirection(dir);
         anim.SetFloat("hzInput", localDir.x);
@@ -130,9 +135,16 @@ public class MovementStateManager : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    /*private void OnDrawGizmos()
+    // --- PUBLIC METHOD TO LOCK MOVEMENT ---
+    public void LockMovement(bool locked)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(spherePos, controller.radius - 0.05f);
-    }*/
+        isLocked = locked;
+
+        if (locked && anim != null)
+        {
+            anim.SetFloat("hzInput", 0);
+            anim.SetFloat("vInput", 0);
+            anim.CrossFade("Idle", 0.1f); // smoothly transition to Idle
+        }
+    }
 }
