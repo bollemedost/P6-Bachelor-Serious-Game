@@ -2931,13 +2931,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   womanPrefabs:
   - {fileID: 7510923714180462430, guid: 732bc46409a1fe34591ce6ddec0a88cd, type: 3}
-  spawnPoint: {fileID: 938595488}
+  spawnPoints:
+  - {fileID: 938595488}
   waypoints:
   - {fileID: 1933923937}
   - {fileID: 1710822833}
   - {fileID: 928565973}
   - {fileID: 1688381150}
-  spawnInterval: 1
+  spawnInterval: 3
 --- !u!4 &608357274
 Transform:
   m_ObjectHideFlags: 0
@@ -4169,7 +4170,7 @@ Transform:
   m_GameObject: {fileID: 901749960}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.056, y: 0, z: 0}
+  m_LocalPosition: {x: 1.056, y: 0, z: 0.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4548,7 +4549,7 @@ Transform:
   m_GameObject: {fileID: 938595487}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2509995, y: 0, z: 0}
+  m_LocalPosition: {x: -1.2509995, y: 0, z: 0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5871,13 +5872,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   womanPrefabs:
   - {fileID: 7510923714180462430, guid: 732bc46409a1fe34591ce6ddec0a88cd, type: 3}
-  spawnPoint: {fileID: 901749961}
+  spawnPoints:
+  - {fileID: 901749961}
   waypoints:
   - {fileID: 1605066891}
   - {fileID: 1281571671}
   - {fileID: 1321187315}
   - {fileID: 1526724265}
-  spawnInterval: 1
+  spawnInterval: 3
 --- !u!4 &1180349634
 Transform:
   m_ObjectHideFlags: 0
@@ -12754,81 +12756,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1663520531
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1663520535}
-  - component: {fileID: 1663520534}
-  - component: {fileID: 1663520533}
-  - component: {fileID: 1663520532}
-  m_Layer: 0
-  m_Name: DestroyZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1663520532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663520531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b047e0a605f5a849af9a56bd005488a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &1663520533
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663520531}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1663520534
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663520531}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1663520535
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663520531}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.0359, y: -2.2825, z: -10.7244}
-  m_LocalScale: {x: 3.7682, y: 2.5151, z: 5.4221106}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1666274516
 GameObject:
   m_ObjectHideFlags: 0
@@ -14071,13 +13998,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   womanPrefabs:
   - {fileID: 7510923714180462430, guid: 732bc46409a1fe34591ce6ddec0a88cd, type: 3}
-  spawnPoint: {fileID: 1859010899}
+  spawnPoints:
+  - {fileID: 1859010899}
   waypoints:
   - {fileID: 142092007}
   - {fileID: 676794334}
   - {fileID: 1791770915}
   - {fileID: 956910286}
-  spawnInterval: 1
+  spawnInterval: 3
 --- !u!4 &1873943487
 Transform:
   m_ObjectHideFlags: 0
@@ -47998,4 +47926,3 @@ SceneRoots:
   - {fileID: 608357274}
   - {fileID: 1873943487}
   - {fileID: 1180349634}
-  - {fileID: 1663520535}

@@ -1286,10 +1286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0023f59955ffaa34eb34f38ec09f56f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  moveSpeed: 2
+  waypoints: []
+  moveSpeed: 1.5
+  destroyAfterSeconds: 30
 --- !u!1 &7586214156796579461
 GameObject:
   m_ObjectHideFlags: 0
