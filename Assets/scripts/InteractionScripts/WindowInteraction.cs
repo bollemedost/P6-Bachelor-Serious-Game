@@ -9,22 +9,23 @@ public class WindowInteraction : Interactable
     public CinemachineVirtualCamera windowCam;
 
     [Header("Player UI")]
-    public CanvasGroup playerUICanvasGroup; // Assign your UI CanvasGroup here
+    public CanvasGroup playerUICanvasGroup;
 
     [Header("Fade Settings")]
-    public float fadeDuration = 0.5f; // time it takes to fade in
-    public float fadeDelay = 0.3f; // optional delay before fade in
+    public float fadeDuration = 0.5f;
+    public float fadeDelay = 0.3f;
+
+    [Header("Game Event")]
+    public GameEvent windowEvent; // Assign Window1, Window2, etc.
 
     private bool isActive = false;
+    private bool eventTriggered = false;
+    private EventManager eventManager;
 
-    protected override void Update()
+    protected override void Start()
     {
-        base.Update(); // Handles E toggle and canvas
-
-        if (!isActive)
-            return;
-
-        // Additional logic while interacting
+        base.Start();
+        eventManager = FindFirstObjectByType<EventManager>();
     }
 
     public override void Interact()
@@ -44,12 +45,18 @@ public class WindowInteraction : Interactable
         windowCam.Priority = 10;
         playerCam.Priority = 0;
 
-        // Hide UI immediately
         if (playerUICanvasGroup != null)
-            playerUICanvasGroup.alpha = 0f; // invisible
+            playerUICanvasGroup.alpha = 0f;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // 🔥 Complete event ONCE
+        if (!eventTriggered && eventManager != null && windowEvent != null)
+        {
+            eventTriggered = true;
+            eventManager.CompleteEvent(windowEvent);
+        }
     }
 
     private void ExitWindow()
@@ -59,7 +66,6 @@ public class WindowInteraction : Interactable
         playerCam.Priority = 10;
         windowCam.Priority = 0;
 
-        // Fade UI back in
         if (playerUICanvasGroup != null)
         {
             StopAllCoroutines();
@@ -81,12 +87,14 @@ public class WindowInteraction : Interactable
 
         float elapsed = 0f;
         float startAlpha = cg.alpha;
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             cg.alpha = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
             yield return null;
         }
+
         cg.alpha = 1f;
     }
 }
