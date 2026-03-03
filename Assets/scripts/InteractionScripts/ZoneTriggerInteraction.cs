@@ -6,18 +6,23 @@ using UnityEngine;
 public class TimedAudio
 {
     public AudioClip clip;
-    public float time; // Time after interaction starts
+    public float time;
 }
 
 public class ZoneTriggerInteraction : MonoBehaviour
 {
+    [Header("Event Settings")]
+    [SerializeField] private GameEvent zoneEvent;                  // 👈 Event this zone triggers
+    [SerializeField] private GameEvent[] prerequisiteEvents;       // 👈 Optional requirements
+    private EventManager eventManager;
+
     [Header("Player Animation Settings")]
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private string playerTriggerName = "Wave";
     [SerializeField] private string playerUpperBodyLayerName = "UpperBody";
     [SerializeField] private float playerAnimationDuration = 2f;
-    [SerializeField] private float playerEarlyExitTime = 0.2f; // fade slightly early
-    [SerializeField] private float playerLayerFadeTime = 0.15f; // smooth fade duration
+    [SerializeField] private float playerEarlyExitTime = 0.2f;
+    [SerializeField] private float playerLayerFadeTime = 0.15f;
 
     [Header("NPC Animation Settings")]
     [SerializeField] private Animator npcAnimator;
@@ -29,17 +34,32 @@ public class ZoneTriggerInteraction : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<TimedAudio> timedAudios = new List<TimedAudio>();
 
-    private bool hasTriggered = false;
+    private void Start()
+    {
+        eventManager = FindFirstObjectByType<EventManager>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasTriggered) return;
+        if (!other.CompareTag("Player")) return;
+        if (eventManager == null || zoneEvent == null) return;
 
-        if (other.CompareTag("Player"))
+        // 🚫 If already completed → do nothing
+        if (eventManager.IsEventCompleted(zoneEvent))
+            return;
+
+        // 🚫 Check prerequisites
+        foreach (var prereq in prerequisiteEvents)
         {
-            hasTriggered = true;
-            StartCoroutine(HandleInteraction());
+            if (!eventManager.IsEventCompleted(prereq))
+                return;
         }
+
+        // ✅ Trigger interaction
+        StartCoroutine(HandleInteraction());
+
+        // ✅ Mark event as completed
+        eventManager.CompleteEvent(zoneEvent);
     }
 
     private IEnumerator HandleInteraction()
@@ -77,14 +97,12 @@ public class ZoneTriggerInteraction : MonoBehaviour
         }
 
         // =====================
-        // RESET PLAYER LAYER (fade slightly early)
+        // RESET PLAYER LAYER
         // =====================
         if (layerIndex >= 0)
         {
             float adjustedDuration = Mathf.Max(0f, playerAnimationDuration - playerEarlyExitTime);
             yield return new WaitForSeconds(adjustedDuration);
-
-            // Smooth fade out
             StartCoroutine(FadeOutLayer(playerAnimator, layerIndex, playerLayerFadeTime));
         }
     }

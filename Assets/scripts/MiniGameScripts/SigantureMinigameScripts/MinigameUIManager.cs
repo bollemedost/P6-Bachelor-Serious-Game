@@ -4,55 +4,73 @@ using UnityEngine;
 public class MinigameUIManager : MonoBehaviour
 {
     public TextMeshProUGUI signatureText;
-    public int totalSignatures = 10;
+
+    [Header("Signature Settings")]
+    public int signaturesRequiredToReturn = 10; // REQUIRED amount
     private int currentSignatures = 0;
 
     [Header("All Signatures Collected Image")]
-    public GameObject allSignaturesCollectedImage; // Drag your image here
+    public GameObject allSignaturesCollectedImage;
+
+    [Header("Return Objective Event")]
+    public GameEvent returnAvailableEvent; // NEW
+    private bool returnEventTriggered = false; // prevent multiple triggers
 
     [Header("Sound Effects")]
-    public AudioClip signatureSound; // Drag your SFX here
+    public AudioClip signatureSound;
     private AudioSource audioSource;
 
     private void Start()
     {
         if (allSignaturesCollectedImage != null)
-            allSignaturesCollectedImage.SetActive(false); // hide at start
+            allSignaturesCollectedImage.SetActive(false);
 
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
+
+        UpdateUI();
     }
 
-    // Call this when the player gets a signature
     public void AddSignature()
     {
         currentSignatures++;
         UpdateUI();
 
-        // Play sound
+        // Play signature sound
         if (signatureSound != null && audioSource != null)
             audioSource.PlayOneShot(signatureSound);
 
-        // Show image if all signatures collected
-        if (currentSignatures >= totalSignatures && allSignaturesCollectedImage != null)
+        // If required amount reached → trigger return event ONCE
+        if (!returnEventTriggered && currentSignatures >= signaturesRequiredToReturn)
         {
-            allSignaturesCollectedImage.SetActive(true);
+            returnEventTriggered = true;
+
+            EventManager evtManager = FindFirstObjectByType<EventManager>();
+            if (evtManager != null && returnAvailableEvent != null)
+            {
+                evtManager.CompleteEvent(returnAvailableEvent);
+            }
+
+            if (allSignaturesCollectedImage != null)
+                allSignaturesCollectedImage.SetActive(true);
         }
     }
 
     private void UpdateUI()
     {
         if (signatureText != null)
-            signatureText.text = $"Underskrift {currentSignatures}/{totalSignatures}";
+            signatureText.text = $"Underskrifter Indsamlet {currentSignatures}/{signaturesRequiredToReturn}";
     }
 
     public void ResetSignatures()
     {
         currentSignatures = 0;
+        returnEventTriggered = false;
+
         UpdateUI();
 
         if (allSignaturesCollectedImage != null)
-            allSignaturesCollectedImage.SetActive(false); // hide again on reset
+            allSignaturesCollectedImage.SetActive(false);
     }
 }

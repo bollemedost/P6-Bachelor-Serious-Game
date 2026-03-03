@@ -8092,6 +8092,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111f3cfe1cc43b74680c68e844b3c039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneEvent: {fileID: 11400000, guid: 0d0c86e70b8c0a1419e30029e8aedca7, type: 2}
+  prerequisiteEvents: []
   playerAnimator: {fileID: 0}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody
@@ -29188,6 +29190,10 @@ PrefabInstance:
       value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: doorEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 41986943ef2733442952e577ae66c7fe, type: 2}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: sceneToLoad
       value: Scene5Valgret1896
       objectReference: {fileID: 0}
@@ -34042,6 +34048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111f3cfe1cc43b74680c68e844b3c039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneEvent: {fileID: 11400000, guid: bd76e4ae429cd044eab6f1b259bc1baa, type: 2}
+  prerequisiteEvents: []
   playerAnimator: {fileID: 0}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody
