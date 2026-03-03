@@ -24041,6 +24041,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1560167481}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: currentEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 7953cf5dd95e6b04d9780d774405518c, type: 2}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: dialogueCanvas
       value: 
       objectReference: {fileID: 1908002035}
@@ -24064,6 +24068,10 @@ PrefabInstance:
       propertyPath: npcEvents.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: npcEvents.Array.data[0].gameEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 7953cf5dd95e6b04d9780d774405518c, type: 2}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[1].gameEvent
       value: 
@@ -24588,6 +24596,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: doorEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 588d46989acfc0146b99b2a51292f4db, type: 2}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: prerequisiteEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: 'prerequisiteEvents.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
     - target: {fileID: 5695291182417612650, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_IsActive
       value: 0
