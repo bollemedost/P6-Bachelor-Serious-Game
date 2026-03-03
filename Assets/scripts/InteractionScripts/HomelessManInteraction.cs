@@ -15,10 +15,12 @@ public class HomelessManInteraction : Interactable
     public int requiredCoins = 5;
 
     [Header("Audio")]
-    public AudioSource audioSource;     // Assign in inspector
-    public AudioClip giveMoneyClip;     // Sound to play when giving money
+    public AudioSource audioSource;         
+    public AudioClip giveMoneyClip;         // 🪙 plays every time
+    public AudioClip firstTimeDialogueClip; // 🗣 plays only first time
 
     private bool isUnlocked = false;
+    private bool hasPlayedDialogue = false; // 👈 Tracks first-time dialogue
 
     protected override void Start()
     {
@@ -83,10 +85,17 @@ public class HomelessManInteraction : Interactable
             // Deduct coins
             CoinManager.Instance.AddCoin(-requiredCoins);
 
-            // Play give sound
+            // 🪙 Coin sound plays EVERY time
             if (audioSource != null && giveMoneyClip != null)
             {
                 audioSource.PlayOneShot(giveMoneyClip);
+            }
+
+            // 🗣 Dialogue plays ONLY first time
+            if (!hasPlayedDialogue && audioSource != null && firstTimeDialogueClip != null)
+            {
+                audioSource.PlayOneShot(firstTimeDialogueClip);
+                hasPlayedDialogue = true;
             }
 
             // Complete the event
