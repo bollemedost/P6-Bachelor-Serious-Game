@@ -13,13 +13,20 @@ public class NewsPaper : Interactable
     public float zoomSpeed = 5f;
 
     [Header("Player UI")]
-    public CanvasGroup playerUICanvasGroup; // assign your UI CanvasGroup here
+    public CanvasGroup playerUICanvasGroup;
 
     [Header("Fade Settings")]
     public float fadeDuration = 0.5f;
     public float fadeDelay = 0.3f;
 
+    [Header("Interaction Audio")]
+    public AudioSource audioSource;
+    public AudioClip interactClip;
+    public float soundDelay = 0.3f;
+
     private bool isZoomed = false;
+    private bool isAudioPlaying = false;
+
     private Transform camTransform;
     private Vector3 originalPos;
     private Vector3 targetPos;
@@ -35,16 +42,18 @@ public class NewsPaper : Interactable
             originalPos = camTransform.position;
             targetPos = originalPos;
         }
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     protected override void Update()
     {
-        base.Update(); // Handles E toggle and canvas
+        base.Update();
 
         if (!isZoomed || camTransform == null) 
             return;
 
-        // Scroll zoom
         float scroll = Input.mouseScrollDelta.y;
 
         if (scroll > 0.01f)
@@ -68,10 +77,32 @@ public class NewsPaper : Interactable
     public override void Interact()
     {
         ZoomIn();
+
+        if (audioSource != null && interactClip != null)
+        {
+            StartCoroutine(PlaySoundWithDelay());
+        }
+    }
+
+    private IEnumerator PlaySoundWithDelay()
+    {
+        isAudioPlaying = true;
+
+        yield return new WaitForSeconds(soundDelay);
+
+        audioSource.PlayOneShot(interactClip);
+
+        yield return new WaitForSeconds(interactClip.length);
+
+        isAudioPlaying = false;
     }
 
     protected override void StopInteraction()
     {
+        // 🚫 Block exit if audio is still playing
+        if (interactClip != null && isAudioPlaying)
+            return;
+
         ZoomOut();
     }
 
@@ -82,7 +113,6 @@ public class NewsPaper : Interactable
         newspaperCam.Priority = 10;
         playerCam.Priority = 0;
 
-        // Hide UI immediately
         if (playerUICanvasGroup != null)
             playerUICanvasGroup.alpha = 0f;
 
@@ -105,7 +135,6 @@ public class NewsPaper : Interactable
         if (camTransform != null)
             camTransform.position = originalPos;
 
-        // Fade UI back in
         if (playerUICanvasGroup != null)
         {
             StopAllCoroutines();
@@ -124,12 +153,14 @@ public class NewsPaper : Interactable
 
         float elapsed = 0f;
         float startAlpha = cg.alpha;
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             cg.alpha = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
             yield return null;
         }
+
         cg.alpha = 1f;
     }
 }
