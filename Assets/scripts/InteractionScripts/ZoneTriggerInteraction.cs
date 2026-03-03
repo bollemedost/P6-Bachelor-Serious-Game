@@ -129,7 +129,7 @@ public class ZoneTriggerInteraction : MonoBehaviour
             timer += Time.deltaTime;
             float weight = Mathf.Lerp(startWeight, 0f, timer / fadeTime);
             anim.SetLayerWeight(layerIndex, weight);
-            yield return null;
+            yield return null;      
         }
 
         anim.SetLayerWeight(layerIndex, 0f);
