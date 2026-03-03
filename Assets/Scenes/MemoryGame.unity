@@ -441,53 +441,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b0a922c33a64bdf94a49586cfcab64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels:
-  - pairs:
-    - matchId: Fruentimmere
-      spriteA: {fileID: 21300000, guid: 5392fc875c9d64c30be556efaf175ff3, type: 3}
-      spriteB: {fileID: 21300000, guid: 5392fc875c9d64c30be556efaf175ff3, type: 3}
-    - matchId: Fallenter
-      spriteA: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
-      spriteB: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
-    - matchId: Fremmede
-      spriteA: {fileID: 21300000, guid: 9b7604884d9b544198a496ab6325dab8, type: 3}
-      spriteB: {fileID: 21300000, guid: 9b7604884d9b544198a496ab6325dab8, type: 3}
-    - matchId: Fattige
-      spriteA: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
-      spriteB: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
-    - matchId: Fjolser
-      spriteA: {fileID: 21300000, guid: 9b7604884d9b544198a496ab6325dab8, type: 3}
-      spriteB: {fileID: 21300000, guid: 9b7604884d9b544198a496ab6325dab8, type: 3}
-    - matchId: Folkehold
-      spriteA: {fileID: 21300000, guid: 3a6a391a942d849059d8ba22ae1b3601, type: 3}
-      spriteB: {fileID: 21300000, guid: 3a6a391a942d849059d8ba22ae1b3601, type: 3}
-    - matchId: Forbryddere
-      spriteA: {fileID: 21300000, guid: 7f63bd09ffd2c440f83e2c73f81f4aa7, type: 3}
-      spriteB: {fileID: 21300000, guid: 7f63bd09ffd2c440f83e2c73f81f4aa7, type: 3}
-  - pairs:
-    - matchId: Fruentimmere
-      spriteA: {fileID: 0}
-      spriteB: {fileID: 0}
-    - matchId: Fallenter
-      spriteA: {fileID: 0}
-      spriteB: {fileID: 0}
-    - matchId: Fremmede
-      spriteA: {fileID: 0}
-      spriteB: {fileID: 0}
-    - matchId: Fattige
-      spriteA: {fileID: 0}
-      spriteB: {fileID: 0}
-    - matchId: Fjolser
-      spriteA: {fileID: 0}
-      spriteB: {fileID: 0}
-    - matchId: Folkehold
-      spriteA: {fileID: 0}
-      spriteB: {fileID: 0}
-    - matchId: Forbryddere
-      spriteA: {fileID: 0}
-      spriteB: {fileID: 0}
+  pairs:
+  - matchId: Fremmede
+    spriteA: {fileID: 0}
+    spriteB: {fileID: 0}
+  - matchId: Fruentimmer
+    spriteA: {fileID: 21300000, guid: 5392fc875c9d64c30be556efaf175ff3, type: 3}
+    spriteB: {fileID: 21300000, guid: 5392fc875c9d64c30be556efaf175ff3, type: 3}
+  - matchId: Fallenter
+    spriteA: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
+    spriteB: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
+  - matchId: Fjolser
+    spriteA: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
+    spriteB: {fileID: 21300000, guid: 78542538936d1440bb34e5a5c4d2cbcd, type: 3}
+  - matchId: Folkehold
+    spriteA: {fileID: 21300000, guid: 3a6a391a942d849059d8ba22ae1b3601, type: 3}
+    spriteB: {fileID: 21300000, guid: 3a6a391a942d849059d8ba22ae1b3601, type: 3}
+  - matchId: Forbryder
+    spriteA: {fileID: 21300000, guid: 7f63bd09ffd2c440f83e2c73f81f4aa7, type: 3}
+    spriteB: {fileID: 21300000, guid: 7f63bd09ffd2c440f83e2c73f81f4aa7, type: 3}
+  - matchId: Fattige
+    spriteA: {fileID: 21300000, guid: 5392fc875c9d64c30be556efaf175ff3, type: 3}
+    spriteB: {fileID: 21300000, guid: 5392fc875c9d64c30be556efaf175ff3, type: 3}
   revealTime: 0.4
-  nextLevelDelay: 1
   cardPrefab: {fileID: 4045679928305802091, guid: 6879881a69cd045ada2fb39e203936b5, type: 3}
   gridTransform: {fileID: 731071445}
 --- !u!1 &1323157695

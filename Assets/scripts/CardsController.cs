@@ -12,18 +12,11 @@ public class CardsController : MonoBehaviour
         public Sprite spriteB;
     }
 
-    [System.Serializable]
-    public class Level
-    {
-        public List<SpritePair> pairs = new List<SpritePair>();
-    }
+    [Header("Cards (Single Level)")]
+    [SerializeField] private List<SpritePair> pairs = new List<SpritePair>();
 
-    [Header("Levels")]
-    [SerializeField] private List<Level> levels = new List<Level>();
+    [Header("Timing")]
     [SerializeField] private float revealTime = 0.4f;   // how long cards stay revealed before flipping back
-    [SerializeField] private float nextLevelDelay = 1f; // delay before loading next level
-
-    private int currentLevel = 0;
 
     [Header("Board")]
     [SerializeField] private Card cardPrefab;
@@ -51,47 +44,38 @@ public class CardsController : MonoBehaviour
 
     private void Start()
     {
-        StartLevel(0);
+        StartGame();
     }
 
-    private void StartLevel(int levelIndex)
+    private void StartGame()
     {
-        if (levels == null || levels.Count == 0)
+        if (pairs == null || pairs.Count == 0)
         {
-            Debug.LogError("No levels set on CardsController. Add levels and pairs in the Inspector.", this);
+            Debug.LogError("No pairs set on CardsController. Add pairs in the Inspector.", this);
             return;
         }
 
-        if (levelIndex < 0 || levelIndex >= levels.Count)
-        {
-            Debug.LogError($"Level index {levelIndex} is out of range.", this);
-            return;
-        }
-
-        currentLevel = levelIndex;
         matchesFound = 0;
         firstSelected = null;
         secondSelected = null;
         canSelect = true;
 
         ClearBoard();
-        PrepareCardsForCurrentLevel();
+        PrepareCards();
         CreateCards();
     }
 
-    private void PrepareCardsForCurrentLevel()
+    private void PrepareCards()
     {
         cardsToSpawn = new List<CardData>();
 
-        var pairList = levels[currentLevel].pairs;
-
-        for (int i = 0; i < pairList.Count; i++)
+        for (int i = 0; i < pairs.Count; i++)
         {
-            var p = pairList[i];
+            var p = pairs[i];
 
             if (p.spriteA == null || p.spriteB == null)
             {
-                Debug.LogWarning($"Level {currentLevel} pair {i} ('{p.matchId}') is missing spriteA or spriteB. Skipping.", this);
+                Debug.LogWarning($"Pair {i} ('{p.matchId}') is missing spriteA or spriteB. Skipping.", this);
                 continue;
             }
 
@@ -144,10 +128,10 @@ public class CardsController : MonoBehaviour
             matchesFound++;
 
             // matched -> keep them shown
-            if (matchesFound >= GetExpectedMatchesThisLevel())
+            if (matchesFound >= GetExpectedMatches())
             {
-                yield return new WaitForSeconds(nextLevelDelay);
-                LoadNextLevel();
+                Debug.Log("Game completed!");
+                // Hvis du vil: her kan du vise en win-screen eller genstarte spillet
             }
         }
         else
@@ -162,35 +146,24 @@ public class CardsController : MonoBehaviour
         canSelect = true;
     }
 
-    private int GetExpectedMatchesThisLevel()
+    private int GetExpectedMatches()
     {
         // Count only valid pairs (both sprites present)
         int count = 0;
-        var pairList = levels[currentLevel].pairs;
 
-        for (int i = 0; i < pairList.Count; i++)
+        for (int i = 0; i < pairs.Count; i++)
         {
-            if (pairList[i].spriteA != null && pairList[i].spriteB != null)
+            if (pairs[i].spriteA != null && pairs[i].spriteB != null)
                 count++;
         }
+
         return count;
-    }
-
-    private void LoadNextLevel()
-    {
-        int next = currentLevel + 1;
-
-        if (next >= levels.Count)
-        {
-            Debug.Log("All levels completed!");
-            return;
-        }
-
-        StartLevel(next);
     }
 
     private void ClearBoard()
     {
+        if (gridTransform == null) return;
+
         // Destroy existing children under the grid
         for (int i = gridTransform.childCount - 1; i >= 0; i--)
         {
