@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class NPCInteraction : Interactable
@@ -57,6 +58,10 @@ public class NPCInteraction : Interactable
     public float playerFollowDistance = 5f;
     public Animator animator;
     public string walkBoolName = "isWalking";
+
+    [Header("Scene Transition (Optional)")]
+    public bool loadSceneAfterInteraction = false; // New option
+    public string sceneToLoad;                     // Scene to load
 
     private EventManager eventManager;
     private AudioSource audioSource;
@@ -233,8 +238,8 @@ public class NPCInteraction : Interactable
             }
         }
 
-        // Fade player UI back in
-        if (playerUICanvasGroup != null)
+        // Fade player UI back in ONLY if NOT loading a new scene
+        if (!loadSceneAfterInteraction && playerUICanvasGroup != null)
         {
             StopAllCoroutines();
             StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
@@ -250,6 +255,19 @@ public class NPCInteraction : Interactable
         // Walk after interaction
         if (walkAfterInteraction && waypoints != null && waypoints.Length > 0)
             StartCoroutine(StartWalkWithDelay());
+
+        // Optional scene load after NPC interaction
+        if (loadSceneAfterInteraction && !string.IsNullOrEmpty(sceneToLoad))
+        {
+            if (SceneTransition.Instance != null)
+            {
+                SceneTransition.Instance.FadeToScene(sceneToLoad);
+            }
+            else
+            {
+                SceneManager.LoadScene(sceneToLoad);
+            }
+        }
     }
 
     // =============================== WALKING LOGIC ===============================

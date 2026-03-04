@@ -5853,6 +5853,10 @@ MonoBehaviour:
     bodyAnim: 3
   - time: 4
     bodyAnim: 0
+  - time: 5
+    bodyAnim: 7
+  - time: 10
+    bodyAnim: 0
 --- !u!114 &66928367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5897,6 +5901,8 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 66928365}
   walkBoolName: isWalking
+  loadSceneAfterInteraction: 1
+  sceneToLoad: Scene6Home1903
 --- !u!82 &66928368
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22255,6 +22261,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 894841944}
+  - {fileID: 1447416165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -33823,12 +33830,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447416164}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1943621394}
+  m_Father: {fileID: 927413468}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -34312,6 +34319,99 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4711006838293316, guid: 9552a629a90d25c41bc7836cad49268a, type: 3}
   m_PrefabInstance: {fileID: 1492371524}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1495852256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495852261}
+  - component: {fileID: 1495852260}
+  - component: {fileID: 1495852258}
+  - component: {fileID: 1495852257}
+  m_Layer: 0
+  m_Name: TriggerZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1495852257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495852256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111f3cfe1cc43b74680c68e844b3c039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneEvent: {fileID: 11400000, guid: dad8313a5f733ee4988cfe9c204e3db6, type: 2}
+  prerequisiteEvents:
+  - {fileID: 11400000, guid: b94ed40c8c797c24db0780d2342dde20, type: 2}
+  loadSceneOnTrigger: 1
+  sceneToLoad: Scene6Home1903
+  waitForInteractionToFinish: 1
+  playerAnimator: {fileID: 0}
+  playerTriggerName: Wave
+  playerUpperBodyLayerName: UpperBody
+  playerAnimationDuration: 2
+  playerEarlyExitTime: 0.2
+  playerLayerFadeTime: 0.15
+  npcAnimator: {fileID: 0}
+  npcTriggerName: Wave
+  npcDelay: 0
+  npcAnimationDuration: 2
+  audioSource: {fileID: 0}
+  timedAudios: []
+--- !u!65 &1495852258
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495852256}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1495852260
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495852256}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1495852261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495852256}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -47.35, y: 0.941, z: 7.3446}
+  m_LocalScale: {x: 2.3989277, y: 2.2339, z: 4.260642}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1496895257
 GameObject:
   m_ObjectHideFlags: 0
@@ -44977,9 +45077,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce9f6e4d7c81964aa6a53bf074844e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyCanvasGroup: {fileID: 0}
-  coinText: {fileID: 0}
-  fadeDuration: 0.5
+  debugLogs: 1
+  totalCoins: 0
 --- !u!4 &1917352966
 Transform:
   m_ObjectHideFlags: 0
@@ -45334,8 +45433,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 563339589}
-  moneySlider: {fileID: 589681643}
-  maxMoneyForSlider: 10000
 --- !u!114 &1943621391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45415,7 +45512,6 @@ RectTransform:
   - {fileID: 563339591}
   - {fileID: 654060701}
   - {fileID: 589681644}
-  - {fileID: 1447416165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -48461,3 +48557,4 @@ SceneRoots:
   - {fileID: 66928363}
   - {fileID: 791487895}
   - {fileID: 1245082616}
+  - {fileID: 1495852261}
