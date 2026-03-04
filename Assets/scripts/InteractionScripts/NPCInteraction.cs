@@ -62,6 +62,7 @@ public class NPCInteraction : Interactable
     [Header("Scene Transition (Optional)")]
     public bool loadSceneAfterInteraction = false; // New option
     public string sceneToLoad;                     // Scene to load
+    public float sceneLoadDelay = 0.5f; // NEW: extra delay before loading scene
 
     private EventManager eventManager;
     private AudioSource audioSource;
@@ -257,17 +258,11 @@ public class NPCInteraction : Interactable
             StartCoroutine(StartWalkWithDelay());
 
         // Optional scene load after NPC interaction
-        if (loadSceneAfterInteraction && !string.IsNullOrEmpty(sceneToLoad))
-        {
-            if (SceneTransition.Instance != null)
-            {
-                SceneTransition.Instance.FadeToScene(sceneToLoad);
-            }
-            else
-            {
-                SceneManager.LoadScene(sceneToLoad);
-            }
-        }
+       // Optional scene load after NPC interaction (UPDATED SAFE VERSION)
+if (loadSceneAfterInteraction && !string.IsNullOrEmpty(sceneToLoad))
+{
+    StartCoroutine(LoadSceneAfterDialogueFinished());
+}
     }
 
     // =============================== WALKING LOGIC ===============================
@@ -373,4 +368,35 @@ public class NPCInteraction : Interactable
         cg.interactable = true;
         cg.blocksRaycasts = true;
     }
+
+    private IEnumerator LoadSceneAfterDialogueFinished()
+{
+    // Wait until audio is completely finished
+    while (audioSource != null && audioSource.isPlaying)
+    {
+        yield return null;
+    }
+
+    // Wait until talking animation is completely finished
+    if (currentNPCEvent != null && currentNPCEvent.talkingSequence != null)
+    {
+        while (currentNPCEvent.talkingSequence.IsPlaying)
+        {
+            yield return null;
+        }
+    }
+
+    // Extra configurable delay (for safety / polish)
+    yield return new WaitForSeconds(sceneLoadDelay);
+
+    // Now load scene safely
+    if (SceneTransition.Instance != null)
+    {
+        SceneTransition.Instance.FadeToScene(sceneToLoad);
+    }
+    else
+    {
+        SceneManager.LoadScene(sceneToLoad);
+    }
+}
 }

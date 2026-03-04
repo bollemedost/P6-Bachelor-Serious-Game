@@ -5853,8 +5853,8 @@ MonoBehaviour:
     bodyAnim: 3
   - time: 4
     bodyAnim: 0
-  - time: 5
-    bodyAnim: 7
+  - time: 6
+    bodyAnim: 3
   - time: 10
     bodyAnim: 0
 --- !u!114 &66928367
@@ -5874,7 +5874,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: b94ed40c8c797c24db0780d2342dde20, type: 2}
-    finishedEvent: {fileID: 0}
+    finishedEvent: {fileID: 11400000, guid: 884b0f46f1465c8438559e334b46d415, type: 2}
     dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
     talkingSequence: {fileID: 66928366}
     timedImages:
@@ -5899,10 +5899,11 @@ MonoBehaviour:
   moveSpeed: 2
   waypointStopDistance: 0.2
   playerFollowDistance: 5
-  animator: {fileID: 66928365}
+  animator: {fileID: 0}
   walkBoolName: isWalking
   loadSceneAfterInteraction: 1
   sceneToLoad: Scene6Home1903
+  sceneLoadDelay: 2
 --- !u!82 &66928368
 AudioSource:
   m_ObjectHideFlags: 0

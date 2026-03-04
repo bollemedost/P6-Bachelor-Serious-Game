@@ -81,4 +81,9 @@ public class SceneTransition : MonoBehaviour
     {
         return t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
     }
+
+    public void LoadSceneFromButton(string sceneName)
+    {
+        FadeToScene(sceneName);
+    }
 }

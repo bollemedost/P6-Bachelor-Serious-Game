@@ -4062,6 +4062,7 @@ MonoBehaviour:
   startDelay: 0.1
   uiCanvasGroups:
   - {fileID: 1166722643}
+  - {fileID: 1621154632}
   uiFadeDuration: 0.5
   uiFadeDelay: 0.2
 --- !u!114 &306414929
@@ -45340,6 +45341,9 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 0}
   walkBoolName: isWalking
+  loadSceneAfterInteraction: 0
+  sceneToLoad: 
+  sceneLoadDelay: 0.5
 --- !u!82 &5866666020583890493
 AudioSource:
   m_ObjectHideFlags: 0
@@ -46839,8 +46843,8 @@ SceneRoots:
   - {fileID: 502880138}
   - {fileID: 549618877}
   - {fileID: 306414932}
-  - {fileID: 1166722647}
   - {fileID: 1621154637}
+  - {fileID: 1166722647}
   - {fileID: 616930096}
   - {fileID: 33018478}
   - {fileID: 2006807895}
