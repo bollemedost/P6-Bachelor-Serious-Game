@@ -3714,6 +3714,7 @@ MonoBehaviour:
   startDelay: 0.1
   uiCanvasGroups:
   - {fileID: 1166722643}
+  - {fileID: 1198563176}
   uiFadeDuration: 0.5
   uiFadeDelay: 0.2
 --- !u!114 &306414929
@@ -5693,7 +5694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startObjectiveEvent: {fileID: 11400000, guid: 222e2664859fb374ebb11efb78f153da, type: 2}
-  completeObjectiveEvent: {fileID: 0}
+  completeObjectiveEvent: {fileID: 11400000, guid: 41986943ef2733442952e577ae66c7fe, type: 2}
   objectiveCanvas: {fileID: 1198563174}
   objectiveCanvasGroup: {fileID: 1198563176}
   objectiveText: {fileID: 270993911}
@@ -7071,7 +7072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d1384c070f329438a64c85868025c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanel: {fileID: 0}
+  fadePanel: {fileID: 1473964741}
   fadeDuration: 2
 --- !u!4 &549618877
 Transform:
@@ -7852,6 +7853,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneEvent: {fileID: 11400000, guid: 0d0c86e70b8c0a1419e30029e8aedca7, type: 2}
   prerequisiteEvents: []
+  loadSceneOnTrigger: 0
+  sceneToLoad: 
+  waitForInteractionToFinish: 0
   playerAnimator: {fileID: 0}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody
@@ -33684,6 +33688,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneEvent: {fileID: 11400000, guid: bd76e4ae429cd044eab6f1b259bc1baa, type: 2}
   prerequisiteEvents: []
+  loadSceneOnTrigger: 0
+  sceneToLoad: 
+  waitForInteractionToFinish: 0
   playerAnimator: {fileID: 0}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody
