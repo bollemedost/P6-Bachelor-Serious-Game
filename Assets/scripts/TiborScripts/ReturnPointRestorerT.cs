@@ -8,6 +8,10 @@ public class ReturnPointRestorerT : MonoBehaviour
     public string playerTag = "Player";
     public bool debugLogs = true;
 
+    [Header("Stability")]
+    [Tooltip("How many frames to re-apply teleport to beat spawn/position scripts.")]
+    public int applyFrames = 5;
+
     private static ReturnPointRestorerT _instance;
 
     private void Awake()
@@ -43,6 +47,17 @@ public class ReturnPointRestorerT : MonoBehaviour
         // Wait 1 frame so other Awake/Start scripts can run first
         yield return null;
 
+        // If there's a pending restore, ONLY restore when we're in the intended target scene
+        string targetScene = ReturnToPreviousSceneT.GetTargetSceneName();
+        if (!string.IsNullOrEmpty(targetScene) && sceneName != targetScene)
+        {
+            // We're not returning to the saved scene -> clear pending so it can't mess with spawns
+            if (debugLogs)
+                Debug.Log($"[ReturnPointRestorerT] Pending restore exists but scene '{sceneName}' != target '{targetScene}'. Clearing pending restore.");
+            ReturnToPreviousSceneT.ClearPendingRestore();
+            yield break;
+        }
+
         GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
         if (playerObj == null)
         {
@@ -56,11 +71,12 @@ public class ReturnPointRestorerT : MonoBehaviour
             yield break;
         }
 
-        Teleport(playerObj, pos, rotY);
-
-        // Wait 1 more frame and apply again (beats "spawn at start" scripts)
-        yield return null;
-        Teleport(playerObj, pos, rotY);
+        // Apply multiple frames to beat any "spawn at start" or controller scripts
+        for (int i = 0; i < Mathf.Max(1, applyFrames); i++)
+        {
+            Teleport(playerObj, pos, rotY);
+            yield return null;
+        }
 
         ReturnToPreviousSceneT.ClearPendingRestore();
 

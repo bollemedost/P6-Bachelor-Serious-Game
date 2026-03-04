@@ -10,11 +10,20 @@ public static class ReturnToPreviousSceneT
     private const string RotYKey = "RTPS_rotY";
     private const string PendingRestoreKey = "RTPS_pendingRestore";
 
+    // NEW: store which scene we intend to restore INTO
+    private const string TargetSceneKey = "RTPS_targetScene";
+
     public static void SaveReturnPoint(Transform player)
     {
         if (player == null) return;
 
-        PlayerPrefs.SetString(PrevSceneKey, SceneManager.GetActiveScene().name);
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        // Previous scene is where we want to return to
+        PlayerPrefs.SetString(PrevSceneKey, currentScene);
+
+        // NEW: target scene = the scene name we must be in before restoring
+        PlayerPrefs.SetString(TargetSceneKey, currentScene);
 
         Vector3 p = player.position;
         PlayerPrefs.SetFloat(PosXKey, p.x);
@@ -62,6 +71,12 @@ public static class ReturnToPreviousSceneT
 
         rotY = PlayerPrefs.GetFloat(RotYKey, 0f);
         return true;
+    }
+
+    // NEW: lets the restorer verify scene match
+    public static string GetTargetSceneName()
+    {
+        return PlayerPrefs.GetString(TargetSceneKey, "");
     }
 
     public static void ClearPendingRestore()
