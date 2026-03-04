@@ -5788,6 +5788,8 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 5866666021850284922}
   walkBoolName: isWalking
+  loadSceneAfterInteraction: 1
+  sceneToLoad: Scene11Home1908
 --- !u!82 &66928368
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22322,6 +22324,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 894841944}
+  - {fileID: 1447416165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -34107,12 +34110,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447416164}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1943621394}
+  m_Father: {fileID: 927413468}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -45027,9 +45030,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce9f6e4d7c81964aa6a53bf074844e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyCanvasGroup: {fileID: 0}
-  coinText: {fileID: 0}
-  fadeDuration: 0.5
+  debugLogs: 1
+  totalCoins: 0
 --- !u!4 &1917352966
 Transform:
   m_ObjectHideFlags: 0
@@ -45384,8 +45386,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 563339589}
-  moneySlider: {fileID: 589681643}
-  maxMoneyForSlider: 10000
 --- !u!114 &1943621391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45465,7 +45465,6 @@ RectTransform:
   - {fileID: 563339591}
   - {fileID: 654060701}
   - {fileID: 589681644}
-  - {fileID: 1447416165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -46340,15 +46339,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1098511542615885625, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.01
+      value: 1.015
       objectReference: {fileID: 0}
     - target: {fileID: 1098511542615885625, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -46.412
+      value: -46.406
       objectReference: {fileID: 0}
     - target: {fileID: 1098511542615885625, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.208
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1098511542615885625, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_LocalPosition.z
