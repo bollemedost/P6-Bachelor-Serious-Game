@@ -25,6 +25,8 @@ public class Coin : Interactable
         // Add coin to manager
         if (CoinManager.Instance != null)
             CoinManager.Instance.AddCoin(coinValue);
+        else
+            CoinManager.EnsureExists().AddCoin(coinValue);
 
         // Play pickup animation once
         PlayPickupAnimationOnce();

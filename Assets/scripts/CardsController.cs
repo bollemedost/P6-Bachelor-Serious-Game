@@ -12,11 +12,25 @@ public class CardsController : MonoBehaviour
         public Sprite spriteB;
     }
 
-    [Header("Cards (Single Level)")]
-    [SerializeField] private List<SpritePair> pairs = new List<SpritePair>();
+    [System.Serializable]
+    public class Level
+    {
+        public List<SpritePair> pairs = new List<SpritePair>();
+    }
 
-    [Header("Timing")]
+    [Header("Levels")]
+    [SerializeField] private List<Level> levels = new List<Level>();
     [SerializeField] private float revealTime = 0.4f;   // how long cards stay revealed before flipping back
+    [SerializeField] private float nextLevelDelay = 1f; // delay before loading next level
+
+    [Header("Minigame Complete Reward")]
+    [Tooltip("How many coins to award when ALL levels in this minigame are completed.")]
+    [SerializeField] private int rewardCoinsOnComplete = 20;
+
+    [Tooltip("Assign your MinigameCompleteUI (canvas script) here.")]
+    [SerializeField] private MinigameCompleteUI completeUI;
+
+    private int currentLevel = 0;
 
     [Header("Board")]
     [SerializeField] private Card cardPrefab;
@@ -44,38 +58,47 @@ public class CardsController : MonoBehaviour
 
     private void Start()
     {
-        StartGame();
+        StartLevel(0);
     }
 
-    private void StartGame()
+    private void StartLevel(int levelIndex)
     {
-        if (pairs == null || pairs.Count == 0)
+        if (levels == null || levels.Count == 0)
         {
-            Debug.LogError("No pairs set on CardsController. Add pairs in the Inspector.", this);
+            Debug.LogError("No levels set on CardsController. Add levels and pairs in the Inspector.", this);
             return;
         }
 
+        if (levelIndex < 0 || levelIndex >= levels.Count)
+        {
+            Debug.LogError($"Level index {levelIndex} is out of range.", this);
+            return;
+        }
+
+        currentLevel = levelIndex;
         matchesFound = 0;
         firstSelected = null;
         secondSelected = null;
         canSelect = true;
 
         ClearBoard();
-        PrepareCards();
+        PrepareCardsForCurrentLevel();
         CreateCards();
     }
 
-    private void PrepareCards()
+    private void PrepareCardsForCurrentLevel()
     {
         cardsToSpawn = new List<CardData>();
 
-        for (int i = 0; i < pairs.Count; i++)
+        var pairList = levels[currentLevel].pairs;
+
+        for (int i = 0; i < pairList.Count; i++)
         {
-            var p = pairs[i];
+            var p = pairList[i];
 
             if (p.spriteA == null || p.spriteB == null)
             {
-                Debug.LogWarning($"Pair {i} ('{p.matchId}') is missing spriteA or spriteB. Skipping.", this);
+                Debug.LogWarning($"Level {currentLevel} pair {i} ('{p.matchId}') is missing spriteA or spriteB. Skipping.", this);
                 continue;
             }
 
@@ -128,10 +151,10 @@ public class CardsController : MonoBehaviour
             matchesFound++;
 
             // matched -> keep them shown
-            if (matchesFound >= GetExpectedMatches())
+            if (matchesFound >= GetExpectedMatchesThisLevel())
             {
-                Debug.Log("Game completed!");
-                // Hvis du vil: her kan du vise en win-screen eller genstarte spillet
+                yield return new WaitForSeconds(nextLevelDelay);
+                LoadNextLevel();
             }
         }
         else
@@ -146,24 +169,42 @@ public class CardsController : MonoBehaviour
         canSelect = true;
     }
 
-    private int GetExpectedMatches()
+    private int GetExpectedMatchesThisLevel()
     {
         // Count only valid pairs (both sprites present)
         int count = 0;
+        var pairList = levels[currentLevel].pairs;
 
-        for (int i = 0; i < pairs.Count; i++)
+        for (int i = 0; i < pairList.Count; i++)
         {
-            if (pairs[i].spriteA != null && pairs[i].spriteB != null)
+            if (pairList[i].spriteA != null && pairList[i].spriteB != null)
                 count++;
         }
-
         return count;
+    }
+
+    private void LoadNextLevel()
+    {
+        int next = currentLevel + 1;
+
+        if (next >= levels.Count)
+        {
+            Debug.Log("All levels completed!");
+
+            //  Show completion UI (coins are added ONLY when player clicks the button)
+            if (completeUI != null)
+            {
+                canSelect = false;
+                completeUI.Show(rewardCoinsOnComplete);
+            }
+            return;
+        }
+
+        StartLevel(next);
     }
 
     private void ClearBoard()
     {
-        if (gridTransform == null) return;
-
         // Destroy existing children under the grid
         for (int i = gridTransform.childCount - 1; i >= 0; i--)
         {

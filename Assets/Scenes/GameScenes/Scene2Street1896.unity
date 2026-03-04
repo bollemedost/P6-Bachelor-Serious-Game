@@ -8447,9 +8447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce9f6e4d7c81964aa6a53bf074844e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyCanvasGroup: {fileID: 1621154632}
-  coinText: {fileID: 1734597692}
-  fadeDuration: 0.5
+  debugLogs: 1
+  totalCoins: 0
 --- !u!4 &616930096
 Transform:
   m_ObjectHideFlags: 0
@@ -15727,6 +15726,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4937060029079926, guid: 24a5f7c212479624ba65a0ad94f34342, type: 3}
   m_PrefabInstance: {fileID: 828430091}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &835008209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 835008211}
+  - component: {fileID: 835008210}
+  m_Layer: 0
+  m_Name: ReturnPointRestorer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &835008210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835008209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddedb8cedb626e945ad77cb462b734e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  debugLogs: 1
+--- !u!4 &835008211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835008209}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.102529, y: 2.943044, z: 3.9897017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &835351232
 GameObject:
   m_ObjectHideFlags: 0
@@ -20029,9 +20074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb4594a7e69acb4cb37c111415d3072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinText: {fileID: 0}
-  moneySlider: {fileID: 0}
-  maxMoneyForSlider: 10000
+  coinText: {fileID: 1734597692}
 --- !u!225 &1166722643
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -25194,8 +25237,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 1734597692}
-  moneySlider: {fileID: 1473707358}
-  maxMoneyForSlider: 10000
 --- !u!114 &1621154634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46807,3 +46848,4 @@ SceneRoots:
   - {fileID: 1735786310}
   - {fileID: 593828456}
   - {fileID: 736795526}
+  - {fileID: 835008211}

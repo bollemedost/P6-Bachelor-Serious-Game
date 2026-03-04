@@ -8,6 +8,21 @@ public class ReturnPointRestorerT : MonoBehaviour
     public string playerTag = "Player";
     public bool debugLogs = true;
 
+    private static ReturnPointRestorerT _instance;
+
+    private void Awake()
+    {
+        // Persist across scenes so you only need ONE instance in your project.
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -43,7 +58,7 @@ public class ReturnPointRestorerT : MonoBehaviour
 
         Teleport(playerObj, pos, rotY);
 
-        // Wait 1 more frame and apply again (beats “spawn at start” scripts)
+        // Wait 1 more frame and apply again (beats "spawn at start" scripts)
         yield return null;
         Teleport(playerObj, pos, rotY);
 

@@ -617,9 +617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce9f6e4d7c81964aa6a53bf074844e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyCanvasGroup: {fileID: 0}
-  coinText: {fileID: 0}
-  fadeDuration: 0.5
+  debugLogs: 1
+  totalCoins: 0
 --- !u!4 &38076650
 Transform:
   m_ObjectHideFlags: 0
@@ -801,8 +800,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 803735272}
-  moneySlider: {fileID: 1240882676}
-  maxMoneyForSlider: 10000
 --- !u!225 &51675424
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4822,7 +4819,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eded1c902bb042f419f20306387ce410, type: 2}
   lockedCanvas: {fileID: 0}
   interactCanvas: {fileID: 1971266989}
-  miniGameSceneName: SubwayT
+  miniGameSceneName: MemoryGame
+  interactKey: 101
+  debugLogs: 0
 --- !u!65 &402086353
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31979,6 +31978,7 @@ MonoBehaviour:
   playerUICanvasGroup: {fileID: 51675424}
   fadeDuration: 0.5
   fadeDelay: 0.3
+  windowEvent: {fileID: 0}
 --- !u!1 &9022875471753211960
 GameObject:
   m_ObjectHideFlags: 0

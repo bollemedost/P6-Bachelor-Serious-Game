@@ -1,63 +1,59 @@
 using UnityEngine;
-using TMPro;
+
 
 public class CoinManager : MonoBehaviour
 {
-    public static CoinManager Instance;
+    public static CoinManager Instance { get; private set; }
 
-    public int TotalCoins { get; private set; }
+    [Header("Debug")]
+    public bool debugLogs = true;
 
-    [Header("UI Settings")]
-    public CanvasGroup moneyCanvasGroup; // assign the MoneyCanvas root here
-    public TextMeshProUGUI coinText;
-    public float fadeDuration = 0.5f;
+    [SerializeField] private int totalCoins;
 
-    private bool uiShown = false;
+    // Keep compatibility with your CoinDisplay.cs
+    public int TotalCoins => totalCoins;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
 
-        if (moneyCanvasGroup != null)
-            moneyCanvasGroup.alpha = 0f; // start hidden
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // IMPORTANT: reset on fresh run
+        totalCoins = 0;
+
+        if (debugLogs)
+            Debug.Log($"[CoinManager] New run => totalCoins reset to {totalCoins}");
+    }
+
+    public static CoinManager EnsureExists()
+    {
+        if (Instance != null)
+            return Instance;
+
+        GameObject go = new GameObject("CoinManager");
+        return go.AddComponent<CoinManager>();
     }
 
     public void AddCoin(int amount)
     {
-        TotalCoins += amount;
-        UpdateUI();
+        totalCoins += amount;
+        if (totalCoins < 0) totalCoins = 0;
 
-        if (!uiShown && TotalCoins > 0)
-        {
-            uiShown = true;
-            if (moneyCanvasGroup != null)
-                StartCoroutine(FadeInCanvas(moneyCanvasGroup));
-        }
+        if (debugLogs)
+            Debug.Log($"[CoinManager] AddCoin({amount}) => totalCoins={totalCoins}");
     }
 
-    private void UpdateUI()
+    public void SetCoins(int amount)
     {
-        if (coinText != null)
-            coinText.text = TotalCoins.ToString();
-    }
+        totalCoins = Mathf.Max(0, amount);
 
-    private System.Collections.IEnumerator FadeInCanvas(CanvasGroup canvasGroup)
-    {
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Clamp01(elapsed / fadeDuration);
-            yield return null;
-        }
-        canvasGroup.alpha = 1f;
+        if (debugLogs)
+            Debug.Log($"[CoinManager] SetCoins({amount})");
     }
 }
