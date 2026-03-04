@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class TimedAudio
@@ -12,9 +13,14 @@ public class TimedAudio
 public class ZoneTriggerInteraction : MonoBehaviour
 {
     [Header("Event Settings")]
-    [SerializeField] private GameEvent zoneEvent;                  // 👈 Event this zone triggers
-    [SerializeField] private GameEvent[] prerequisiteEvents;       // 👈 Optional requirements
+    [SerializeField] private GameEvent zoneEvent;
+    [SerializeField] private GameEvent[] prerequisiteEvents;
     private EventManager eventManager;
+
+    [Header("Scene Transition (Optional)")]
+    [SerializeField] private bool loadSceneOnTrigger = false;
+    [SerializeField] private string sceneToLoad;
+    [SerializeField] private bool waitForInteractionToFinish = false;
 
     [Header("Player Animation Settings")]
     [SerializeField] private Animator playerAnimator;
@@ -44,7 +50,7 @@ public class ZoneTriggerInteraction : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         if (eventManager == null || zoneEvent == null) return;
 
-        // 🚫 If already completed → do nothing
+        // 🚫 Already completed
         if (eventManager.IsEventCompleted(zoneEvent))
             return;
 
@@ -55,11 +61,18 @@ public class ZoneTriggerInteraction : MonoBehaviour
                 return;
         }
 
-        // ✅ Trigger interaction
-        StartCoroutine(HandleInteraction());
-
-        // ✅ Mark event as completed
+        // ✅ Mark event completed
         eventManager.CompleteEvent(zoneEvent);
+
+        if (loadSceneOnTrigger && !waitForInteractionToFinish)
+        {
+            // 🔥 Immediate scene load
+            LoadScene();
+            return;
+        }
+
+        // ✅ Run normal interaction
+        StartCoroutine(HandleInteraction());
     }
 
     private IEnumerator HandleInteraction()
@@ -77,7 +90,6 @@ public class ZoneTriggerInteraction : MonoBehaviour
         if (playerAnimator != null)
         {
             layerIndex = playerAnimator.GetLayerIndex(playerUpperBodyLayerName);
-
             if (layerIndex >= 0)
                 playerAnimator.SetLayerWeight(layerIndex, 1f);
 
@@ -105,6 +117,29 @@ public class ZoneTriggerInteraction : MonoBehaviour
             yield return new WaitForSeconds(adjustedDuration);
             StartCoroutine(FadeOutLayer(playerAnimator, layerIndex, playerLayerFadeTime));
         }
+
+        // 🔥 Scene load AFTER interaction (if enabled)
+        if (loadSceneOnTrigger && waitForInteractionToFinish)
+        {
+            LoadScene();
+        }
+    }
+
+    private void LoadScene()
+    {
+        if (string.IsNullOrEmpty(sceneToLoad))
+            return;
+
+        if (SceneTransition.Instance != null)
+        {
+            // ✅ Use your fade system if it exists
+            SceneTransition.Instance.FadeToScene(sceneToLoad);
+        }
+        else
+        {
+            // ❌ Fallback without fade
+            SceneManager.LoadScene(sceneToLoad);
+        }
     }
 
     private IEnumerator PlayTimedAudios()
@@ -129,7 +164,7 @@ public class ZoneTriggerInteraction : MonoBehaviour
             timer += Time.deltaTime;
             float weight = Mathf.Lerp(startWeight, 0f, timer / fadeTime);
             anim.SetLayerWeight(layerIndex, weight);
-            yield return null;      
+            yield return null;
         }
 
         anim.SetLayerWeight(layerIndex, 0f);

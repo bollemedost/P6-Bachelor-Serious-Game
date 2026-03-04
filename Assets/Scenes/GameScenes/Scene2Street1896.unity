@@ -673,6 +673,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneEvent: {fileID: 11400000, guid: 0af32ceecc669214cb27f7f783d00143, type: 2}
   prerequisiteEvents: []
+  loadSceneOnTrigger: 0
+  sceneToLoad: 
+  waitForInteractionToFinish: 0
   playerAnimator: {fileID: 1900624934}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody
@@ -7530,7 +7533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d1384c070f329438a64c85868025c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanel: {fileID: 0}
+  fadePanel: {fileID: 1473964741}
   fadeDuration: 2
 --- !u!4 &549618877
 Transform:
@@ -15757,6 +15760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTag: Player
   debugLogs: 1
+  applyFrames: 5
 --- !u!4 &835008211
 Transform:
   m_ObjectHideFlags: 0

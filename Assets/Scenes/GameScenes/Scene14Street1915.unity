@@ -5483,7 +5483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d1384c070f329438a64c85868025c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanel: {fileID: 0}
+  fadePanel: {fileID: 49145125}
   fadeDuration: 2
 --- !u!4 &549618877
 Transform:
@@ -11524,6 +11524,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneEvent: {fileID: 11400000, guid: ceb39928ff192964fa2c6488c29448ad, type: 2}
   prerequisiteEvents: []
+  loadSceneOnTrigger: 1
+  sceneToLoad: Scene1Home1896
+  waitForInteractionToFinish: 0
   playerAnimator: {fileID: 0}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody
@@ -11619,8 +11622,8 @@ Transform:
   m_GameObject: {fileID: 1124057780}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.8428, y: 0.27, z: -5.2807}
-  m_LocalScale: {x: 4.1025286, y: 1, z: 3.8986}
+  m_LocalPosition: {x: -3.8428, y: 0.27, z: -4.523}
+  m_LocalScale: {x: 4.1025286, y: 1, z: 2.3830643}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -15414,6 +15417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneEvent: {fileID: 11400000, guid: 83419245d8629dc4eb5e43e5d23d89d3, type: 2}
   prerequisiteEvents: []
+  loadSceneOnTrigger: 0
+  sceneToLoad: 
+  waitForInteractionToFinish: 0
   playerAnimator: {fileID: 0}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody
@@ -15464,7 +15470,7 @@ Transform:
   m_GameObject: {fileID: 1532112076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.4257, y: 0.0261, z: -7.4191}
+  m_LocalPosition: {x: -3.4257, y: 0.0261, z: -6.92}
   m_LocalScale: {x: 5.48792, y: 1, z: 1.4779348}
   m_ConstrainProportionsScale: 0
   m_Children: []
