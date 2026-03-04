@@ -489,9 +489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce9f6e4d7c81964aa6a53bf074844e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyCanvasGroup: {fileID: 0}
-  coinText: {fileID: 0}
-  fadeDuration: 0.5
+  debugLogs: 1
+  totalCoins: 0
 --- !u!4 &125319144
 Transform:
   m_ObjectHideFlags: 0
@@ -2215,7 +2214,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -17050,8 +17049,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 1066946230}
-  moneySlider: {fileID: 1688997014}
-  maxMoneyForSlider: 10000
 --- !u!1 &1614814045
 GameObject:
   m_ObjectHideFlags: 0
