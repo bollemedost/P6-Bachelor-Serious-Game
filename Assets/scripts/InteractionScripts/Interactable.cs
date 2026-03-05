@@ -10,6 +10,9 @@ public abstract class Interactable : MonoBehaviour
 
     protected Transform player;
 
+    // 🔒 Global interaction lock
+    public static bool interactionLocked = false;
+
     // 🔥 Static list of all interactables
     private static List<Interactable> allInteractables = new List<Interactable>();
 
@@ -43,9 +46,12 @@ public abstract class Interactable : MonoBehaviour
 
         if (canvas != null)
         {
-            // Show canvas if player is close and not interacting
-            canvas.SetActive(isClosest && !IsCurrentlyInteracting());
+            canvas.SetActive(isClosest && !IsCurrentlyInteracting() && !interactionLocked);
         }
+
+        // 🚫 If interaction is locked, block all E presses
+        if (interactionLocked)
+            return;
 
         // Toggle interaction with E if closest
         if (isClosest && Input.GetKeyDown(KeyCode.E))
@@ -81,16 +87,25 @@ public abstract class Interactable : MonoBehaviour
         return closest;
     }
 
-    // 🔹 Child classes can override to indicate active interaction
+    // 🔓 Call this when interaction finishes
+    protected void UnlockInteraction()
+    {
+        interactionLocked = false;
+    }
+
+    // 🔒 Call this when interaction starts
+    protected void LockInteraction()
+    {
+        interactionLocked = true;
+    }
+
     protected virtual bool IsCurrentlyInteracting()
     {
         return false;
     }
 
-    // 🔹 Optional stop interaction for toggling
     protected virtual void StopInteraction()
     {
-        // Child classes override
     }
 
     public abstract void Interact();

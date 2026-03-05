@@ -95,6 +95,8 @@ public class NPCInteraction : Interactable
 
     private void StartInteraction()
     {
+        LockInteraction();
+
         currentNPCEvent = GetEvent(currentEvent);
         if (currentNPCEvent == null)
         {
@@ -259,10 +261,12 @@ public class NPCInteraction : Interactable
 
         // Optional scene load after NPC interaction
        // Optional scene load after NPC interaction (UPDATED SAFE VERSION)
-if (loadSceneAfterInteraction && !string.IsNullOrEmpty(sceneToLoad))
-{
-    StartCoroutine(LoadSceneAfterDialogueFinished());
-}
+        if (loadSceneAfterInteraction && !string.IsNullOrEmpty(sceneToLoad))
+        {
+            StartCoroutine(LoadSceneAfterDialogueFinished());
+        }
+    
+    UnlockInteraction();
     }
 
     // =============================== WALKING LOGIC ===============================

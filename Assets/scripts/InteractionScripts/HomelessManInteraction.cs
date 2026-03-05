@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class HomelessManInteraction : Interactable
 {
@@ -14,13 +15,21 @@ public class HomelessManInteraction : Interactable
     [Header("Coin Settings")]
     public int requiredCoins = 5;
 
+    [Header("Donation Limits")]
+    public int maxDonations = 3;
+    private int donationCount = 0;
+
+    [Header("Interaction Cooldown")]
+    public float interactionCooldown = 2f;
+    private bool isOnCooldown = false;
+
     [Header("Audio")]
-    public AudioSource audioSource;         
-    public AudioClip giveMoneyClip;         // 🪙 plays every time
-    public AudioClip firstTimeDialogueClip; // 🗣 plays only first time
+    public AudioSource audioSource;
+    public AudioClip giveMoneyClip;
+    public AudioClip firstTimeDialogueClip;
 
     private bool isUnlocked = false;
-    private bool hasPlayedDialogue = false; // 👈 Tracks first-time dialogue
+    private bool hasPlayedDialogue = false;
 
     protected override void Start()
     {
@@ -52,6 +61,14 @@ public class HomelessManInteraction : Interactable
     {
         if (eventManager == null) return;
 
+        // If max donations reached hide UI permanently
+        if (donationCount >= maxDonations)
+        {
+            if (lockedCanvas != null) lockedCanvas.SetActive(false);
+            if (interactCanvas != null) interactCanvas.SetActive(false);
+            return;
+        }
+
         isUnlocked = true;
         foreach (var prereq in prerequisiteEvents)
         {
@@ -62,7 +79,7 @@ public class HomelessManInteraction : Interactable
             }
         }
 
-        if (isUnlocked)
+        if (isUnlocked && !isOnCooldown)
         {
             if (interactCanvas != null) interactCanvas.SetActive(true);
             if (lockedCanvas != null) lockedCanvas.SetActive(false);
@@ -76,33 +93,36 @@ public class HomelessManInteraction : Interactable
 
     public override void Interact()
     {
-        if (!isUnlocked || CoinManager.Instance == null) return;
+        if (!isUnlocked || isOnCooldown || donationCount >= maxDonations)
+            return;
+
+        if (CoinManager.Instance == null) return;
 
         int playerCoins = CoinManager.Instance.TotalCoins;
 
         if (playerCoins >= requiredCoins)
         {
-            // Deduct coins
+            donationCount++;
+
             CoinManager.Instance.AddCoin(-requiredCoins);
 
-            // 🪙 Coin sound plays EVERY time
+            // Coin sound every time
             if (audioSource != null && giveMoneyClip != null)
-            {
                 audioSource.PlayOneShot(giveMoneyClip);
-            }
 
-            // 🗣 Dialogue plays ONLY first time
+            // Dialogue only first time
             if (!hasPlayedDialogue && audioSource != null && firstTimeDialogueClip != null)
             {
                 audioSource.PlayOneShot(firstTimeDialogueClip);
                 hasPlayedDialogue = true;
             }
 
-            // Complete the event
             if (giveHomelessManMoneyEvent != null && eventManager != null)
                 eventManager.CompleteEvent(giveHomelessManMoneyEvent);
 
-            Debug.Log($"Player gave {requiredCoins} coins to homeless man!");
+            Debug.Log($"Donation {donationCount}/{maxDonations}");
+
+            StartCoroutine(InteractionCooldownRoutine());
         }
         else
         {
@@ -110,8 +130,20 @@ public class HomelessManInteraction : Interactable
         }
     }
 
+    private IEnumerator InteractionCooldownRoutine()
+    {
+        isOnCooldown = true;
+
+        if (interactCanvas != null)
+            interactCanvas.SetActive(false);
+
+        yield return new WaitForSeconds(interactionCooldown);
+
+        isOnCooldown = false;
+    }
+
     protected override bool IsCurrentlyInteracting()
     {
-        return false;
+        return isOnCooldown;
     }
 }
