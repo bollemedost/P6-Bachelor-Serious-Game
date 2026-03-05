@@ -37,7 +37,7 @@ public class MinigameCompleteUI : MonoBehaviour
     {
         if (!shown) return;
 
-        // Award coins (runtime only, if you're using the non-PlayerPrefs CoinManager)
+        // Award coins
         CoinManager.EnsureExists().AddCoin(rewardCoins);
 
         // Complete story progression event
@@ -47,7 +47,7 @@ public class MinigameCompleteUI : MonoBehaviour
             em.CompleteEvent(miniGameEvent);
         }
 
-        // Return to previous scene + restore position
+        //  ALWAYS go to Scene35School1896
         ReturnToPreviousSceneT.ReturnNow();
     }
 }

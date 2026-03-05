@@ -10,27 +10,25 @@ public static class ReturnToPreviousSceneT
     private const string RotYKey = "RTPS_rotY";
     private const string PendingRestoreKey = "RTPS_pendingRestore";
 
-    // NEW: store which scene we intend to restore INTO
+    // Store which scene we intend to restore INTO
     private const string TargetSceneKey = "RTPS_targetScene";
+
+    //  FORCE RETURN SCENE (MemoryGame will ALWAYS go here)
+    private const string ForcedReturnScene = "Scene35School1896";
 
     public static void SaveReturnPoint(Transform player)
     {
         if (player == null) return;
 
-        string currentScene = SceneManager.GetActiveScene().name;
-
-        // Previous scene is where we want to return to
-        PlayerPrefs.SetString(PrevSceneKey, currentScene);
-
-        // NEW: target scene = the scene name we must be in before restoring
-        PlayerPrefs.SetString(TargetSceneKey, currentScene);
+        //  Always return to Scene35School1896, no matter where we came from
+        PlayerPrefs.SetString(PrevSceneKey, ForcedReturnScene);
+        PlayerPrefs.SetString(TargetSceneKey, ForcedReturnScene);
 
         Vector3 p = player.position;
         PlayerPrefs.SetFloat(PosXKey, p.x);
         PlayerPrefs.SetFloat(PosYKey, p.y);
         PlayerPrefs.SetFloat(PosZKey, p.z);
 
-        // Only Y rotation (typical third person)
         PlayerPrefs.SetFloat(RotYKey, player.eulerAngles.y);
 
         PlayerPrefs.SetInt(PendingRestoreKey, 1);
@@ -44,10 +42,8 @@ public static class ReturnToPreviousSceneT
 
     public static void ReturnNow()
     {
-        if (!HasReturnPoint()) return;
-
-        string sceneName = PlayerPrefs.GetString(PrevSceneKey, "");
-        if (string.IsNullOrEmpty(sceneName)) return;
+        //  Always load Scene35School1896
+        string sceneName = ForcedReturnScene;
 
         if (SceneTransition.Instance != null)
             SceneTransition.Instance.FadeToScene(sceneName);
@@ -73,10 +69,10 @@ public static class ReturnToPreviousSceneT
         return true;
     }
 
-    // NEW: lets the restorer verify scene match
     public static string GetTargetSceneName()
     {
-        return PlayerPrefs.GetString(TargetSceneKey, "");
+        //  Return forced target to match ReturnPointRestorerT checks
+        return ForcedReturnScene;
     }
 
     public static void ClearPendingRestore()
