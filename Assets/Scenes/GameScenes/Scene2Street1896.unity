@@ -9539,12 +9539,28 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
   lockedCanvas: {fileID: 0}
   interactCanvas: {fileID: 1598823326}
+  dialogueCanvas: {fileID: 435205924}
+  timedUI:
+  - timeStamp: 0
+    uiObject: {fileID: 369323230}
+  - timeStamp: 1
+    uiObject: {fileID: 1468723186}
+  - timeStamp: 2
+    uiObject: {fileID: 1238811658}
+  - timeStamp: 3
+    uiObject: {fileID: 4350217}
+  - timeStamp: 4
+    uiObject: {fileID: 2110801936}
+  - timeStamp: 5
+    uiObject: {fileID: 127122163}
+  - timeStamp: 6
+    uiObject: {fileID: 120737656}
   requiredCoins: 2
   maxDonations: 3
-  interactionCooldown: 6
+  interactionCooldown: 15
   audioSource: {fileID: 567265124}
   giveMoneyClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
-  firstTimeDialogueClip: {fileID: 0}
+  firstTimeDialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
 --- !u!82 &567265124
 AudioSource:
   m_ObjectHideFlags: 0
@@ -51978,7 +51994,7 @@ MonoBehaviour:
   npcCam: {fileID: 1111114249}
   playerTransform: {fileID: 569178096}
   playerInteractionPoint: {fileID: 0}
-  dialogueCanvas: {fileID: 0}
+  dialogueCanvas: {fileID: 435205924}
   playerUICanvasGroup: {fileID: 1166722643}
   fadeDuration: 0.5
   fadeDelay: 0.3

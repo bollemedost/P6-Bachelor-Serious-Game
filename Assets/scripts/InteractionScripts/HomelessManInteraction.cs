@@ -3,6 +3,13 @@ using System.Collections;
 
 public class HomelessManInteraction : Interactable
 {
+    [System.Serializable]
+    public class TimedDialogueUI
+    {
+        public float timeStamp;
+        public GameObject uiObject;
+    }
+
     [Header("Event Settings")]
     public GameEvent giveHomelessManMoneyEvent;
     public GameEvent[] prerequisiteEvents;
@@ -11,6 +18,10 @@ public class HomelessManInteraction : Interactable
     [Header("UI Canvases")]
     public GameObject lockedCanvas;
     public GameObject interactCanvas;
+
+    [Header("Dialogue Canvas")]
+    public GameObject dialogueCanvas;
+    public TimedDialogueUI[] timedUI;
 
     [Header("Coin Settings")]
     public int requiredCoins = 5;
@@ -31,6 +42,11 @@ public class HomelessManInteraction : Interactable
     private bool isUnlocked = false;
     private bool hasPlayedDialogue = false;
 
+    // Dialogue timeline
+    private float interactionTimer = 0f;
+    private int currentUIIndex = 0;
+    private bool dialogueRunning = false;
+
     protected override void Start()
     {
         base.Start();
@@ -38,6 +54,9 @@ public class HomelessManInteraction : Interactable
 
         if (lockedCanvas != null) lockedCanvas.SetActive(false);
         if (interactCanvas != null) interactCanvas.SetActive(false);
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(false);
     }
 
     protected override void Update()
@@ -55,13 +74,39 @@ public class HomelessManInteraction : Interactable
             if (lockedCanvas != null) lockedCanvas.SetActive(false);
             if (interactCanvas != null) interactCanvas.SetActive(false);
         }
+
+        // ======================
+        // TIMED DIALOGUE SYSTEM
+        // ======================
+
+        if (!dialogueRunning) return;
+
+        interactionTimer += Time.deltaTime;
+
+        if (timedUI != null && currentUIIndex < timedUI.Length)
+        {
+            if (interactionTimer >= timedUI[currentUIIndex].timeStamp)
+            {
+                if (currentUIIndex > 0)
+                {
+                    var previous = timedUI[currentUIIndex - 1];
+                    if (previous.uiObject != null)
+                        previous.uiObject.SetActive(false);
+                }
+
+                var current = timedUI[currentUIIndex];
+                if (current.uiObject != null)
+                    current.uiObject.SetActive(true);
+
+                currentUIIndex++;
+            }
+        }
     }
 
     private void UpdateCanvasState()
     {
         if (eventManager == null) return;
 
-        // If max donations reached hide UI permanently
         if (donationCount >= maxDonations)
         {
             if (lockedCanvas != null) lockedCanvas.SetActive(false);
@@ -70,6 +115,7 @@ public class HomelessManInteraction : Interactable
         }
 
         isUnlocked = true;
+
         foreach (var prereq in prerequisiteEvents)
         {
             if (!eventManager.IsEventCompleted(prereq))
@@ -115,6 +161,8 @@ public class HomelessManInteraction : Interactable
             {
                 audioSource.PlayOneShot(firstTimeDialogueClip);
                 hasPlayedDialogue = true;
+
+                StartDialogueTimeline();
             }
 
             if (giveHomelessManMoneyEvent != null && eventManager != null)
@@ -130,6 +178,25 @@ public class HomelessManInteraction : Interactable
         }
     }
 
+    private void StartDialogueTimeline()
+    {
+        interactionTimer = 0f;
+        currentUIIndex = 0;
+        dialogueRunning = true;
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(true);
+
+        if (timedUI != null)
+        {
+            foreach (var entry in timedUI)
+            {
+                if (entry.uiObject != null)
+                    entry.uiObject.SetActive(false);
+            }
+        }
+    }
+
     private IEnumerator InteractionCooldownRoutine()
     {
         isOnCooldown = true;
@@ -140,6 +207,20 @@ public class HomelessManInteraction : Interactable
         yield return new WaitForSeconds(interactionCooldown);
 
         isOnCooldown = false;
+
+        dialogueRunning = false;
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(false);
+
+        if (timedUI != null)
+        {
+            foreach (var entry in timedUI)
+            {
+                if (entry.uiObject != null)
+                    entry.uiObject.SetActive(false);
+            }
+        }
     }
 
     protected override bool IsCurrentlyInteracting()
