@@ -18,7 +18,8 @@ public class MiniGameInteraction : MonoBehaviour
     public GameObject interactCanvas;      // shown when in range and unlocked
 
     [Header("Minigame Scene")]
-    public string miniGameSceneName = "MemoryGame";
+    //  Default scene (you can still override per object in Inspector)
+    public string miniGameSceneName = "Scene12Ulkassetale1908";
 
     [Header("Input")]
     public KeyCode interactKey = KeyCode.E;

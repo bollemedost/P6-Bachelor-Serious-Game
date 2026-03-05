@@ -30,6 +30,11 @@ public class slot : MonoBehaviour, IDropHandler
     public float anySlotScale = 2f;
     public float specificSlotScale = 1f;
 
+    //  State for finish-check
+    [Header("State (Read Only)")]
+    [SerializeField] private bool isCorrectPlaced = false;
+    public bool IsCorrectPlaced => isCorrectPlaced;
+
     public void OnDrop(PointerEventData eventData)
     {
         if (transform.childCount != 0)
@@ -37,7 +42,6 @@ public class slot : MonoBehaviour, IDropHandler
 
         GameObject dropped = eventData.pointerDrag;
         draggableItemSpeach draggable = dropped.GetComponent<draggableItemSpeach>();
-
         if (draggable == null)
             return;
 
@@ -46,9 +50,9 @@ public class slot : MonoBehaviour, IDropHandler
         if (acceptAnyItem)
         {
             draggable.parentAfterDrag = transform;
-
             ApplyItemTransform(droppedRect, anySlotScale);
 
+            // acceptAny does not set IsCorrectPlaced
             return;
         }
 
@@ -58,8 +62,7 @@ public class slot : MonoBehaviour, IDropHandler
             draggable.LockItem();
 
             ApplyItemTransform(droppedRect, specificSlotScale);
-
-            HandleCorrect(droppedRect);
+            HandleCorrect();
         }
         else
         {
@@ -76,33 +79,29 @@ public class slot : MonoBehaviour, IDropHandler
         rect.localScale = Vector3.one * scale;
         rect.localPosition = Vector3.zero;
 
-        // Optional: reset UI layout offsets (prevents layout glitches)
         rect.anchorMin = new Vector2(0.5f, 0.5f);
         rect.anchorMax = new Vector2(0.5f, 0.5f);
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = Vector2.zero;
     }
 
-    void HandleCorrect(RectTransform target)
+    void HandleCorrect()
     {
-        // Change sprite
+        isCorrectPlaced = true;
+
         if (slotImage != null && correctSprite != null)
-        {
             slotImage.sprite = correctSprite;
-        }
 
-        // Play sound
         if (audioSource != null && correctSound != null)
-        {
             audioSource.PlayOneShot(correctSound);
-        }
 
-        // Throw coin
         ThrowCoin();
     }
 
     void ThrowTomato(RectTransform target)
     {
+        if (tomatoPrefab == null || tomatoSpawnPoint == null) return;
+
         GameObject tomato = Instantiate(tomatoPrefab, tomatoSpawnPoint.parent);
 
         RectTransform tomatoRect = tomato.GetComponent<RectTransform>();
@@ -114,8 +113,7 @@ public class slot : MonoBehaviour, IDropHandler
 
     void ThrowCoin()
     {
-        if (coinPrefab == null || coinSpawnPoint == null)
-            return;
+        if (coinPrefab == null || coinSpawnPoint == null) return;
 
         GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.parent);
 
@@ -126,4 +124,3 @@ public class slot : MonoBehaviour, IDropHandler
         uiCoin.Throw();
     }
 }
-

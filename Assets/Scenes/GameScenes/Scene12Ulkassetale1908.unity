@@ -2318,6 +2318,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &173293094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4890,6 +4891,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &418677873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5288,6 +5290,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &498533795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5546,6 +5549,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &503333510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5820,6 +5824,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &531483618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5946,6 +5951,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &548091648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6962,6 +6968,66 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4187361873712528, guid: dc83d82e59754f34ea737a544b53fc9a, type: 3}
   m_PrefabInstance: {fileID: 650163693}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &663635995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 663635997}
+  - component: {fileID: 663635996}
+  m_Layer: 0
+  m_Name: MinigameFinishController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &663635996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663635995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2264e29315ce542468fbf25e36cef0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allSlots:
+  - {fileID: 173293093}
+  - {fileID: 1691663686}
+  - {fileID: 1214083130}
+  - {fileID: 1413077684}
+  - {fileID: 1493847944}
+  - {fileID: 1185759496}
+  - {fileID: 1266348119}
+  - {fileID: 1434126519}
+  - {fileID: 1620043501}
+  - {fileID: 1229492832}
+  - {fileID: 704048436}
+  nextSceneName: Scene13Home1915
+  rewardCoins: 20
+  miniGameEvent: {fileID: 11400000, guid: 649ead44f1c3549868f2d064c066c50f, type: 2}
+  debugLogs: 1
+--- !u!4 &663635997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663635995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1420.7025, y: 96.34575, z: -3.8743753}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &674288041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7431,6 +7497,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &704048437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8451,6 +8518,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &823402413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12849,6 +12917,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &1179998928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13201,6 +13270,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1185759497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13454,6 +13524,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1214083131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13770,6 +13841,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1229492833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14081,6 +14153,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &1235463121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14400,6 +14473,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1266348120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16078,6 +16152,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1413077685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16353,6 +16428,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1434126520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17214,6 +17290,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1493847945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17418,6 +17495,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &1533740198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18751,6 +18829,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1620043502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19280,6 +19359,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4937060029079926, guid: 24a5f7c212479624ba65a0ad94f34342, type: 3}
   m_PrefabInstance: {fileID: 1632605534}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1633005422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1633005424}
+  - component: {fileID: 1633005423}
+  m_Layer: 0
+  m_Name: CursorController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1633005423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633005422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7036a0260920f824ea7eb0c70317c7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockCursorInThisScene: 1
+--- !u!4 &1633005424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633005422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 968.30426, y: 683.8317, z: 47.29315}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1634114956
 GameObject:
   m_ObjectHideFlags: 0
@@ -19952,6 +20076,7 @@ MonoBehaviour:
   acceptAnyItem: 0
   anySlotScale: 1.2
   specificSlotScale: 1
+  isCorrectPlaced: 0
 --- !u!114 &1691663687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24301,6 +24426,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &2040701217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25440,6 +25566,7 @@ MonoBehaviour:
   acceptAnyItem: 1
   anySlotScale: 1
   specificSlotScale: 0.8
+  isCorrectPlaced: 0
 --- !u!114 &2137170693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25518,3 +25645,5 @@ SceneRoots:
   - {fileID: 898366900}
   - {fileID: 2031986325}
   - {fileID: 1248247535}
+  - {fileID: 1633005424}
+  - {fileID: 663635997}
