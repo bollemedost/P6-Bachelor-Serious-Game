@@ -8543,7 +8543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &267835964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12716,6 +12716,8 @@ MonoBehaviour:
   lockedCanvas: {fileID: 0}
   interactCanvas: {fileID: 1598823326}
   requiredCoins: 5
+  maxDonations: 3
+  interactionCooldown: 2
   audioSource: {fileID: 567265124}
   giveMoneyClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
   firstTimeDialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
@@ -25375,6 +25377,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4187361873712528, guid: dc83d82e59754f34ea737a544b53fc9a, type: 3}
   m_PrefabInstance: {fileID: 1082869748}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1090384985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1090384986}
+  - component: {fileID: 1090384988}
+  - component: {fileID: 1090384987}
+  m_Layer: 7
+  m_Name: YearImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1090384986
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090384985}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.49999997, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1323208779}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 187}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1090384987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090384985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 0c6eb9e0838ebae44a5a115d0201aa8e, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1090384988
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090384985}
+  m_CullTransparentMesh: 1
 --- !u!1 &1097087061
 GameObject:
   m_ObjectHideFlags: 0
@@ -33212,6 +33286,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 267835964}
+  - {fileID: 1090384986}
   - {fileID: 1647038374}
   - {fileID: 2136395765}
   - {fileID: 1833149057}
@@ -45341,6 +45416,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneEvent: {fileID: 11400000, guid: 7b63e2fa631cd104daa80a0a985d963d, type: 2}
   prerequisiteEvents: []
+  loadSceneOnTrigger: 0
+  sceneToLoad: 
+  waitForInteractionToFinish: 0
   playerAnimator: {fileID: 0}
   playerTriggerName: Wave
   playerUpperBodyLayerName: UpperBody

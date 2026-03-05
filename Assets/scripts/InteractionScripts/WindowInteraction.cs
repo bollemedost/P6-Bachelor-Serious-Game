@@ -16,16 +16,20 @@ public class WindowInteraction : Interactable
     public float fadeDelay = 0.3f;
 
     [Header("Game Event")]
-    public GameEvent windowEvent; // Assign Window1, Window2, etc.
+    public GameEvent windowEvent;
 
     private bool isActive = false;
     private bool eventTriggered = false;
+
     private EventManager eventManager;
+    private MovementStateManager playerMovement;
 
     protected override void Start()
     {
         base.Start();
+
         eventManager = FindFirstObjectByType<EventManager>();
+        playerMovement = FindFirstObjectByType<MovementStateManager>();
     }
 
     public override void Interact()
@@ -42,16 +46,25 @@ public class WindowInteraction : Interactable
     {
         isActive = true;
 
+        // Lock player movement
+        if (playerMovement != null)
+            playerMovement.LockMovement(true);
+
+        MovementStateManager.canRotate = false;
+
+        // Switch camera
         windowCam.Priority = 10;
         playerCam.Priority = 0;
 
+        // Hide player UI
         if (playerUICanvasGroup != null)
             playerUICanvasGroup.alpha = 0f;
 
+        // Cursor locked for gameplay view
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // 🔥 Complete event ONCE
+        // Trigger event once
         if (!eventTriggered && eventManager != null && windowEvent != null)
         {
             eventTriggered = true;
@@ -63,17 +76,25 @@ public class WindowInteraction : Interactable
     {
         isActive = false;
 
+        // Switch camera back
         playerCam.Priority = 10;
         windowCam.Priority = 0;
 
+        // Unlock movement
+        if (playerMovement != null)
+            playerMovement.LockMovement(false);
+
+        MovementStateManager.canRotate = true;
+
+        // Fade UI back in
         if (playerUICanvasGroup != null)
         {
             StopAllCoroutines();
             StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
         }
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        // Restore gameplay cursor state safely
+        StartCoroutine(RestoreCursorNextFrame());
     }
 
     protected override bool IsCurrentlyInteracting()
@@ -96,5 +117,13 @@ public class WindowInteraction : Interactable
         }
 
         cg.alpha = 1f;
+    }
+
+    private IEnumerator RestoreCursorNextFrame()
+    {
+        yield return null;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

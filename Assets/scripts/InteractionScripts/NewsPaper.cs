@@ -11,6 +11,9 @@ public class NewsPaper : Interactable
         public GameObject uiObject; // assign text or image UI
     }
 
+    [Header("Event Trigger")]
+    public GameEvent newspaperEvent; // assign in Inspector
+
     [Header("Cameras")]
     public CinemachineVirtualCamera playerCam;
     public CinemachineVirtualCamera newspaperCam;
@@ -223,6 +226,16 @@ public class NewsPaper : Interactable
         {
             StopAllCoroutines();
             StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
+        }
+
+        // ✅ Trigger the Newspaper GameEvent
+        if (newspaperEvent != null)
+        {
+            EventManager eventManager = Object.FindFirstObjectByType<EventManager>();
+            if (eventManager != null)
+            {
+                eventManager.CompleteEvent(newspaperEvent);
+            }
         }
     }
 
