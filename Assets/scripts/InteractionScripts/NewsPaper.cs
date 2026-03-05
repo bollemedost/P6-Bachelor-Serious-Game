@@ -4,9 +4,16 @@ using System.Collections;
 
 public class NewsPaper : Interactable
 {
+    [System.Serializable]
+    public class TimedDialogueUI
+    {
+        public float timeStamp;
+        public GameObject uiObject; // assign text or image UI
+    }
+
     [Header("Cameras")]
-    public CinemachineVirtualCamera playerCam;      
-    public CinemachineVirtualCamera newspaperCam;   
+    public CinemachineVirtualCamera playerCam;
+    public CinemachineVirtualCamera newspaperCam;
 
     [Header("Scroll Zoom Settings")]
     public float zoomAmount = 0.2f;
@@ -14,6 +21,10 @@ public class NewsPaper : Interactable
 
     [Header("Player UI")]
     public CanvasGroup playerUICanvasGroup;
+
+    [Header("Dialogue Canvas")]
+    public GameObject dialogueCanvas;
+    public TimedDialogueUI[] timedUI;
 
     [Header("Fade Settings")]
     public float fadeDuration = 0.5f;
@@ -32,6 +43,9 @@ public class NewsPaper : Interactable
     private Vector3 targetPos;
     private bool isScrollingForward = false;
 
+    private float interactionTimer = 0f;
+    private int currentUIIndex = 0;
+
     protected override void Start()
     {
         base.Start();
@@ -45,15 +59,21 @@ public class NewsPaper : Interactable
 
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(false);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        if (!isZoomed || camTransform == null) 
+        if (!isZoomed || camTransform == null)
             return;
 
+        // ======================
+        // CAMERA SCROLL ZOOM
+        // ======================
         float scroll = Input.mouseScrollDelta.y;
 
         if (scroll > 0.01f)
@@ -72,6 +92,30 @@ public class NewsPaper : Interactable
         }
 
         camTransform.position = targetPos;
+
+        // ======================
+        // TIMED UI SYSTEM
+        // ======================
+        interactionTimer += Time.deltaTime;
+
+        if (timedUI != null && currentUIIndex < timedUI.Length)
+        {
+            if (interactionTimer >= timedUI[currentUIIndex].timeStamp)
+            {
+                if (currentUIIndex > 0)
+                {
+                    var previous = timedUI[currentUIIndex - 1];
+                    if (previous.uiObject != null)
+                        previous.uiObject.SetActive(false);
+                }
+
+                var current = timedUI[currentUIIndex];
+                if (current.uiObject != null)
+                    current.uiObject.SetActive(true);
+
+                currentUIIndex++;
+            }
+        }
     }
 
     public override void Interact()
@@ -82,6 +126,8 @@ public class NewsPaper : Interactable
         {
             StartCoroutine(PlaySoundWithDelay());
         }
+
+        StartDialogueTimeline();
     }
 
     private IEnumerator PlaySoundWithDelay()
@@ -97,9 +143,27 @@ public class NewsPaper : Interactable
         isAudioPlaying = false;
     }
 
+    private void StartDialogueTimeline()
+    {
+        interactionTimer = 0f;
+        currentUIIndex = 0;
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(true);
+
+        if (timedUI != null)
+        {
+            foreach (var entry in timedUI)
+            {
+                if (entry.uiObject != null)
+                    entry.uiObject.SetActive(false);
+            }
+        }
+    }
+
     protected override void StopInteraction()
     {
-        // 🚫 Block exit if audio is still playing
+        // 🚫 Prevent exit if audio still playing
         if (interactClip != null && isAudioPlaying)
             return;
 
@@ -109,6 +173,10 @@ public class NewsPaper : Interactable
     private void ZoomIn()
     {
         isZoomed = true;
+
+        // LOCK PLAYER
+        MovementStateManager.canMove = false;
+        MovementStateManager.canRotate = false;
 
         newspaperCam.Priority = 10;
         playerCam.Priority = 0;
@@ -129,11 +197,27 @@ public class NewsPaper : Interactable
     {
         isZoomed = false;
 
+        // UNLOCK PLAYER
+        MovementStateManager.canMove = true;
+        MovementStateManager.canRotate = true;
+
         playerCam.Priority = 10;
         newspaperCam.Priority = 0;
 
         if (camTransform != null)
             camTransform.position = originalPos;
+
+        if (dialogueCanvas != null)
+            dialogueCanvas.SetActive(false);
+
+        if (timedUI != null)
+        {
+            foreach (var entry in timedUI)
+            {
+                if (entry.uiObject != null)
+                    entry.uiObject.SetActive(false);
+            }
+        }
 
         if (playerUICanvasGroup != null)
         {
