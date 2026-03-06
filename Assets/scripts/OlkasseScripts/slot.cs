@@ -24,13 +24,16 @@ public class slot : MonoBehaviour, IDropHandler
     public AudioSource audioSource;
     public AudioClip correctSound;
 
+    [Header("Coin Rewards/Penalties")]
+    public int correctCoinReward = 10;
+    public int wrongCoinPenalty = 5;
+
     public bool acceptAnyItem = false;
 
     [Header("Item Scale Settings")]
     public float anySlotScale = 2f;
     public float specificSlotScale = 1f;
 
-    //  State for finish-check
     [Header("State (Read Only)")]
     [SerializeField] private bool isCorrectPlaced = false;
     public bool IsCorrectPlaced => isCorrectPlaced;
@@ -42,6 +45,7 @@ public class slot : MonoBehaviour, IDropHandler
 
         GameObject dropped = eventData.pointerDrag;
         draggableItemSpeach draggable = dropped.GetComponent<draggableItemSpeach>();
+
         if (draggable == null)
             return;
 
@@ -52,7 +56,7 @@ public class slot : MonoBehaviour, IDropHandler
             draggable.parentAfterDrag = transform;
             ApplyItemTransform(droppedRect, anySlotScale);
 
-            // acceptAny does not set IsCorrectPlaced
+            // acceptAnyItem slots count as filled, but not "correct"
             return;
         }
 
@@ -68,6 +72,7 @@ public class slot : MonoBehaviour, IDropHandler
         {
             draggable.parentAfterDrag = draggable.originalParent;
             ThrowTomato(droppedRect);
+            HandleWrong();
         }
     }
 
@@ -89,18 +94,35 @@ public class slot : MonoBehaviour, IDropHandler
     {
         isCorrectPlaced = true;
 
+        // Change sprite
         if (slotImage != null && correctSprite != null)
+        {
             slotImage.sprite = correctSprite;
+        }
 
+        // Play sound
         if (audioSource != null && correctSound != null)
+        {
             audioSource.PlayOneShot(correctSound);
+        }
 
+        // Give coins
+        CoinManager.EnsureExists().AddCoin(correctCoinReward);
+
+        // Throw coin visual
         ThrowCoin();
+    }
+
+    void HandleWrong()
+    {
+        // Remove coins
+        CoinManager.EnsureExists().AddCoin(-wrongCoinPenalty);
     }
 
     void ThrowTomato(RectTransform target)
     {
-        if (tomatoPrefab == null || tomatoSpawnPoint == null) return;
+        if (tomatoPrefab == null || tomatoSpawnPoint == null)
+            return;
 
         GameObject tomato = Instantiate(tomatoPrefab, tomatoSpawnPoint.parent);
 
@@ -113,7 +135,8 @@ public class slot : MonoBehaviour, IDropHandler
 
     void ThrowCoin()
     {
-        if (coinPrefab == null || coinSpawnPoint == null) return;
+        if (coinPrefab == null || coinSpawnPoint == null)
+            return;
 
         GameObject coin = Instantiate(coinPrefab, coinSpawnPoint.parent);
 
