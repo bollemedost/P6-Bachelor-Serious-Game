@@ -47,6 +47,9 @@ public class ZoneTriggerInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (Interactable.interactionLocked)
+        return;
+        
         if (!other.CompareTag("Player")) return;
         if (eventManager == null || zoneEvent == null) return;
 
@@ -63,6 +66,9 @@ public class ZoneTriggerInteraction : MonoBehaviour
 
         // ✅ Mark event completed
         eventManager.CompleteEvent(zoneEvent);
+
+        // 🔒 LOCK ALL OTHER INTERACTIONS
+        Interactable.interactionLocked = true;
 
         if (loadSceneOnTrigger && !waitForInteractionToFinish)
         {
@@ -123,6 +129,8 @@ public class ZoneTriggerInteraction : MonoBehaviour
         {
             LoadScene();
         }
+
+        Interactable.interactionLocked = false;
     }
 
     private void LoadScene()
