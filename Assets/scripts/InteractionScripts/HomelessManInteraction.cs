@@ -139,6 +139,8 @@ public class HomelessManInteraction : Interactable
 
     public override void Interact()
     {
+        LockInteraction();
+
         if (!isUnlocked || isOnCooldown || donationCount >= maxDonations)
             return;
 
@@ -221,6 +223,8 @@ public class HomelessManInteraction : Interactable
                     entry.uiObject.SetActive(false);
             }
         }
+
+        UnlockInteraction(); // ✅ IMPORTANT
     }
 
     protected override bool IsCurrentlyInteracting()
