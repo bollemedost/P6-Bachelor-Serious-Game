@@ -19,6 +19,7 @@ public class CrosswordGameManagerT : MonoBehaviour
     public RectTransform boardPanel;
     public RectTransform letterBankPanel;
     public GameObject crosswordCellPrefab;
+    public GameObject blackCellPrefab;
     public GameObject letterButtonPrefab;
 
     [Header("Layout")]
@@ -26,6 +27,8 @@ public class CrosswordGameManagerT : MonoBehaviour
     public float visibleCellSize = 44f;
     public int totalColumns = 12;
     public int totalRows = 17;
+    public int boardStartX = -1;
+    public int boardStartY = 0;
 
     private Dictionary<Vector2Int, CrosswordSlotT> slotMap = new Dictionary<Vector2Int, CrosswordSlotT>();
 
@@ -51,36 +54,77 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         List<CellData> cells = GetExactPuzzleLayout();
 
+        Dictionary<Vector2Int, CellData> cellLookup = new Dictionary<Vector2Int, CellData>();
+
+        foreach (CellData cell in cells)
+        {
+            Vector2Int key = new Vector2Int(cell.x, cell.y);
+            if (!cellLookup.ContainsKey(key))
+            {
+                cellLookup.Add(key, cell);
+            }
+        }
+
         float boardWidth = totalColumns * gridStep;
         float boardHeight = totalRows * gridStep;
 
-        foreach (CellData data in cells)
+        for (int y = boardStartY; y < boardStartY + totalRows; y++)
         {
-            GameObject newCell = Instantiate(crosswordCellPrefab, boardPanel);
-            newCell.name = $"Cell_{data.x}_{data.y}_{data.letter}";
+            for (int x = boardStartX; x < boardStartX + totalColumns; x++)
+            {
+                Vector2Int pos = new Vector2Int(x, y);
+                bool isLetterCell = cellLookup.ContainsKey(pos);
 
-            RectTransform rt = newCell.GetComponent<RectTransform>();
-            rt.anchorMin = new Vector2(0.5f, 0.5f);
-            rt.anchorMax = new Vector2(0.5f, 0.5f);
-            rt.pivot = new Vector2(0.5f, 0.5f);
-            rt.localScale = Vector3.one;
-            rt.sizeDelta = new Vector2(visibleCellSize, visibleCellSize);
+                GameObject newCell;
 
-            float posX = (data.x * gridStep) - (boardWidth / 2f) + (gridStep / 2f);
-            float posY = -(data.y * gridStep) + (boardHeight / 2f) - (gridStep / 2f);
+                if (isLetterCell)
+                {
+                    CellData data = cellLookup[pos];
 
-            rt.anchoredPosition = new Vector2(posX, posY);
+                    newCell = Instantiate(crosswordCellPrefab, boardPanel);
+                    newCell.name = $"Cell_{data.x}_{data.y}_{data.letter}";
 
-            CrosswordSlotT slot = newCell.GetComponent<CrosswordSlotT>();
+                    RectTransform rt = newCell.GetComponent<RectTransform>();
+                    rt.anchorMin = new Vector2(0.5f, 0.5f);
+                    rt.anchorMax = new Vector2(0.5f, 0.5f);
+                    rt.pivot = new Vector2(0.5f, 0.5f);
+                    rt.localScale = Vector3.one;
+                    rt.sizeDelta = new Vector2(visibleCellSize, visibleCellSize);
 
-            TMP_Text letterText = newCell.transform.Find("LetterText").GetComponent<TMP_Text>();
-            TMP_Text clueNumberText = newCell.transform.Find("ClueNumberText").GetComponent<TMP_Text>();
+                    float posX = ((x - boardStartX) * gridStep) - (boardWidth / 2f) + (gridStep / 2f);
+                    float posY = -((y - boardStartY) * gridStep) + (boardHeight / 2f) - (gridStep / 2f);
 
-            slot.letterText = letterText;
-            slot.clueNumberText = clueNumberText;
-            slot.Setup(data.letter, data.clueNumber);
+                    rt.anchoredPosition = new Vector2(posX, posY);
 
-            slotMap[new Vector2Int(data.x, data.y)] = slot;
+                    CrosswordSlotT slot = newCell.GetComponent<CrosswordSlotT>();
+
+                    TMP_Text letterText = newCell.transform.Find("LetterText").GetComponent<TMP_Text>();
+                    TMP_Text clueNumberText = newCell.transform.Find("ClueNumberText").GetComponent<TMP_Text>();
+
+                    slot.letterText = letterText;
+                    slot.clueNumberText = clueNumberText;
+                    slot.Setup(data.letter, data.clueNumber);
+
+                    slotMap[pos] = slot;
+                }
+                else
+                {
+                    newCell = Instantiate(blackCellPrefab, boardPanel);
+                    newCell.name = $"Black_{x}_{y}";
+
+                    RectTransform rt = newCell.GetComponent<RectTransform>();
+                    rt.anchorMin = new Vector2(0.5f, 0.5f);
+                    rt.anchorMax = new Vector2(0.5f, 0.5f);
+                    rt.pivot = new Vector2(0.5f, 0.5f);
+                    rt.localScale = Vector3.one;
+                    rt.sizeDelta = new Vector2(visibleCellSize, visibleCellSize);
+
+                    float posX = ((x - boardStartX) * gridStep) - (boardWidth / 2f) + (gridStep / 2f);
+                    float posY = -((y - boardStartY) * gridStep) + (boardHeight / 2f) - (gridStep / 2f);
+
+                    rt.anchoredPosition = new Vector2(posX, posY);
+                }
+            }
         }
     }
 
