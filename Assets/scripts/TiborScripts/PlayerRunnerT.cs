@@ -8,18 +8,22 @@ public class PlayerRunnerT : MonoBehaviour
     public float laneOffset = 2f;
     public float laneChangeSpeed = 10f;
 
+    [Header("Pause Near Active Gate")]
+    public bool pauseNearActiveGate = true;
+    public float gatePauseDistance = 2f;
+
     [Header("Gravity")]
     public float gravity = -25f;
     private float verticalVelocity = 0f;
 
-    [Header("Bounce Back (wrong answer)")]
+    [Header("Bounce Back (optional, not used for wrong answers anymore)")]
     public float bounceBackDistance = 8f;
     public float bounceBackDuration = 0.30f;
     public float bounceUpVelocity = 2.5f;
     public bool stopForwardDuringBounce = true;
 
     [Header("Anti re-trigger")]
-    public float ignoreTriggersAfterBounce = 0.20f; // prevents instant re-hit
+    public float ignoreTriggersAfterBounce = 0.20f;
     private float ignoreTriggerTimer = 0f;
 
     [Header("Debug")]
@@ -32,10 +36,28 @@ public class PlayerRunnerT : MonoBehaviour
     private float bounceTimer = 0f;
     private Vector3 bounceVelocity;
 
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+
+    private bool waitingForLaneChoice = false;
+    private GateChoice pauseConsumedGate = null;
+    private GateChoice lastSeenCurrentGate = null;
+
     void Awake()
     {
         cc = GetComponent<CharacterController>();
-        if (debugLogs) Debug.Log($"[PlayerRunnerT] Awake on {name}. CC={(cc != null)}");
+
+        if (debugLogs)
+            Debug.Log($"[PlayerRunnerT] Awake on {name}. CC={(cc != null)}");
+    }
+
+    void Start()
+    {
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+
+        if (debugLogs)
+            Debug.Log($"[PlayerRunnerT] Start position saved: {startPosition}");
     }
 
     void Update()
@@ -43,12 +65,84 @@ public class PlayerRunnerT : MonoBehaviour
         if (ignoreTriggerTimer > 0f)
             ignoreTriggerTimer -= Time.deltaTime;
 
-        HandleLaneInput();
-
         if (isBouncing)
+        {
             UpdateBounce();
-        else
-            UpdateRun();
+            return;
+        }
+
+        CheckGatePause();
+
+        if (waitingForLaneChoice)
+        {
+            UpdatePausedAtGate();
+            return;
+        }
+
+        HandleLaneInput();
+        UpdateRun();
+    }
+
+    void CheckGatePause()
+    {
+        if (!pauseNearActiveGate) return;
+
+        GameManagerQuizRunner gm = FindFirstObjectByType<GameManagerQuizRunner>();
+        if (gm == null) return;
+        if (gm.IsFinished()) return;
+
+        GateChoice currentGate = gm.GetCurrentGate();
+
+        if (currentGate != lastSeenCurrentGate)
+        {
+            lastSeenCurrentGate = currentGate;
+            pauseConsumedGate = null;
+            waitingForLaneChoice = false;
+        }
+
+        if (currentGate == null) return;
+        if (pauseConsumedGate == currentGate) return;
+
+        float distance = Vector3.Distance(transform.position, currentGate.transform.position);
+
+        if (distance <= gatePauseDistance)
+        {
+            waitingForLaneChoice = true;
+
+            if (debugLogs)
+                Debug.Log($"[PlayerRunnerT] Paused near gate '{currentGate.name}' at distance {distance:F2}");
+        }
+    }
+
+    void UpdatePausedAtGate()
+    {
+        ApplyGravityOnly();
+
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            targetLane = -1;
+            ResumeFromGatePause();
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            targetLane = 1;
+            ResumeFromGatePause();
+            return;
+        }
+    }
+
+    void ResumeFromGatePause()
+    {
+        GameManagerQuizRunner gm = FindFirstObjectByType<GameManagerQuizRunner>();
+        if (gm != null)
+            pauseConsumedGate = gm.GetCurrentGate();
+
+        waitingForLaneChoice = false;
+
+        if (debugLogs)
+            Debug.Log("[PlayerRunnerT] Gate pause ended. Forward movement resumed.");
     }
 
     void HandleLaneInput()
@@ -78,13 +172,9 @@ public class PlayerRunnerT : MonoBehaviour
     {
         bounceTimer -= Time.deltaTime;
 
-        if (debugLogs)
-            Debug.Log($"[PlayerRunnerT] BOUNCING timer={bounceTimer:F2}");
-
         if (bounceTimer <= 0f)
         {
             isBouncing = false;
-            if (debugLogs) Debug.Log("[PlayerRunnerT] Bounce finished.");
             return;
         }
 
@@ -107,11 +197,18 @@ public class PlayerRunnerT : MonoBehaviour
             verticalVelocity += gravity * Time.deltaTime;
     }
 
-    // GateChoice calls this on wrong answer
+    void ApplyGravityOnly()
+    {
+        ApplyGravity();
+
+        Vector3 move = Vector3.zero;
+        move.y = verticalVelocity;
+
+        cc.Move(move * Time.deltaTime);
+    }
+
     public void BounceBack(string reason = "")
     {
-        // DO NOT reset lane anymore -> keeps same left/right lane
-
         isBouncing = true;
         bounceTimer = bounceBackDuration;
 
@@ -119,15 +216,50 @@ public class PlayerRunnerT : MonoBehaviour
         bounceVelocity = Vector3.back * speedBack;
 
         verticalVelocity = bounceUpVelocity;
-
-        // Prevent instant retrigger while still inside trigger volume
         ignoreTriggerTimer = ignoreTriggersAfterBounce;
 
         if (debugLogs)
             Debug.Log($"[PlayerRunnerT] BounceBack CALLED reason='{reason}' lane={targetLane}");
     }
 
-    // GateTriggerProxy can call this to ignore trigger hits right after bounce
+    public void RespawnAtStart()
+    {
+        if (debugLogs)
+            Debug.Log("[PlayerRunnerT] RespawnAtStart called.");
+
+        isBouncing = false;
+        bounceTimer = 0f;
+        verticalVelocity = -2f;
+        targetLane = 0;
+
+        waitingForLaneChoice = false;
+        pauseConsumedGate = null;
+        lastSeenCurrentGate = null;
+
+        if (cc != null)
+            cc.enabled = false;
+
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+
+        if (cc != null)
+            cc.enabled = true;
+
+        ThirdPersonFollow camFollow = FindFirstObjectByType<ThirdPersonFollow>();
+        if (camFollow != null)
+        {
+            camFollow.transform.position = transform.position + camFollow.offset;
+
+            Vector3 lookTarget = transform.position + camFollow.lookAtOffset;
+            Vector3 dir = lookTarget - camFollow.transform.position;
+
+            if (dir.sqrMagnitude > 0.0001f)
+                camFollow.transform.rotation = Quaternion.LookRotation(dir);
+        }
+
+        ignoreTriggerTimer = ignoreTriggersAfterBounce;
+    }
+
     public bool CanTriggerChoices()
     {
         return ignoreTriggerTimer <= 0f;

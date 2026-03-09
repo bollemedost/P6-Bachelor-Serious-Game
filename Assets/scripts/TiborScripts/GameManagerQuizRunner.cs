@@ -18,15 +18,20 @@ public class GameManagerQuizRunner : MonoBehaviour
     public Question[] questions;
     public GateChoice[] gates;
 
-    [Header("UI (optional)")]
+    [Header("UI")]
     public TMP_Text progressText;
     public GameObject finishedPanel;
 
-    [Header("Year label above player (TMP)")]
+    [Header("Year label above player")]
     public TMP_Text playerYearText;
 
-    [Header("Gate option reveal")]
+    [Header("Gate text visibility")]
     public bool revealNextGateOptions = true;
+
+    [Header("Coin Rewards")]
+    public int correctGateReward = 5;
+    public int wrongGatePenalty = 5;
+    public int finishReward = 20;
 
     [Header("On Finish")]
     public bool returnToPreviousSceneOnFinish = true;
@@ -35,25 +40,14 @@ public class GameManagerQuizRunner : MonoBehaviour
     public bool debugLogs = true;
 
     private int currentIndex = 0;
+    private bool isFinished = false;
 
     void Start()
     {
-        if (debugLogs)
-            Debug.Log($"[GameManager] Start. questions={questions?.Length}, gates={gates?.Length}");
-
         if (finishedPanel != null)
             finishedPanel.SetActive(false);
 
-        int count = Mathf.Min(questions.Length, gates.Length);
-        for (int i = 0; i < count; i++)
-        {
-            if (gates[i] == null)
-            {
-                Debug.Log($"[GameManager] WARNING: gates[{i}] is NULL (not assigned).");
-                continue;
-            }
-            gates[i].Setup(this, i);
-        }
+        SetupAllGates();
 
         if (revealNextGateOptions)
             ApplyGateOptionVisibility();
@@ -62,15 +56,26 @@ public class GameManagerQuizRunner : MonoBehaviour
         UpdatePlayerYearLabel();
     }
 
+    void SetupAllGates()
+    {
+        int count = Mathf.Min(questions.Length, gates.Length);
+
+        for (int i = 0; i < count; i++)
+        {
+            if (gates[i] == null) continue;
+
+            gates[i].Setup(this, i);
+            gates[i].ResetSolvedState();
+        }
+    }
+
     public bool CheckAnswer(int gateIndex, Side chosenSide)
     {
-        if (debugLogs)
-            Debug.Log($"[GameManager] CheckAnswer gateIndex={gateIndex} chosenSide={chosenSide} currentIndex={currentIndex}");
+        if (isFinished) return false;
 
         if (gateIndex != currentIndex)
         {
-            if (debugLogs)
-                Debug.Log($"[GameManager] ❌ Wrong order. Expected gateIndex={currentIndex}");
+            LoseCoins();
             return false;
         }
 
@@ -78,6 +83,8 @@ public class GameManagerQuizRunner : MonoBehaviour
 
         if (chosenSide == correct)
         {
+            GainCoins(correctGateReward);
+
             currentIndex++;
 
             UpdateUI();
@@ -86,18 +93,81 @@ public class GameManagerQuizRunner : MonoBehaviour
             if (revealNextGateOptions)
                 ApplyGateOptionVisibility();
 
-            if (debugLogs)
-                Debug.Log($"[GameManager] ✅ Correct! Progress now {currentIndex}/{questions.Length}");
-
             if (currentIndex >= questions.Length)
                 FinishGame();
 
             return true;
         }
 
-        if (debugLogs)
-            Debug.Log("[GameManager] ❌ Wrong side!");
+        LoseCoins();
         return false;
+    }
+
+    void GainCoins(int amount)
+    {
+        if (CoinManager.Instance != null)
+            CoinManager.Instance.AddCoin(amount);
+
+        if (CoinTextFeedback.Instance != null)
+            CoinTextFeedback.Instance.FlashForChange(amount);
+    }
+
+    void LoseCoins()
+    {
+        if (CoinManager.Instance != null)
+            CoinManager.Instance.AddCoin(-wrongGatePenalty);
+
+        if (CoinTextFeedback.Instance != null)
+            CoinTextFeedback.Instance.FlashForChange(-wrongGatePenalty);
+    }
+
+    public void ResetRun(PlayerRunnerT player)
+    {
+        isFinished = false;
+        currentIndex = 0;
+
+        if (finishedPanel != null)
+            finishedPanel.SetActive(false);
+
+        for (int i = 0; i < gates.Length; i++)
+        {
+            if (gates[i] == null) continue;
+            gates[i].ResetSolvedState();
+        }
+
+        UpdateUI();
+        UpdatePlayerYearLabel();
+
+        if (revealNextGateOptions)
+            ApplyGateOptionVisibility();
+
+        if (player != null)
+            player.RespawnAtStart();
+    }
+
+    void FinishGame()
+    {
+        if (isFinished) return;
+
+        isFinished = true;
+
+        GainCoins(finishReward);
+
+        if (finishedPanel != null)
+            finishedPanel.SetActive(true);
+
+        if (revealNextGateOptions)
+            ApplyGateOptionVisibility();
+
+        if (returnToPreviousSceneOnFinish && ReturnToPreviousSceneT.HasReturnPoint())
+        {
+            ReturnToPreviousSceneT.ReturnNow();
+            return;
+        }
+
+        var player = FindFirstObjectByType<PlayerRunnerT>();
+        if (player != null)
+            player.enabled = false;
     }
 
     void UpdateUI()
@@ -129,32 +199,25 @@ public class GameManagerQuizRunner : MonoBehaviour
             if (gates[i] == null) continue;
 
             bool shouldShow = (i == currentIndex);
-            if (currentIndex >= questions.Length) shouldShow = false;
+
+            if (currentIndex >= questions.Length)
+                shouldShow = false;
 
             gates[i].SetOptionsVisible(shouldShow);
         }
     }
 
-    void FinishGame()
+    public GateChoice GetCurrentGate()
     {
-        if (debugLogs) Debug.Log("[GameManager] 🎉 Finished all questions!");
+        if (isFinished) return null;
+        if (gates == null) return null;
+        if (currentIndex < 0 || currentIndex >= gates.Length) return null;
 
-        if (finishedPanel != null)
-            finishedPanel.SetActive(true);
+        return gates[currentIndex];
+    }
 
-        if (revealNextGateOptions)
-            ApplyGateOptionVisibility();
-
-        // ✅ Return to the scene where you interacted with cube (and restore position)
-        if (returnToPreviousSceneOnFinish && ReturnToPreviousSceneT.HasReturnPoint())
-        {
-            ReturnToPreviousSceneT.ReturnNow();
-            return;
-        }
-
-        // fallback (original idea): stop player movement
-        var player = FindFirstObjectByType<PlayerRunnerT>();
-        if (player != null)
-            player.enabled = false;
+    public bool IsFinished()
+    {
+        return isFinished;
     }
 }
