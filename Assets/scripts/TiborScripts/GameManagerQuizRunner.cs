@@ -33,8 +33,9 @@ public class GameManagerQuizRunner : MonoBehaviour
     public int wrongGatePenalty = 5;
     public int finishReward = 20;
 
-    [Header("On Finish")]
+    [Header("Finish Return")]
     public bool returnToPreviousSceneOnFinish = true;
+    public bool useSubwayTReturnScene = true;
 
     [Header("Debug")]
     public bool debugLogs = true;
@@ -44,6 +45,9 @@ public class GameManagerQuizRunner : MonoBehaviour
 
     void Start()
     {
+        if (debugLogs)
+            Debug.Log($"[GameManager] Start. questions={questions?.Length}, gates={gates?.Length}");
+
         if (finishedPanel != null)
             finishedPanel.SetActive(false);
 
@@ -62,7 +66,11 @@ public class GameManagerQuizRunner : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            if (gates[i] == null) continue;
+            if (gates[i] == null)
+            {
+                Debug.LogWarning($"[GameManager] gates[{i}] is NULL.");
+                continue;
+            }
 
             gates[i].Setup(this, i);
             gates[i].ResetSolvedState();
@@ -71,10 +79,17 @@ public class GameManagerQuizRunner : MonoBehaviour
 
     public bool CheckAnswer(int gateIndex, Side chosenSide)
     {
-        if (isFinished) return false;
+        if (isFinished)
+            return false;
+
+        if (debugLogs)
+            Debug.Log($"[GameManager] CheckAnswer gateIndex={gateIndex}, chosenSide={chosenSide}, currentIndex={currentIndex}");
 
         if (gateIndex != currentIndex)
         {
+            if (debugLogs)
+                Debug.Log($"[GameManager] Wrong order. Expected gate {currentIndex}, got {gateIndex}");
+
             LoseCoins();
             return false;
         }
@@ -110,6 +125,9 @@ public class GameManagerQuizRunner : MonoBehaviour
 
         if (CoinTextFeedback.Instance != null)
             CoinTextFeedback.Instance.FlashForChange(amount);
+
+        if (debugLogs)
+            Debug.Log($"[GameManager] +{amount} coins");
     }
 
     void LoseCoins()
@@ -119,20 +137,29 @@ public class GameManagerQuizRunner : MonoBehaviour
 
         if (CoinTextFeedback.Instance != null)
             CoinTextFeedback.Instance.FlashForChange(-wrongGatePenalty);
+
+        if (debugLogs)
+            Debug.Log($"[GameManager] -{wrongGatePenalty} coins");
     }
 
     public void ResetRun(PlayerRunnerT player)
     {
+        if (debugLogs)
+            Debug.Log("[GameManager] ResetRun called.");
+
         isFinished = false;
         currentIndex = 0;
 
         if (finishedPanel != null)
             finishedPanel.SetActive(false);
 
-        for (int i = 0; i < gates.Length; i++)
+        if (gates != null)
         {
-            if (gates[i] == null) continue;
-            gates[i].ResetSolvedState();
+            for (int i = 0; i < gates.Length; i++)
+            {
+                if (gates[i] == null) continue;
+                gates[i].ResetSolvedState();
+            }
         }
 
         UpdateUI();
@@ -151,6 +178,9 @@ public class GameManagerQuizRunner : MonoBehaviour
 
         isFinished = true;
 
+        if (debugLogs)
+            Debug.Log("[GameManager] Finished all questions.");
+
         GainCoins(finishReward);
 
         if (finishedPanel != null)
@@ -159,13 +189,19 @@ public class GameManagerQuizRunner : MonoBehaviour
         if (revealNextGateOptions)
             ApplyGateOptionVisibility();
 
+        if (useSubwayTReturnScene)
+        {
+            SubwayTReturnToScene13T.ReturnNow();
+            return;
+        }
+
         if (returnToPreviousSceneOnFinish && ReturnToPreviousSceneT.HasReturnPoint())
         {
             ReturnToPreviousSceneT.ReturnNow();
             return;
         }
 
-        var player = FindFirstObjectByType<PlayerRunnerT>();
+        PlayerRunnerT player = FindFirstObjectByType<PlayerRunnerT>();
         if (player != null)
             player.enabled = false;
     }

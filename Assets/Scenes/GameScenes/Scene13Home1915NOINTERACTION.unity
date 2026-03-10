@@ -616,12 +616,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9618a60369169884e917e0f32fc81d26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 728618231}
-  interactDistance: 1.5
+  canvas: {fileID: 0}
+  interactDistance: 3
   playerTag: Player
   miniGameEvent: {fileID: 11400000, guid: 1a5b9a58970101c49a7cc8488c185534, type: 2}
-  prerequisiteEvents:
-  - {fileID: 11400000, guid: 7953cf5dd95e6b04d9780d774405518c, type: 2}
+  prerequisiteEvents: []
   lockedCanvas: {fileID: 1892076753}
   interactCanvas: {fileID: 728618231}
   miniGameSceneName: SubwayT
@@ -743,7 +742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &175039217
 Transform:
   m_ObjectHideFlags: 0
@@ -753,7 +752,7 @@ Transform:
   m_GameObject: {fileID: 175039216}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.63, y: 1.339, z: -19.59}
+  m_LocalPosition: {x: 9.29, y: 0.94899994, z: -19.385}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3488,7 +3487,6 @@ GameObject:
   - component: {fileID: 728618234}
   - component: {fileID: 728618233}
   - component: {fileID: 728618232}
-  - component: {fileID: 728618236}
   m_Layer: 5
   m_Name: InteractE (2)
   m_TagString: Untagged
@@ -3579,18 +3577,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.57500076, y: 0.23800015}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &728618236
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728618231}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &763014347
 GameObject:
   m_ObjectHideFlags: 0
@@ -14428,7 +14414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1892076754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24519,6 +24505,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gingis mor Fix
       objectReference: {fileID: 0}
+    - target: {fileID: 9111289636487539700, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7038602432413276886, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
@@ -24953,7 +24943,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 588d46989acfc0146b99b2a51292f4db, type: 2}
     - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: prerequisiteEvents.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: 'prerequisiteEvents.Array.data[0]'
@@ -26575,6 +26565,10 @@ PrefabInstance:
     - target: {fileID: 978630832215472880, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: m_Name
       value: WindowInteraction
+      objectReference: {fileID: 0}
+    - target: {fileID: 978630832215472880, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2529234509385451831, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: m_LocalPosition.x
@@ -46270,6 +46264,10 @@ PrefabInstance:
     - target: {fileID: 6653735826338290941, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
       propertyPath: m_Name
       value: Newspaper
+      objectReference: {fileID: 0}
+    - target: {fileID: 6653735826338290941, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
       propertyPath: fadeDelay

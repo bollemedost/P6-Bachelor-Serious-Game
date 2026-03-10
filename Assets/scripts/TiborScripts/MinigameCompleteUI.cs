@@ -12,7 +12,10 @@ public class MinigameCompleteUI : MonoBehaviour
     public string messageTemplate = "Du fuldførte minispillet. Du får nu tildelt {0} mønter";
 
     [Header("Event")]
-    public GameEvent miniGameEvent; // assign the same event as on the cube in main scene
+    public GameEvent miniGameEvent;
+
+    [Header("SubwayT Special Return")]
+    public bool useSubwayTReturnScene = true;
 
     private bool shown = false;
 
@@ -32,22 +35,26 @@ public class MinigameCompleteUI : MonoBehaviour
         if (root != null) root.SetActive(true);
     }
 
-    // Hook up to "Tilbage/Færdig" button
     public void OnDoneClicked()
     {
         if (!shown) return;
 
-        // Award coins
         CoinManager.EnsureExists().AddCoin(rewardCoins);
 
-        // Complete story progression event
         var em = FindObjectOfType<EventManager>();
         if (em != null && miniGameEvent != null)
         {
             em.CompleteEvent(miniGameEvent);
         }
 
-        //  ALWAYS go to Scene35School1896
+        // SubwayT should go to Scene13Home1915NOINTERACTION
+        if (useSubwayTReturnScene)
+        {
+            SubwayTReturnToScene13T.ReturnNow();
+            return;
+        }
+
+        // Other minigames can still use old return
         ReturnToPreviousSceneT.ReturnNow();
     }
 }
