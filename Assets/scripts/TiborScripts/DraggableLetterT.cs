@@ -14,6 +14,11 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     private GameObject dragVisual;
 
+    // Added so the WHOLE box can move and then return back
+    private Transform originalParent;
+    private int originalSiblingIndex;
+    private Vector2 originalAnchoredPosition;
+
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -36,20 +41,21 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        dragVisual = Instantiate(gameObject, canvas.transform);
-        dragVisual.name = gameObject.name + "_DragVisual";
+        // Keep your old variables so nothing else breaks
+        dragVisual = gameObject;
 
-        DraggableLetterT dragLetter = dragVisual.GetComponent<DraggableLetterT>();
-        dragLetter.enabled = false;
+        originalParent = transform.parent;
+        originalSiblingIndex = transform.GetSiblingIndex();
+        originalAnchoredPosition = rectTransform.anchoredPosition;
 
-        CanvasGroup cg = dragVisual.GetComponent<CanvasGroup>();
-        if (cg == null) cg = dragVisual.AddComponent<CanvasGroup>();
+        // Move the WHOLE button to the top canvas while dragging
+        transform.SetParent(canvas.transform, true);
+        transform.SetAsLastSibling();
 
-        cg.blocksRaycasts = false;
-        cg.alpha = 0.8f;
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.alpha = 0.85f;
 
-        RectTransform dragRect = dragVisual.GetComponent<RectTransform>();
-        dragRect.position = eventData.position;
+        rectTransform.position = eventData.position;
 
         DragLetterDataT.CurrentLetter = this;
         DragLetterDataT.CurrentDragVisual = dragVisual;
@@ -57,16 +63,18 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (DragLetterDataT.CurrentDragVisual != null)
-        {
-            DragLetterDataT.CurrentDragVisual.GetComponent<RectTransform>().position = eventData.position;
-        }
+        rectTransform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (DragLetterDataT.CurrentDragVisual != null)
-            Destroy(DragLetterDataT.CurrentDragVisual);
+        // Put the whole button back where it came from
+        transform.SetParent(originalParent, true);
+        transform.SetSiblingIndex(originalSiblingIndex);
+        rectTransform.anchoredPosition = originalAnchoredPosition;
+
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
 
         DragLetterDataT.CurrentLetter = null;
         DragLetterDataT.CurrentDragVisual = null;

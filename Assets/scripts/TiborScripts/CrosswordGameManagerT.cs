@@ -165,7 +165,7 @@ public class CrosswordGameManagerT : MonoBehaviour
             Destroy(letterBankPanel.GetChild(i).gameObject);
         }
 
-        string danishAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ���";
+        string danishAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ";
 
         foreach (char ch in danishAlphabet)
         {
