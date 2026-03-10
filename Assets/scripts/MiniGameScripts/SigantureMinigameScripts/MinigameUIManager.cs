@@ -9,6 +9,9 @@ public class MinigameUIManager : MonoBehaviour
     public int signaturesRequiredToReturn = 10; // REQUIRED amount
     private int currentSignatures = 0;
 
+    [Header("Coin Reward")]
+    public int coinsPerSignature = 10;
+
     [Header("All Signatures Collected Image")]
     public GameObject allSignaturesCollectedImage;
 
@@ -36,6 +39,9 @@ public class MinigameUIManager : MonoBehaviour
     {
         currentSignatures++;
         UpdateUI();
+
+        // Award coins for each collected signature
+        CoinManager.EnsureExists().AddCoin(coinsPerSignature);
 
         // Play signature sound
         if (signatureSound != null && audioSource != null)

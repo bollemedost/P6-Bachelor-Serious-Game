@@ -20,8 +20,12 @@ public class CardsController : MonoBehaviour
 
     [Header("Levels")]
     [SerializeField] private List<Level> levels = new List<Level>();
-    [SerializeField] private float revealTime = 0.4f;   // how long cards stay revealed before flipping back
-    [SerializeField] private float nextLevelDelay = 1f; // delay before loading next level
+    [SerializeField] private float revealTime = 0.4f;
+    [SerializeField] private float nextLevelDelay = 1f;
+
+    [Header("Coin Rewards")]
+    [SerializeField] private int coinsForCorrectMatch = 5;
+    [SerializeField] private int coinsForWrongMatch = -1;
 
     [Header("Minigame Complete Reward")]
     [Tooltip("How many coins to award when ALL levels in this minigame are completed.")]
@@ -119,7 +123,7 @@ public class CardsController : MonoBehaviour
             var d = cardsToSpawn[i];
             c.SetData(d.id, d.sprite);
 
-            c.Hide(); // start face-down
+            c.Hide();
         }
     }
 
@@ -150,7 +154,9 @@ public class CardsController : MonoBehaviour
         {
             matchesFound++;
 
-            // matched -> keep them shown
+            // ADD COINS (GREEN)
+            CoinManager.EnsureExists().AddCoin(coinsForCorrectMatch);
+
             if (matchesFound >= GetExpectedMatchesThisLevel())
             {
                 yield return new WaitForSeconds(nextLevelDelay);
@@ -159,7 +165,9 @@ public class CardsController : MonoBehaviour
         }
         else
         {
-            // not matched -> flip back
+            // REMOVE COINS (RED)
+            CoinManager.EnsureExists().AddCoin(coinsForWrongMatch);
+
             if (a != null) a.Hide();
             if (b != null) b.Hide();
         }
@@ -171,7 +179,6 @@ public class CardsController : MonoBehaviour
 
     private int GetExpectedMatchesThisLevel()
     {
-        // Count only valid pairs (both sprites present)
         int count = 0;
         var pairList = levels[currentLevel].pairs;
 
@@ -191,7 +198,6 @@ public class CardsController : MonoBehaviour
         {
             Debug.Log("All levels completed!");
 
-            //  Show completion UI (coins are added ONLY when player clicks the button)
             if (completeUI != null)
             {
                 canSelect = false;
@@ -205,7 +211,6 @@ public class CardsController : MonoBehaviour
 
     private void ClearBoard()
     {
-        // Destroy existing children under the grid
         for (int i = gridTransform.childCount - 1; i >= 0; i--)
         {
             Destroy(gridTransform.GetChild(i).gameObject);
