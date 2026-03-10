@@ -17485,7 +17485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 2058658273}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 51a02397b746144409eb0791e5cbecb7, type: 2}
@@ -22774,7 +22774,7 @@ Transform:
   m_GameObject: {fileID: 569178092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -35.37, y: 0.19, z: 10.55}
+  m_LocalPosition: {x: -35.544, y: 0.19, z: 10.55}
   m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -28797,7 +28797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1004725956304983124}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 5b920a1cd008ec84dac3301db6624a0a, type: 2}
@@ -30072,8 +30072,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871678012}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.4, y: 13.93, z: 18.13}
+  m_LocalRotation: {x: 0, y: 0.9529264, z: 0, w: 0.30320176}
+  m_LocalPosition: {x: 51.59, y: 13.831, z: 19.18}
   m_LocalScale: {x: 0.37, y: 0.37, z: 0.37}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -30083,7 +30083,7 @@ Transform:
   - {fileID: 1859510564}
   - {fileID: 431325000}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 144.7, z: 0}
 --- !u!136 &871678014
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -30138,7 +30138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1859510563}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: f6543ad33cff0f74e96ecc6ec49d0488, type: 2}
@@ -38645,8 +38645,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989485852}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.43, y: 14.426, z: 18.002226}
+  m_LocalRotation: {x: 0, y: 0.8681989, z: 0, w: 0.49621648}
+  m_LocalPosition: {x: 22.14, y: 14.415, z: 38.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38659,7 +38659,7 @@ Transform:
   - {fileID: 1534119445}
   - {fileID: 1392775597}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 120.5, z: 0}
 --- !u!114 &989485854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38673,7 +38673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1340976541}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 357246c93d5a49d4d90d38e4927877b8, type: 2}
@@ -40380,8 +40380,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045831042}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.176, y: 13.861136, z: 22.111}
+  m_LocalRotation: {x: 0, y: -0.24826722, z: 0, w: 0.9686916}
+  m_LocalPosition: {x: 38.65, y: 13.889, z: 3.1}
   m_LocalScale: {x: 0.37, y: 0.37, z: 0.37}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -40391,7 +40391,7 @@ Transform:
   - {fileID: 251555241}
   - {fileID: 543155696}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -28.75, z: 0}
 --- !u!114 &1045831044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40405,7 +40405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 914429125}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: ad940e57fe0c1744aa48da986113e002, type: 2}
@@ -49530,7 +49530,7 @@ MonoBehaviour:
   m_AvoidObstacles: 1
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
-  m_CameraRadius: 0.4
+  m_CameraRadius: 0.2
   m_Strategy: 1
   m_MaximumEffort: 4
   m_SmoothingTime: 0
@@ -57056,7 +57056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 725777823}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 2c2aee9d42990c540bf7a1034bf74030, type: 2}
@@ -67838,8 +67838,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747183854}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.738, y: 13.828998, z: 19.635}
+  m_LocalRotation: {x: 0, y: -0.83724177, z: 0, w: 0.54683286}
+  m_LocalPosition: {x: 39.5, y: 13.719, z: 20.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67852,7 +67852,7 @@ Transform:
   - {fileID: 1871488303}
   - {fileID: 1218803125}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -113.7, z: 0}
 --- !u!114 &1747183856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67866,7 +67866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1871488302}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: c92fc3923b1e0fd40953d464642d026f, type: 2}
@@ -68173,8 +68173,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750116637}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.608, y: 13.93, z: 13.63}
+  m_LocalRotation: {x: 0, y: 0.87588596, z: 0, w: 0.4825182}
+  m_LocalPosition: {x: 13.51, y: 13.845, z: 24.26}
   m_LocalScale: {x: 0.37, y: 0.37, z: 0.37}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -68184,7 +68184,7 @@ Transform:
   - {fileID: 786976216}
   - {fileID: 688704869}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 122.3, z: 0}
 --- !u!136 &1750116639
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -68239,7 +68239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 786976215}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 24caf623dc42e3340b2ec7231a5fb1b0, type: 2}
@@ -78399,7 +78399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 2022558408}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 55119c98cbed69740ba07930f597c167, type: 2}
@@ -80098,7 +80098,7 @@ Transform:
   m_GameObject: {fileID: 919132147933534253}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.95, y: 13.861136, z: 22.94}
+  m_LocalPosition: {x: 27.87, y: 14.083, z: 15.084}
   m_LocalScale: {x: 0.37, y: 0.37, z: 0.37}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -80117,8 +80117,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148492630162}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.39, y: 14.301, z: 20.32}
+  m_LocalRotation: {x: 0, y: -0.31341234, z: 0, w: 0.94961715}
+  m_LocalPosition: {x: 70.14, y: 14.301, z: 6.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -80131,7 +80131,7 @@ Transform:
   - {fileID: 558177683}
   - {fileID: 1111331470}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -36.53, z: 0}
 --- !u!4 &543450652911823811
 Transform:
   m_ObjectHideFlags: 0
@@ -80140,8 +80140,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148910469497}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.845638, y: 14.301, z: 22.163643}
+  m_LocalRotation: {x: 0, y: 0.27899113, z: 0, w: 0.9602937}
+  m_LocalPosition: {x: 42.68, y: 14.301, z: 14.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -80156,7 +80156,7 @@ Transform:
   - {fileID: 9191994594215656163}
   - {fileID: 1282239273}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 32.4, z: 0}
 --- !u!4 &543450653360868004
 Transform:
   m_ObjectHideFlags: 0
@@ -80165,8 +80165,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149359513630}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.63, y: 13.873, z: 18.13}
+  m_LocalRotation: {x: 0, y: 0.8551835, z: -0, w: -0.5183254}
+  m_LocalPosition: {x: 36.26, y: 13.935, z: 34.59}
   m_LocalScale: {x: 0.375, y: 0.375, z: 0.375}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -80176,7 +80176,7 @@ Transform:
   - {fileID: 2058658274}
   - {fileID: 1275701980}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 242.44, z: 0}
 --- !u!4 &556461311531988025
 Transform:
   m_ObjectHideFlags: 0
@@ -82206,8 +82206,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887876613930072910}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.602844, y: 13.852, z: 15.820411}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 35.79, y: 13.767, z: 23.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -82220,7 +82220,7 @@ Transform:
   - {fileID: 2096001566}
   - {fileID: 469296809}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1266598724020957020
 GameObject:
   m_ObjectHideFlags: 0
@@ -83551,8 +83551,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384786275914631024}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.006031, y: 14.426, z: 18.002226}
+  m_LocalRotation: {x: 0, y: 0.5685619, z: 0, w: 0.82264054}
+  m_LocalPosition: {x: 18.74, y: 14.309, z: 16.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -83565,7 +83565,7 @@ Transform:
   - {fileID: 317399744}
   - {fileID: 971782600}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 69.3, z: 0}
 --- !u!4 &1792246428697511050
 Transform:
   m_ObjectHideFlags: 0
@@ -89826,8 +89826,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5706976114696757740}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.141216, y: 13.829, z: 17.047901}
+  m_LocalRotation: {x: 0, y: -0.44119263, z: 0, w: 0.8974124}
+  m_LocalPosition: {x: 63.447, y: 13.7, z: 17.047901}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -89840,7 +89840,7 @@ Transform:
   - {fileID: 1224821019}
   - {fileID: 1405109868}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -52.36, z: 0}
 --- !u!1 &4941444506798618110
 GameObject:
   m_ObjectHideFlags: 0
@@ -90279,7 +90279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 2096001565}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 5bbea58a2bd39c94f9682fe3bf6c39ff, type: 2}
@@ -91445,7 +91445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 831503360}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 4503b04fdeb86a94f969e1bb03b2f302, type: 2}
@@ -91836,7 +91836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1224821018}
-  interactDistance: 3
+  interactDistance: 1
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 2697479fb5ccd174bbd03f0727576f55, type: 2}
