@@ -4610,6 +4610,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 504227431}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  gainColor: {r: 0, g: 1, b: 0, a: 1}
+  lossColor: {r: 1, g: 0, b: 0, a: 1}
+  colorFlashDuration: 0.5
 --- !u!225 &401255546
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7380,7 +7384,7 @@ MonoBehaviour:
   - {fileID: 1620043501}
   - {fileID: 1229492832}
   - {fileID: 704048436}
-  nextSceneName: Scene13Home1915
+  nextSceneName: Scene12Home1908
   rewardCoins: 20
   miniGameEvent: {fileID: 11400000, guid: 649ead44f1c3549868f2d064c066c50f, type: 2}
   debugLogs: 1

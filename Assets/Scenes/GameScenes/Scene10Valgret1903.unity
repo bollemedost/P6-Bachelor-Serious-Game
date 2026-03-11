@@ -471,8 +471,8 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 19352439}
   walkBoolName: isWalking
-  loadSceneAfterInteraction: 0
-  sceneToLoad: 
+  loadSceneAfterInteraction: 1
+  sceneToLoad: Scene11Street1908
   sceneLoadDelay: 0.5
 --- !u!82 &19352438
 AudioSource:
@@ -48563,6 +48563,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 563339589}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  gainColor: {r: 0, g: 1, b: 0, a: 1}
+  lossColor: {r: 1, g: 0, b: 0, a: 1}
+  colorFlashDuration: 0.5
 --- !u!114 &1943621391
 MonoBehaviour:
   m_ObjectHideFlags: 0
