@@ -1873,6 +1873,11 @@ Transform:
   - {fileID: 1141717937}
   m_Father: {fileID: 1906797370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &298115749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8128668236925612103, guid: 3777ff79ae8764ac3894552bf7a74fa6, type: 3}
+  m_PrefabInstance: {fileID: 472337286}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &313290647
 GameObject:
   m_ObjectHideFlags: 0
@@ -3473,13 +3478,33 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8897093224900880590, guid: 3777ff79ae8764ac3894552bf7a74fa6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1180214566}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8128668236925612103, guid: 3777ff79ae8764ac3894552bf7a74fa6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 472337288}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: 3777ff79ae8764ac3894552bf7a74fa6, type: 3}
 --- !u!4 &472337287 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8897093224900880590, guid: 3777ff79ae8764ac3894552bf7a74fa6, type: 3}
   m_PrefabInstance: {fileID: 472337286}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &472337288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298115749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c011bf7cfa351b540bf5d6f72fe3d89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lampLight: {fileID: 1180214565}
+  baseIntensity: 0.15
+  flickerAmount: 0.1
+  flickerSpeed: 5
+  randomFlicker: 1
 --- !u!1001 &489782835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17311,7 +17336,7 @@ Transform:
   m_GameObject: {fileID: 1180214563}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -1.5700926e-16, z: 0.7071068, w: -1.5700926e-16}
-  m_LocalPosition: {x: 0.26, y: -17.5, z: 0.1}
+  m_LocalPosition: {x: 8.6, y: -17.5, z: 0.1}
   m_LocalScale: {x: 99.999985, y: 99.99995, z: 99.999985}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20165,6 +20190,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 1066946230}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  gainColor: {r: 0, g: 1, b: 0, a: 1}
+  lossColor: {r: 1, g: 0, b: 0, a: 1}
+  colorFlashDuration: 0.5
 --- !u!1 &1603612474
 GameObject:
   m_ObjectHideFlags: 0
@@ -49484,6 +49513,10 @@ MonoBehaviour:
   loadSceneAfterInteraction: 0
   sceneToLoad: 
   sceneLoadDelay: 0.5
+  checkPlayerCoins: 0
+  requiredCoins: 50
+  enoughCoinsEvent: {fileID: 0}
+  notEnoughCoinsEvent: {fileID: 0}
 --- !u!1 &4510951260154083043
 GameObject:
   m_ObjectHideFlags: 0
