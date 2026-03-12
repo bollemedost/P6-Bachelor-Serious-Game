@@ -23366,6 +23366,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4187361873712528, guid: dc83d82e59754f34ea737a544b53fc9a, type: 3}
   m_PrefabInstance: {fileID: 1082869748}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1093983387 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
+  m_PrefabInstance: {fileID: 1852113195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1093983389
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093983387}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 5.3505554
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.1752596, z: 0}
 --- !u!1 &1097297271
 GameObject:
   m_ObjectHideFlags: 3
@@ -35735,7 +35763,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1093983389}
   m_SourcePrefab: {fileID: 100100000, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
 --- !u!1 &1857864946
 GameObject:
@@ -42392,6 +42423,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e397f03c60937e5469d4612ac36e09cf, type: 3}
       propertyPath: m_Name
       value: Gingis mor Fix
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e397f03c60937e5469d4612ac36e09cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -50482,6 +50517,10 @@ MonoBehaviour:
   loadSceneAfterInteraction: 0
   sceneToLoad: 
   sceneLoadDelay: 0.5
+  checkPlayerCoins: 0
+  requiredCoins: 50
+  enoughCoinsEvent: {fileID: 0}
+  notEnoughCoinsEvent: {fileID: 0}
 --- !u!137 &257682522079869286
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -54847,6 +54886,10 @@ MonoBehaviour:
   loadSceneAfterInteraction: 0
   sceneToLoad: 
   sceneLoadDelay: 0.5
+  checkPlayerCoins: 0
+  requiredCoins: 50
+  enoughCoinsEvent: {fileID: 0}
+  notEnoughCoinsEvent: {fileID: 0}
 --- !u!82 &5866666020583890493
 AudioSource:
   m_ObjectHideFlags: 0
