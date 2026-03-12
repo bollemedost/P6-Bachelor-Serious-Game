@@ -29282,6 +29282,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: npcEvents.Array.data[0].dialogueClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d738f5febc7374a70ba0e354628d4e2a, type: 3}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[1].dialogueClip
       value: 
       objectReference: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
@@ -29291,7 +29295,7 @@ PrefabInstance:
       objectReference: {fileID: 5227754304388460740}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.size
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[1].timedImages.Array.size
@@ -29303,43 +29307,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[0].timeStamp
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[1].timeStamp
-      value: 2
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[2].timeStamp
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[3].timeStamp
-      value: 4
+      value: 11.5
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[4].timeStamp
-      value: 5
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[5].timeStamp
-      value: 6
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[6].timeStamp
-      value: 7
+      value: 25.5
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[7].timeStamp
-      value: 8
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[8].timeStamp
-      value: 9
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[9].timeStamp
-      value: 10
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[1].timedImages.Array.data[0].timeStamp
@@ -29351,23 +29355,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[10].timeStamp
-      value: 11
+      value: 47.5
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[11].timeStamp
-      value: 12
+      value: 49.5
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[12].timeStamp
-      value: 13
+      value: 54.5
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[13].timeStamp
-      value: 14
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[14].timeStamp
-      value: 3
+      value: 63.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: npcEvents.Array.data[0].timedImages.Array.data[15].timeStamp
+      value: 67
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[0].dialogueImageObject
@@ -29424,19 +29432,23 @@ PrefabInstance:
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[11].dialogueImageObject
       value: 
-      objectReference: {fileID: 732640897}
+      objectReference: {fileID: 2137941788}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[12].dialogueImageObject
       value: 
-      objectReference: {fileID: 732640897}
+      objectReference: {fileID: 2065969690}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[13].dialogueImageObject
       value: 
-      objectReference: {fileID: 732640897}
+      objectReference: {fileID: 1118788356}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].timedImages.Array.data[14].dialogueImageObject
       value: 
-      objectReference: {fileID: 732640897}
+      objectReference: {fileID: 15253024}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: npcEvents.Array.data[0].timedImages.Array.data[15].dialogueImageObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3608444752417491457, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.142
