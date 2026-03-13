@@ -1,74 +1,78 @@
 using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
+public class AnimationStep
+{
+    public string triggerName; // Animator Trigger name
+    public float duration = 4f; // How long this animation lasts before moving to next
+}
+
 public class NPCConversation : MonoBehaviour
 {
+    [Header("Animator Settings")]
     public Animator animator;
-    public string[] talkAnimations;
+    public AnimationStep[] animationSequence; // Ordered sequence of animations
 
-    public float minTalkTime = 4f;
-    public float maxTalkTime = 8f;
+    [Header("Audio Settings")]
+    public AudioSource audioSource; // Assign looping conversation audio
+    public Transform player;        // Assign the player transform
+    public float hearingDistance = 15f; // Distance where audio fades in
+    public float fadeSpeed = 2f;        // Speed of audio fade
 
-    public Transform player;
-
-    public float hearingDistance = 15f;
-    public float fadeSpeed = 2f;
-
-    AudioSource audioSource;
-    float targetVolume;
+    private float targetVolume;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        if(audioSource != null)
+        {
+            audioSource.loop = true;
+            audioSource.playOnAwake = false;
+            audioSource.pitch = Random.Range(0.95f, 1.05f);
+            audioSource.volume = 0f;
+        }
 
-        audioSource.loop = true;
-        audioSource.playOnAwake = false;
-
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
-
-        StartCoroutine(TalkLoop());
+        StartCoroutine(PlaySequence());
     }
 
     void Update()
     {
+        if(player == null || audioSource == null) return;
+
         float distance = Vector3.Distance(player.position, transform.position);
+        targetVolume = (distance <= hearingDistance) ? 1f : 0f;
 
-        // Decide what the target volume should be
-        if (distance <= hearingDistance)
-        {
-            targetVolume = 1f;
+        // Smoothly fade volume
+        audioSource.volume = Mathf.MoveTowards(audioSource.volume, targetVolume, fadeSpeed * Time.deltaTime);
 
-            if (!audioSource.isPlaying)
-                audioSource.Play();
-        }
-        else
-        {
-            targetVolume = 0f;
-        }
+        if(audioSource.volume > 0 && !audioSource.isPlaying)
+            audioSource.Play();
 
-        // Smoothly move volume toward the target
-        audioSource.volume = Mathf.MoveTowards(
-            audioSource.volume,
-            targetVolume,
-            fadeSpeed * Time.deltaTime
-        );
-
-        // Stop audio once fully faded out
-        if (audioSource.volume == 0 && targetVolume == 0 && audioSource.isPlaying)
-        {
+        if(audioSource.volume == 0 && targetVolume == 0 && audioSource.isPlaying)
             audioSource.Stop();
-        }
     }
 
-    IEnumerator TalkLoop()
+   IEnumerator PlaySequence()
     {
+        if(animationSequence.Length == 0) yield break;
+
+        int index = 0;
+
         while(true)
         {
-            int rand = Random.Range(0, talkAnimations.Length);
-            animator.Play(talkAnimations[rand]);
+            AnimationStep step = animationSequence[index];
 
-            float waitTime = Random.Range(minTalkTime, maxTalkTime);
-            yield return new WaitForSeconds(waitTime);
+            if(animator != null && !string.IsNullOrEmpty(step.triggerName))
+            {
+                // Smoothly blend into the next animation
+                animator.CrossFade(step.triggerName, 0.2f);
+            }
+
+            // Wait for the duration of this step
+            yield return new WaitForSeconds(step.duration);
+
+            // Move to next step, loop to start if at the end
+            index = (index + 1) % animationSequence.Length;
         }
     }
 }
