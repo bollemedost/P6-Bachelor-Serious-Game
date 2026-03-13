@@ -1,25 +1,41 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UlkasseMinigameFinishT : MonoBehaviour
 {
     [Header("Finish Condition")]
-    [Tooltip("Drag ALL slots from the minigame here (e.g., 13 slots).")]
     public slot[] allSlots;
 
     [Header("Next Scene")]
     public string nextSceneName = "Scene13Home1915";
 
-    [Header("Coins + Event (like MemoryGame)")]
-    public int rewardCoins = 20;
-    public GameEvent miniGameEvent; // MiniGame3
+    [Header("Optional Completion Popup")]
+    public bool showCompletionMessageBeforeSceneChange = false;
+    public GameObject completionPanel;
+    public Button continueButton;
 
     [Header("Debug")]
     public bool debugLogs = true;
 
     private bool finished = false;
+    private bool waitingForContinue = false;
 
-    private void Update()
+    void Start()
+    {
+        // Always hide panel at scene start
+        if (completionPanel != null)
+            completionPanel.SetActive(false);
+
+        // Hook up button automatically
+        if (continueButton != null)
+        {
+            continueButton.onClick.RemoveListener(OnContinuePressed);
+            continueButton.onClick.AddListener(OnContinuePressed);
+        }
+    }
+
+    void Update()
     {
         if (finished) return;
         if (allSlots == null || allSlots.Length == 0) return;
@@ -30,48 +46,75 @@ public class UlkasseMinigameFinishT : MonoBehaviour
         }
     }
 
-    private bool AreAllSlotsCompleted()
+    bool AreAllSlotsCompleted()
     {
         for (int i = 0; i < allSlots.Length; i++)
         {
-            slot s = allSlots[i];
-            if (s == null) continue;
+            if (allSlots[i] == null) continue;
 
-            // If acceptAnyItem: must simply be filled (has a child)
-            if (s.acceptAnyItem)
+            if (allSlots[i].acceptAnyItem)
             {
-                if (s.transform.childCount == 0)
+                if (allSlots[i].transform.childCount == 0)
                     return false;
-
-                continue;
             }
-
-            // Normal slots: must be correct
-            if (!s.IsCorrectPlaced)
-                return false;
+            else
+            {
+                if (!allSlots[i].IsCorrectPlaced)
+                    return false;
+            }
         }
 
         return true;
     }
 
-    private void FinishMinigame()
+    void FinishMinigame()
     {
         finished = true;
 
-        // Coins
-        CoinManager.EnsureExists().AddCoin(rewardCoins);
-
-        // Event progression
-        var em = FindObjectOfType<EventManager>();
-        if (em != null && miniGameEvent != null)
+        if (showCompletionMessageBeforeSceneChange)
         {
-            em.CompleteEvent(miniGameEvent);
+            waitingForContinue = true;
+
+            if (debugLogs)
+                Debug.Log("[UlkasseMinigameFinishT] Minigame complete. Showing completion panel.");
+
+            if (completionPanel != null)
+            {
+                completionPanel.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("[UlkasseMinigameFinishT] No completionPanel assigned. Loading next scene directly.");
+                LoadNextScene();
+            }
         }
+        else
+        {
+            if (debugLogs)
+                Debug.Log("[UlkasseMinigameFinishT] Minigame complete. Loading next scene directly.");
+
+            LoadNextScene();
+        }
+    }
+
+    public void OnContinuePressed()
+    {
+        if (!waitingForContinue)
+            return;
 
         if (debugLogs)
-            Debug.Log($"[UlkasseMinigameFinishT] Completed ALL slots! +{rewardCoins} coins, Event={(miniGameEvent ? miniGameEvent.name : "null")} -> Loading {nextSceneName}");
+            Debug.Log("[UlkasseMinigameFinishT] Continue button pressed. Loading next scene.");
 
-        // Load next scene
+        waitingForContinue = false;
+
+        if (completionPanel != null)
+            completionPanel.SetActive(false);
+
+        LoadNextScene();
+    }
+
+    void LoadNextScene()
+    {
         if (SceneTransition.Instance != null)
             SceneTransition.Instance.FadeToScene(nextSceneName);
         else
