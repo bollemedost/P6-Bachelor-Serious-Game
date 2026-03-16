@@ -139,45 +139,48 @@ public class HomelessManInteraction : Interactable
 
     public override void Interact()
     {
-        LockInteraction();
-
+        // IMPORTANT:
+        // Do NOT lock interaction before checking whether this interaction is actually allowed.
         if (!isUnlocked || isOnCooldown || donationCount >= maxDonations)
             return;
 
-        if (CoinManager.Instance == null) return;
+        if (CoinManager.Instance == null)
+            return;
 
         int playerCoins = CoinManager.Instance.TotalCoins;
 
-        if (playerCoins >= requiredCoins)
-        {
-            donationCount++;
-
-            CoinManager.Instance.AddCoin(-requiredCoins);
-
-            // Coin sound every time
-            if (audioSource != null && giveMoneyClip != null)
-                audioSource.PlayOneShot(giveMoneyClip);
-
-            // Dialogue only first time
-            if (!hasPlayedDialogue && audioSource != null && firstTimeDialogueClip != null)
-            {
-                audioSource.PlayOneShot(firstTimeDialogueClip);
-                hasPlayedDialogue = true;
-
-                StartDialogueTimeline();
-            }
-
-            if (giveHomelessManMoneyEvent != null && eventManager != null)
-                eventManager.CompleteEvent(giveHomelessManMoneyEvent);
-
-            Debug.Log($"Donation {donationCount}/{maxDonations}");
-
-            StartCoroutine(InteractionCooldownRoutine());
-        }
-        else
+        if (playerCoins < requiredCoins)
         {
             Debug.Log($"Not enough coins! You need {requiredCoins} coins.");
+            return;
         }
+
+        // Only lock once we KNOW the interaction is really happening
+        LockInteraction();
+
+        donationCount++;
+
+        CoinManager.Instance.AddCoin(-requiredCoins);
+
+        // Coin sound every time
+        if (audioSource != null && giveMoneyClip != null)
+            audioSource.PlayOneShot(giveMoneyClip);
+
+        // Dialogue only first time
+        if (!hasPlayedDialogue && audioSource != null && firstTimeDialogueClip != null)
+        {
+            audioSource.PlayOneShot(firstTimeDialogueClip);
+            hasPlayedDialogue = true;
+
+            StartDialogueTimeline();
+        }
+
+        if (giveHomelessManMoneyEvent != null && eventManager != null)
+            eventManager.CompleteEvent(giveHomelessManMoneyEvent);
+
+        Debug.Log($"Donation {donationCount}/{maxDonations}");
+
+        StartCoroutine(InteractionCooldownRoutine());
     }
 
     private void StartDialogueTimeline()
@@ -224,7 +227,7 @@ public class HomelessManInteraction : Interactable
             }
         }
 
-        UnlockInteraction(); // ✅ IMPORTANT
+        UnlockInteraction();
     }
 
     protected override bool IsCurrentlyInteracting()
