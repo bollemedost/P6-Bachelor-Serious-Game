@@ -19,6 +19,11 @@ public class DropTargetT : MonoBehaviour, IDropHandler
 
         if (correct)
         {
+            CoinManager.EnsureExists().AddCoin(2);
+
+            if (CoinTextFeedback.Instance != null)
+                CoinTextFeedback.Instance.FlashForChange(2);
+
             CrosswordGameManagerT.Instance.CheckWin();
         }
         else

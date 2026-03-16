@@ -26,7 +26,8 @@ public class CrosswordGameManagerT : MonoBehaviour
     public int completionCoins = 20;
 
     [Header("Hint System")]
-    public bool hintsPickRandomUnfilledSlot = false;
+    public bool hintsPickRandomUnfilledSlot = true;
+    public int hintCost = 1;
 
     [Header("Layout")]
     public float gridStep = 50f;
@@ -36,7 +37,6 @@ public class CrosswordGameManagerT : MonoBehaviour
 
     private Dictionary<Vector2Int, CrosswordSlotT> slotMap = new Dictionary<Vector2Int, CrosswordSlotT>();
     private Dictionary<Vector2Int, string> answerMap = new Dictionary<Vector2Int, string>();
-
     private bool hasCompleted = false;
 
     void Awake()
@@ -233,9 +233,6 @@ public class CrosswordGameManagerT : MonoBehaviour
         }
     }
 
-    // =========================
-    // HINT BUTTON LOGIC
-    // =========================
     public void OnHintButtonPressed()
     {
         if (hasCompleted)
@@ -243,7 +240,14 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         bool placed = PlaceOneHintLetter();
 
-        if (!placed)
+        if (placed)
+        {
+            CoinManager.EnsureExists().AddCoin(-hintCost);
+
+            if (CoinTextFeedback.Instance != null)
+                CoinTextFeedback.Instance.FlashForChange(-hintCost);
+        }
+        else
         {
             Debug.Log("No more hint letters to place.");
         }
