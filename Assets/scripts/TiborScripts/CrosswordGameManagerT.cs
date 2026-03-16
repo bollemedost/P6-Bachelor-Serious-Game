@@ -117,7 +117,7 @@ public class CrosswordGameManagerT : MonoBehaviour
         AddWordHorizontal(c, 0, 3, "FOLKEHOLD", "3");
 
         // left vertical
-        AddWordVertical(c, 0, 3, "FEMTEN", "");
+        //AddWordVertical(c, 0, 3, "FEMTEN", "");
 
         // 4
         AddWordHorizontal(c, -1, 7, "FEMOGTYVE", "4");
