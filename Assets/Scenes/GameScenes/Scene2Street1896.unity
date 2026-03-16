@@ -15017,7 +15017,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: bf67184a9220286448eed13de8be23a2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -20282,24 +20282,24 @@ MonoBehaviour:
   timedUI:
   - timeStamp: 0
     uiObject: {fileID: 369323230}
-  - timeStamp: 1
-    uiObject: {fileID: 1468723186}
   - timeStamp: 2
+    uiObject: {fileID: 1468723186}
+  - timeStamp: 8.5
     uiObject: {fileID: 1238811658}
-  - timeStamp: 3
+  - timeStamp: 15
     uiObject: {fileID: 4350217}
-  - timeStamp: 4
+  - timeStamp: 23
     uiObject: {fileID: 2110801936}
-  - timeStamp: 5
+  - timeStamp: 27
     uiObject: {fileID: 127122163}
-  - timeStamp: 6
+  - timeStamp: 33.5
     uiObject: {fileID: 120737656}
   requiredCoins: 2
   maxDonations: 3
-  interactionCooldown: 15
+  interactionCooldown: 40
   audioSource: {fileID: 567265124}
   giveMoneyClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
-  firstTimeDialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
+  firstTimeDialogueClip: {fileID: 8300000, guid: b1e1298168847494e93a207eb7f58c32, type: 3}
 --- !u!82 &567265124
 AudioSource:
   m_ObjectHideFlags: 0
@@ -64725,13 +64725,15 @@ MonoBehaviour:
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 18d0086acae5aa94b9b0077a238b7122, type: 2}
     finishedEvent: {fileID: 0}
-    dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 26e8e57de82c247aa9791ed17fa2fc3b, type: 3}
     talkingSequence: {fileID: 3264648470942536942}
     timedImages:
-    - timeStamp: 2
+    - timeStamp: 0
       dialogueImageObject: {fileID: 1917208789}
-    - timeStamp: 3
+    - timeStamp: 6
       dialogueImageObject: {fileID: 233351459}
+    - timeStamp: 8
+      dialogueImageObject: {fileID: 0}
   currentEvent: {fileID: 11400000, guid: 18d0086acae5aa94b9b0077a238b7122, type: 2}
   playerCam: {fileID: 1216436767}
   npcCam: {fileID: 4273326914943661376}
@@ -69086,20 +69088,20 @@ MonoBehaviour:
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
     finishedEvent: {fileID: 11400000, guid: 6301fa7306f488b4181757791cd7190e, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
+    dialogueClip: {fileID: 8300000, guid: aa38de42632e2429b95000b235d3ccc7, type: 3}
     talkingSequence: {fileID: 5866666020583890491}
     timedImages:
     - timeStamp: 0
       dialogueImageObject: {fileID: 723388638}
-    - timeStamp: 1
-      dialogueImageObject: {fileID: 1848352511}
-    - timeStamp: 2
-      dialogueImageObject: {fileID: 2128256686}
     - timeStamp: 3
+      dialogueImageObject: {fileID: 1848352511}
+    - timeStamp: 7
+      dialogueImageObject: {fileID: 2128256686}
+    - timeStamp: 14
       dialogueImageObject: {fileID: 1369986568}
-    - timeStamp: 4
+    - timeStamp: 18.5
       dialogueImageObject: {fileID: 597310807}
-    - timeStamp: 5
+    - timeStamp: 21
       dialogueImageObject: {fileID: 267903749}
   currentEvent: {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
   playerCam: {fileID: 1216436767}
