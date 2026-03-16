@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MinigameCompleteUI : MonoBehaviour
 {
@@ -14,14 +15,19 @@ public class MinigameCompleteUI : MonoBehaviour
     [Header("Event")]
     public GameEvent miniGameEvent;
 
-    [Header("SubwayT Special Return")]
-    public bool useSubwayTReturnScene = true;
+    [Header("Scene Load")]
+    public bool loadSpecificScene = true;
+    public string sceneToLoad = "Scene13Home1915NOINTERACTION";
+
+    [Header("Legacy Return Options")]
+    public bool useSubwayTReturnScene = false;
 
     private bool shown = false;
 
     private void Awake()
     {
-        if (root != null) root.SetActive(false);
+        if (root != null)
+            root.SetActive(false);
     }
 
     public void Show(int coins)
@@ -32,12 +38,14 @@ public class MinigameCompleteUI : MonoBehaviour
         if (messageText != null)
             messageText.text = string.Format(messageTemplate, rewardCoins);
 
-        if (root != null) root.SetActive(true);
+        if (root != null)
+            root.SetActive(true);
     }
 
     public void OnDoneClicked()
     {
-        if (!shown) return;
+        if (!shown)
+            return;
 
         CoinManager.EnsureExists().AddCoin(rewardCoins);
 
@@ -47,14 +55,18 @@ public class MinigameCompleteUI : MonoBehaviour
             em.CompleteEvent(miniGameEvent);
         }
 
-        // SubwayT should go to Scene13Home1915NOINTERACTION
+        if (loadSpecificScene && !string.IsNullOrEmpty(sceneToLoad))
+        {
+            SceneManager.LoadScene(sceneToLoad);
+            return;
+        }
+
         if (useSubwayTReturnScene)
         {
             SubwayTReturnToScene13T.ReturnNow();
             return;
         }
 
-        // Other minigames can still use old return
         ReturnToPreviousSceneT.ReturnNow();
     }
 }

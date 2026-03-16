@@ -21,6 +21,10 @@ public class CrosswordGameManagerT : MonoBehaviour
     public GameObject crosswordCellPrefab;
     public GameObject letterButtonPrefab;
 
+    [Header("Completion UI")]
+    public MinigameCompleteUI completeUI;
+    public int completionCoins = 20;
+
     [Header("Layout")]
     public float gridStep = 50f;
     public float visibleCellSize = 44f;
@@ -28,6 +32,7 @@ public class CrosswordGameManagerT : MonoBehaviour
     public int totalRows = 17;
 
     private Dictionary<Vector2Int, CrosswordSlotT> slotMap = new Dictionary<Vector2Int, CrosswordSlotT>();
+    private bool hasCompleted = false;
 
     void Awake()
     {
@@ -38,6 +43,12 @@ public class CrosswordGameManagerT : MonoBehaviour
     {
         BuildBoardExact();
         SpawnAlphabet();
+
+        if (completeUI == null)
+            completeUI = FindObjectOfType<MinigameCompleteUI>();
+
+        if (completeUI != null && completeUI.root != null)
+            completeUI.root.SetActive(false);
     }
 
     void BuildBoardExact()
@@ -152,7 +163,19 @@ public class CrosswordGameManagerT : MonoBehaviour
             Vector2Int key = new Vector2Int(cell.x, cell.y);
 
             if (!unique.ContainsKey(key))
+            {
                 unique[key] = cell;
+            }
+            else
+            {
+                if (unique[key].letter != cell.letter)
+                {
+                    Debug.LogWarning(
+                        $"Crossword conflict at position {key}. " +
+                        $"Existing letter: {unique[key].letter}, New letter: {cell.letter}"
+                    );
+                }
+            }
         }
 
         return new List<CellData>(unique.Values);
@@ -180,12 +203,25 @@ public class CrosswordGameManagerT : MonoBehaviour
 
     public void CheckWin()
     {
+        if (hasCompleted)
+            return;
+
         foreach (var slot in slotMap.Values)
         {
             if (!slot.isFilledCorrectly)
                 return;
         }
 
+        hasCompleted = true;
         Debug.Log("CROSSWORD COMPLETED!");
+
+        if (completeUI != null)
+        {
+            completeUI.Show(completionCoins);
+        }
+        else
+        {
+            Debug.LogWarning("Crossword completed, but no MinigameCompleteUI is assigned.");
+        }
     }
 }
