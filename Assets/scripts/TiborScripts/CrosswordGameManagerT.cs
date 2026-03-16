@@ -25,6 +25,9 @@ public class CrosswordGameManagerT : MonoBehaviour
     public MinigameCompleteUI completeUI;
     public int completionCoins = 20;
 
+    [Header("Hint System")]
+    public bool hintsPickRandomUnfilledSlot = false;
+
     [Header("Layout")]
     public float gridStep = 50f;
     public float visibleCellSize = 44f;
@@ -32,6 +35,8 @@ public class CrosswordGameManagerT : MonoBehaviour
     public int totalRows = 17;
 
     private Dictionary<Vector2Int, CrosswordSlotT> slotMap = new Dictionary<Vector2Int, CrosswordSlotT>();
+    private Dictionary<Vector2Int, string> answerMap = new Dictionary<Vector2Int, string>();
+
     private bool hasCompleted = false;
 
     void Awake()
@@ -54,6 +59,7 @@ public class CrosswordGameManagerT : MonoBehaviour
     void BuildBoardExact()
     {
         slotMap.Clear();
+        answerMap.Clear();
 
         for (int i = boardPanel.childCount - 1; i >= 0; i--)
         {
@@ -91,7 +97,9 @@ public class CrosswordGameManagerT : MonoBehaviour
             slot.clueNumberText = clueNumberText;
             slot.Setup(data.letter, data.clueNumber);
 
-            slotMap[new Vector2Int(data.x, data.y)] = slot;
+            Vector2Int key = new Vector2Int(data.x, data.y);
+            slotMap[key] = slot;
+            answerMap[key] = data.letter;
         }
     }
 
@@ -223,5 +231,68 @@ public class CrosswordGameManagerT : MonoBehaviour
         {
             Debug.LogWarning("Crossword completed, but no MinigameCompleteUI is assigned.");
         }
+    }
+
+    // =========================
+    // HINT BUTTON LOGIC
+    // =========================
+    public void OnHintButtonPressed()
+    {
+        if (hasCompleted)
+            return;
+
+        bool placed = PlaceOneHintLetter();
+
+        if (!placed)
+        {
+            Debug.Log("No more hint letters to place.");
+        }
+    }
+
+    bool PlaceOneHintLetter()
+    {
+        List<Vector2Int> availableHints = new List<Vector2Int>();
+
+        foreach (var pair in slotMap)
+        {
+            CrosswordSlotT slot = pair.Value;
+
+            if (slot != null && !slot.isFilledCorrectly)
+            {
+                availableHints.Add(pair.Key);
+            }
+        }
+
+        if (availableHints.Count == 0)
+        {
+            CheckWin();
+            return false;
+        }
+
+        Vector2Int chosenKey;
+
+        if (hintsPickRandomUnfilledSlot)
+        {
+            int randomIndex = Random.Range(0, availableHints.Count);
+            chosenKey = availableHints[randomIndex];
+        }
+        else
+        {
+            chosenKey = availableHints[0];
+        }
+
+        CrosswordSlotT chosenSlot = slotMap[chosenKey];
+        string correctLetter = answerMap[chosenKey];
+
+        bool placedCorrectly = chosenSlot.TryPlaceLetter(correctLetter);
+
+        if (placedCorrectly)
+        {
+            CheckWin();
+            return true;
+        }
+
+        Debug.LogWarning("Hint tried to place a letter, but TryPlaceLetter returned false.");
+        return false;
     }
 }
