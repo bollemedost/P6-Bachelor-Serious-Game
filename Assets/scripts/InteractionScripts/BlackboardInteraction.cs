@@ -7,51 +7,44 @@ public class BlackboardInteraction : MonoBehaviour
     [Header("Key Interaction UI")]
     public CanvasGroup keyUICanvasGroup;   // Canvas with 1,2,3 keys UI
     public List<KeyAudio> keyAudios;       // List of keys and assigned audio clips
-    public GameEvent prerequisiteEvent;    // The event that must be completed first
 
     [Header("Fade Settings")]
     public float fadeDuration = 0.5f;      // Duration of fade
     public float fadeDelay = 0.3f;         // Delay before fade starts
 
-    private bool isActive = false;
-    private EventManager eventManager;
+    private bool isActive = false;         // True when inside interaction
     private AudioSource audioSource;
 
     [System.Serializable]
     public class KeyAudio
     {
-        public KeyCode mainKey;     // Top row number key (Alpha1, Alpha2, etc.)
-        public KeyCode altKey;      // Numpad key (Keypad1, Keypad2, etc.)
-        public AudioClip clip;      // Audio to play when pressed
+        public KeyCode mainKey;     // Top row number key
+        public KeyCode altKey;      // Numpad key
+        public AudioClip clip;      // Audio to play
     }
 
     private void Start()
     {
         if (keyUICanvasGroup != null)
-            keyUICanvasGroup.alpha = 0f;
+            keyUICanvasGroup.alpha = 0f;  // Start hidden
 
-        // Find the EventManager in the scene
-        eventManager = FindFirstObjectByType<EventManager>();
-
-        // Add or get AudioSource for playing clips
-        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     private void Update()
     {
-        // Toggle UI on/off with E
-        if (Input.GetKeyDown(KeyCode.E) && prerequisiteEvent != null && eventManager != null &&
-            eventManager.IsEventCompleted(prerequisiteEvent))
+        // Press E to enter/exit interaction
+        if (Input.GetKeyDown(KeyCode.E))
         {
             isActive = !isActive;
 
-            // Stop audio if hiding UI
+            // Stop audio if exiting
             if (!isActive && audioSource.isPlaying)
                 audioSource.Stop();
 
-            // Start fade coroutine
+            // Fade UI in or out
             if (keyUICanvasGroup != null)
             {
                 StopAllCoroutines();
@@ -59,7 +52,7 @@ public class BlackboardInteraction : MonoBehaviour
             }
         }
 
-        // If UI is active, check key presses
+        // If inside interaction, listen for key presses
         if (isActive)
         {
             foreach (var ka in keyAudios)
@@ -67,7 +60,7 @@ public class BlackboardInteraction : MonoBehaviour
                 if ((Input.GetKeyDown(ka.mainKey) || Input.GetKeyDown(ka.altKey)) && ka.clip != null)
                 {
                     audioSource.clip = ka.clip;
-                    audioSource.Play(); // This automatically stops the previous clip
+                    audioSource.Play(); // Stops previous clip automatically
                 }
             }
         }
