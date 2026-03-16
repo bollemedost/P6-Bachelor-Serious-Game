@@ -2,7 +2,14 @@ using UnityEngine;
 
 public class WomanSpawner : MonoBehaviour
 {
+    [Header("Normal women")]
     public GameObject[] womanPrefabs;
+
+    [Header("Women less frequently spawned")]
+    public GameObject[] lessFrequentWomanPrefabs;
+    public float lessFrequentSpawnInterval = 10f;
+
+    [Header("Spawn setup")]
     public Transform[] spawnPoints;
     public Transform[] waypoints;
     public float spawnInterval = 3f;
@@ -18,31 +25,54 @@ public class WomanSpawner : MonoBehaviour
             SpawnPrefilledWomen();
         }
 
-        InvokeRepeating(nameof(SpawnWoman), 0f, spawnInterval);
+        // Normal women spawn
+        if (womanPrefabs != null && womanPrefabs.Length > 0)
+        {
+            InvokeRepeating(nameof(SpawnWoman), 0f, spawnInterval);
+        }
+
+        // Less frequent women spawn
+        if (lessFrequentWomanPrefabs != null && lessFrequentWomanPrefabs.Length > 0)
+        {
+            InvokeRepeating(nameof(SpawnLessFrequentWoman), lessFrequentSpawnInterval, lessFrequentSpawnInterval);
+        }
     }
 
     void SpawnPrefilledWomen()
     {
-        if (womanPrefabs.Length == 0 || spawnPoints.Length == 0 || waypoints.Length == 0) return;
+        if ((womanPrefabs == null || womanPrefabs.Length == 0) &&
+            (lessFrequentWomanPrefabs == null || lessFrequentWomanPrefabs.Length == 0))
+            return;
 
-        // Spawn women spaced exactly like the normal spawn interval,
-        // so the road already looks populated when the player enters.
-        for (float t = spawnInterval; t <= prefillDurationSeconds; t += spawnInterval)
+        if (spawnPoints.Length == 0 || waypoints.Length == 0) return;
+
+        // Prefill only with the normal women,
+        // so the rare women stay rare.
+        if (womanPrefabs != null && womanPrefabs.Length > 0)
         {
-            SpawnWomanWithHeadStart(t);
+            for (float t = spawnInterval; t <= prefillDurationSeconds; t += spawnInterval)
+            {
+                SpawnWomanWithHeadStartFromArray(womanPrefabs, t);
+            }
         }
     }
 
     void SpawnWoman()
     {
-        SpawnWomanWithHeadStart(0f);
+        SpawnWomanWithHeadStartFromArray(womanPrefabs, 0f);
     }
 
-    void SpawnWomanWithHeadStart(float headStartSeconds)
+    void SpawnLessFrequentWoman()
     {
-        if (womanPrefabs.Length == 0 || spawnPoints.Length == 0 || waypoints.Length == 0) return;
+        SpawnWomanWithHeadStartFromArray(lessFrequentWomanPrefabs, 0f);
+    }
 
-        GameObject randomPrefab = womanPrefabs[Random.Range(0, womanPrefabs.Length)];
+    void SpawnWomanWithHeadStartFromArray(GameObject[] prefabArray, float headStartSeconds)
+    {
+        if (prefabArray == null || prefabArray.Length == 0 || spawnPoints.Length == 0 || waypoints.Length == 0)
+            return;
+
+        GameObject randomPrefab = prefabArray[Random.Range(0, prefabArray.Length)];
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         GameObject woman = Instantiate(
