@@ -158,6 +158,10 @@ public class HomelessManInteraction : Interactable
         // Only lock once we KNOW the interaction is really happening
         LockInteraction();
 
+        // LOCK PLAYER MOVEMENT/ROTATION DURING THIS INTERACTION
+        MovementStateManager.canMove = false;
+        MovementStateManager.canRotate = false;
+
         donationCount++;
 
         CoinManager.Instance.AddCoin(-requiredCoins);
@@ -226,6 +230,10 @@ public class HomelessManInteraction : Interactable
                     entry.uiObject.SetActive(false);
             }
         }
+
+        // UNLOCK PLAYER MOVEMENT/ROTATION AFTER INTERACTION FINISHES
+        MovementStateManager.canMove = true;
+        MovementStateManager.canRotate = true;
 
         UnlockInteraction();
     }
