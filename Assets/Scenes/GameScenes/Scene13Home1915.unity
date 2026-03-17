@@ -12686,7 +12686,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 10, y: 1, z: 10}
+    m_Scale: {x: 3, y: 1, z: 4}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -12884,7 +12884,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -16778,13 +16778,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219204856}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.34527853, y: -0.5473169, z: -0.3709856, w: 0.6660305}
-  m_LocalPosition: {x: 13.32, y: 22.617367, z: -63.20044}
+  m_LocalRotation: {x: -0.3612249, y: -0.6220667, z: -0.35547736, w: 0.59681284}
+  m_LocalPosition: {x: 12.718, y: 23.141, z: -63.022}
   m_LocalScale: {x: 0.2, y: 0.19999999, z: 0.20000002}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1831930418}
-  m_LocalEulerAnglesHint: {x: -60, y: -71.04, z: -13.441}
+  m_LocalEulerAnglesHint: {x: -60.86, y: -94.11, z: 2.955}
 --- !u!1 &1225378499
 GameObject:
   m_ObjectHideFlags: 0
@@ -36081,6 +36081,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1560167481}
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: enterDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: windowEvent
       value: 
       objectReference: {fileID: 11400000, guid: c87ef6c459dbd57438bc1ac12859994f, type: 2}
@@ -36089,9 +36093,21 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: interactionCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: playerUICanvasGroup
       value: 
       objectReference: {fileID: 1595699400}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: prerequisiteEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: 'prerequisiteEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7953cf5dd95e6b04d9780d774405518c, type: 2}
     - target: {fileID: 5055727365489629765, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 2.067498

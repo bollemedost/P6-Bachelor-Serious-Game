@@ -46,7 +46,7 @@ public abstract class Interactable : MonoBehaviour
 
         if (canvas != null)
         {
-            canvas.SetActive(isClosest && !IsCurrentlyInteracting() && !interactionLocked);
+            canvas.SetActive(isClosest && CanInteract() && !IsCurrentlyInteracting() && !interactionLocked);
         }
 
         // 🚫 If interaction is locked, block all E presses
@@ -109,4 +109,9 @@ public abstract class Interactable : MonoBehaviour
     }
 
     public abstract void Interact();
+
+    protected virtual bool CanInteract()
+    {
+        return true;
+    }
 }
