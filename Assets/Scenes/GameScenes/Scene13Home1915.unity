@@ -5185,8 +5185,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 67.03883, y: 100.22778, z: 74.97431}
-  m_Center: {x: 0.0000019073486, y: 0, z: 37.487156}
+  m_Size: {x: 67.038826, y: 100.22778, z: 96.66268}
+  m_Center: {x: 0.0000033113693, y: -0.0000012005783, z: 48.33134}
 --- !u!4 &430665510 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8897093224900880590, guid: f0fc0e1bac533499a80571601bd3319e, type: 3}
@@ -36091,6 +36091,10 @@ PrefabInstance:
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: interactDistance
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
+      propertyPath: exitDelayAfterEnter
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3856447125239893566, guid: 37941dc0f05edac41b233a25f2c82496, type: 3}
       propertyPath: interactionCooldown

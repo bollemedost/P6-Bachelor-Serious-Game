@@ -21,28 +21,39 @@ public class WindowInteraction : Interactable
     [Header("Prerequisite Events")]
     public GameEvent[] prerequisiteEvents;
 
-    [Header("Interaction Cooldown")]
-    public float interactionCooldown = 0.5f; // seconds to wait after exiting before reactivation
+    [Header("Exit Delay (Anti-Spam)")]
+    public float exitDelayAfterEnter = 0.3f;
+
+    [Header("Re-Enter Cooldown")]
+    public float interactionCooldown = 0.5f;
 
     private bool isActive = false;
     private bool eventTriggered = false;
+
+    private bool canExitInteraction = true;
     private bool canInteractAgain = true;
 
     private EventManager eventManager;
     private MovementStateManager playerMovement;
 
+    private Coroutine fadeCoroutine;
+
     protected override void Start()
     {
         base.Start();
-
         eventManager = FindFirstObjectByType<EventManager>();
         playerMovement = FindFirstObjectByType<MovementStateManager>();
     }
 
-    // Canvas only shows if prerequisites are met
-    protected override bool CanInteract()
+    protected override void Update()
     {
-        return CheckIfUnlocked() && canInteractAgain;
+        base.Update();
+
+        // Ensure canvas only shows when prerequisites are met
+        if (canvas != null && !CheckIfUnlocked())
+        {
+            canvas.SetActive(false);
+        }
     }
 
     public override void Interact()
@@ -68,12 +79,19 @@ public class WindowInteraction : Interactable
 
     protected override void StopInteraction()
     {
+        if (!canExitInteraction)
+            return;
+
         ExitWindow();
     }
 
     private void EnterWindow()
     {
         isActive = true;
+
+        // Prevent instant exit spam
+        canExitInteraction = false;
+        StartCoroutine(EnableExitAfterDelay());
 
         if (playerMovement != null)
             playerMovement.LockMovement(true);
@@ -83,8 +101,14 @@ public class WindowInteraction : Interactable
         windowCam.Priority = 10;
         playerCam.Priority = 0;
 
+        // Hide player UI immediately
         if (playerUICanvasGroup != null)
+        {
+            if (fadeCoroutine != null)
+                StopCoroutine(fadeCoroutine);
+
             playerUICanvasGroup.alpha = 0f;
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -110,14 +134,22 @@ public class WindowInteraction : Interactable
 
         if (playerUICanvasGroup != null)
         {
-            StopAllCoroutines();
-            StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
+            if (fadeCoroutine != null)
+                StopCoroutine(fadeCoroutine);
+
+            fadeCoroutine = StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
         }
 
         StartCoroutine(RestoreCursorNextFrame());
 
-        // Start cooldown before window can be interacted with again
+        // Prevent rapid re-entry
         StartCoroutine(InteractionCooldownCoroutine());
+    }
+
+    private IEnumerator EnableExitAfterDelay()
+    {
+        yield return new WaitForSeconds(exitDelayAfterEnter);
+        canExitInteraction = true;
     }
 
     private IEnumerator InteractionCooldownCoroutine()
