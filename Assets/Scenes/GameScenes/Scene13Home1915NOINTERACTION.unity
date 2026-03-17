@@ -3098,6 +3098,8 @@ MonoBehaviour:
   - {fileID: 7510923714180462430, guid: 732bc46409a1fe34591ce6ddec0a88cd, type: 3}
   - {fileID: 7510923714180462430, guid: 030f5d1226881a747bf5b6a80c5200b2, type: 3}
   - {fileID: 7510923714180462430, guid: b1d0c1083b33c214796eadd0fa88b8c5, type: 3}
+  lessFrequentWomanPrefabs: []
+  lessFrequentSpawnInterval: 10
   spawnPoints:
   - {fileID: 938595488}
   waypoints:
@@ -3106,6 +3108,8 @@ MonoBehaviour:
   - {fileID: 928565973}
   - {fileID: 1688381150}
   spawnInterval: 3
+  prefillPathOnStart: 1
+  prefillDurationSeconds: 40
 --- !u!4 &608357274
 Transform:
   m_ObjectHideFlags: 0
@@ -6238,6 +6242,8 @@ MonoBehaviour:
   - {fileID: 7510923714180462430, guid: 732bc46409a1fe34591ce6ddec0a88cd, type: 3}
   - {fileID: 7510923714180462430, guid: 030f5d1226881a747bf5b6a80c5200b2, type: 3}
   - {fileID: 7510923714180462430, guid: b1d0c1083b33c214796eadd0fa88b8c5, type: 3}
+  lessFrequentWomanPrefabs: []
+  lessFrequentSpawnInterval: 10
   spawnPoints:
   - {fileID: 901749961}
   waypoints:
@@ -6246,6 +6252,8 @@ MonoBehaviour:
   - {fileID: 1321187315}
   - {fileID: 1526724265}
   spawnInterval: 3
+  prefillPathOnStart: 1
+  prefillDurationSeconds: 40
 --- !u!4 &1180349634
 Transform:
   m_ObjectHideFlags: 0
@@ -12976,6 +12984,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 1066946230}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  gainColor: {r: 0, g: 1, b: 0, a: 1}
+  lossColor: {r: 1, g: 0, b: 0, a: 1}
+  colorFlashDuration: 0.5
 --- !u!1 &1605066890
 GameObject:
   m_ObjectHideFlags: 0
@@ -14299,6 +14311,8 @@ MonoBehaviour:
   - {fileID: 7510923714180462430, guid: 732bc46409a1fe34591ce6ddec0a88cd, type: 3}
   - {fileID: 7510923714180462430, guid: 030f5d1226881a747bf5b6a80c5200b2, type: 3}
   - {fileID: 7510923714180462430, guid: b1d0c1083b33c214796eadd0fa88b8c5, type: 3}
+  lessFrequentWomanPrefabs: []
+  lessFrequentSpawnInterval: 10
   spawnPoints:
   - {fileID: 1859010899}
   waypoints:
@@ -14307,6 +14321,8 @@ MonoBehaviour:
   - {fileID: 1791770915}
   - {fileID: 956910286}
   spawnInterval: 3
+  prefillPathOnStart: 1
+  prefillDurationSeconds: 40
 --- !u!4 &1873943487
 Transform:
   m_ObjectHideFlags: 0
@@ -24941,6 +24957,10 @@ PrefabInstance:
       propertyPath: doorEvent
       value: 
       objectReference: {fileID: 11400000, guid: 588d46989acfc0146b99b2a51292f4db, type: 2}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: sceneToLoad
+      value: Scene14Street1915
+      objectReference: {fileID: 0}
     - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: prerequisiteEvents.Array.size
       value: 0

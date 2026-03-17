@@ -3664,7 +3664,7 @@ MonoBehaviour:
   messageText: {fileID: 1734263958}
   rewardCoins: 20
   messageTemplate: '{0}'
-  miniGameEvent: {fileID: 0}
+  miniGameEvent: {fileID: 11400000, guid: 649ead44f1c3549868f2d064c066c50f, type: 2}
   loadSpecificScene: 1
   sceneToLoad: Scene13Home1915NOINTERACTION
   useSubwayTReturnScene: 0
@@ -4147,6 +4147,51 @@ Transform:
   - {fileID: 639613767}
   m_Father: {fileID: 1537228963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2086305763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2086305765}
+  - component: {fileID: 2086305764}
+  m_Layer: 0
+  m_Name: CursorController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2086305764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086305763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7036a0260920f824ea7eb0c70317c7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockCursorInThisScene: 1
+--- !u!4 &2086305765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086305763}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 968.30426, y: 683.8317, z: 47.29315}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092633288
 GameObject:
   m_ObjectHideFlags: 0
@@ -4306,3 +4351,4 @@ SceneRoots:
   - {fileID: 1537228963}
   - {fileID: 1131690063}
   - {fileID: 1378438318}
+  - {fileID: 2086305765}
