@@ -38,6 +38,8 @@ public class WindowInteraction : Interactable
 
     private Coroutine fadeCoroutine;
 
+    public BlackboardInteraction blackboard;
+
     protected override void Start()
     {
         base.Start();
@@ -118,6 +120,9 @@ public class WindowInteraction : Interactable
             eventTriggered = true;
             eventManager.CompleteEvent(windowEvent);
         }
+
+        if (blackboard != null)
+        blackboard.Activate();
     }
 
     private void ExitWindow()
@@ -144,6 +149,9 @@ public class WindowInteraction : Interactable
 
         // Prevent rapid re-entry
         StartCoroutine(InteractionCooldownCoroutine());
+
+        if (blackboard != null)
+        blackboard.Deactivate();
     }
 
     private IEnumerator EnableExitAfterDelay()
