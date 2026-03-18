@@ -25375,19 +25375,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1845347412}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d310017a374694958b7fbf2c727b01ba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.7932444
+      value: 16.96347
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d310017a374694958b7fbf2c727b01ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.504
+      value: 14.378667
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d310017a374694958b7fbf2c727b01ba, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.836749
+      value: -16.818724
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d310017a374694958b7fbf2c727b01ba, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25430,6 +25430,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d310017a374694958b7fbf2c727b01ba, type: 3}
+--- !u!4 &1644858501 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d310017a374694958b7fbf2c727b01ba, type: 3}
+  m_PrefabInstance: {fileID: 1644858500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1646196122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28310,6 +28315,7 @@ Transform:
   - {fileID: 236392422}
   - {fileID: 402047233}
   - {fileID: 114798559}
+  - {fileID: 1644858501}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1861478805
@@ -28852,7 +28858,7 @@ PrefabInstance:
     - target: {fileID: -732280659679269725, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: c973da09dfcff7f4b9b2ef6c7074636d, type: 2}
+      objectReference: {fileID: 2100000, guid: 36230382dafdd400dbee1e53521b0cb6, type: 2}
     - target: {fileID: 919132149155446097, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_Name
       value: Gingi barn Fix
@@ -28868,7 +28874,15 @@ PrefabInstance:
     - target: {fileID: 7379815097510755520, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c973da09dfcff7f4b9b2ef6c7074636d, type: 2}
+      objectReference: {fileID: 2100000, guid: 36230382dafdd400dbee1e53521b0cb6, type: 2}
+    - target: {fileID: 7761571088272382361, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ea75cb5e256e647cf8ade96a014c16ef, type: 2}
+    - target: {fileID: 8786128754026509023, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a6466b63b6ca04146abf1fe053fd965c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -32051,4 +32065,3 @@ SceneRoots:
   - {fileID: 911645519}
   - {fileID: 749116399}
   - {fileID: 1845347412}
-  - {fileID: 1644858500}
