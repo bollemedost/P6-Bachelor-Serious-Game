@@ -48,50 +48,49 @@ public class ZoneTriggerInteraction : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (Interactable.interactionLocked)
-        return;
-        
+            return;
+
         if (!other.CompareTag("Player")) return;
         if (eventManager == null || zoneEvent == null) return;
 
-        // 🚫 Already completed
+        // Already completed
         if (eventManager.IsEventCompleted(zoneEvent))
             return;
 
-        // 🚫 Check prerequisites
+        // Check prerequisites
         foreach (var prereq in prerequisiteEvents)
         {
             if (!eventManager.IsEventCompleted(prereq))
                 return;
         }
 
-        // ✅ Mark event completed
+        // Mark event completed
         eventManager.CompleteEvent(zoneEvent);
 
-        // 🔒 LOCK ALL OTHER INTERACTIONS
+        // Lock all other interactions
         Interactable.interactionLocked = true;
 
         if (loadSceneOnTrigger && !waitForInteractionToFinish)
         {
-            // 🔥 Immediate scene load
+            // IMPORTANT: unlock before changing scene
+            Interactable.interactionLocked = false;
+
+            // Immediate scene load
             LoadScene();
             return;
         }
 
-        // ✅ Run normal interaction
+        // Run normal interaction
         StartCoroutine(HandleInteraction());
     }
 
     private IEnumerator HandleInteraction()
     {
-        // =====================
-        // START TIMED AUDIO
-        // =====================
+        // Start timed audio
         if (audioSource != null && timedAudios.Count > 0)
             StartCoroutine(PlayTimedAudios());
 
-        // =====================
-        // PLAYER ANIMATION
-        // =====================
+        // Player animation
         int layerIndex = -1;
         if (playerAnimator != null)
         {
@@ -102,9 +101,7 @@ public class ZoneTriggerInteraction : MonoBehaviour
             playerAnimator.SetTrigger(playerTriggerName);
         }
 
-        // =====================
-        // NPC ANIMATION
-        // =====================
+        // NPC animation
         if (npcAnimator != null)
         {
             if (npcDelay > 0f)
@@ -114,9 +111,7 @@ public class ZoneTriggerInteraction : MonoBehaviour
             yield return new WaitForSeconds(npcAnimationDuration);
         }
 
-        // =====================
-        // RESET PLAYER LAYER
-        // =====================
+        // Reset player layer
         if (layerIndex >= 0)
         {
             float adjustedDuration = Mathf.Max(0f, playerAnimationDuration - playerEarlyExitTime);
@@ -124,10 +119,13 @@ public class ZoneTriggerInteraction : MonoBehaviour
             StartCoroutine(FadeOutLayer(playerAnimator, layerIndex, playerLayerFadeTime));
         }
 
-        // 🔥 Scene load AFTER interaction (if enabled)
+        // Scene load after interaction
         if (loadSceneOnTrigger && waitForInteractionToFinish)
         {
+            // IMPORTANT: unlock before changing scene
+            Interactable.interactionLocked = false;
             LoadScene();
+            yield break;
         }
 
         Interactable.interactionLocked = false;
@@ -140,12 +138,12 @@ public class ZoneTriggerInteraction : MonoBehaviour
 
         if (SceneTransition.Instance != null)
         {
-            // ✅ Use your fade system if it exists
+            // Use fade system if it exists
             SceneTransition.Instance.FadeToScene(sceneToLoad);
         }
         else
         {
-            // ❌ Fallback without fade
+            // Fallback without fade
             SceneManager.LoadScene(sceneToLoad);
         }
     }
