@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class slot : MonoBehaviour, IDropHandler
@@ -23,6 +24,10 @@ public class slot : MonoBehaviour, IDropHandler
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip correctSound;
+    public AudioClip wrongSound;
+
+    [Tooltip("Delay før forkert lyd afspilles")]
+    public float wrongSoundDelay = 0.2f;
 
     [Header("Coin Rewards/Penalties")]
     public int correctCoinReward = 10;
@@ -55,8 +60,6 @@ public class slot : MonoBehaviour, IDropHandler
         {
             draggable.parentAfterDrag = transform;
             ApplyItemTransform(droppedRect, anySlotScale);
-
-            // acceptAnyItem slots count as filled, but not "correct"
             return;
         }
 
@@ -100,7 +103,7 @@ public class slot : MonoBehaviour, IDropHandler
             slotImage.sprite = correctSprite;
         }
 
-        // Play sound
+        // Play correct sound (ingen delay)
         if (audioSource != null && correctSound != null)
         {
             audioSource.PlayOneShot(correctSound);
@@ -115,8 +118,20 @@ public class slot : MonoBehaviour, IDropHandler
 
     void HandleWrong()
     {
+        // Play wrong sound med delay
+        if (audioSource != null && wrongSound != null)
+        {
+            StartCoroutine(PlayWrongSoundDelayed());
+        }
+
         // Remove coins
         CoinManager.EnsureExists().AddCoin(-wrongCoinPenalty);
+    }
+
+    IEnumerator PlayWrongSoundDelayed()
+    {
+        yield return new WaitForSeconds(wrongSoundDelay);
+        audioSource.PlayOneShot(wrongSound);
     }
 
     void ThrowTomato(RectTransform target)
