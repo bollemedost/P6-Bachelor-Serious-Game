@@ -25,17 +25,26 @@ public class SceneTransition : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
+
+        // Subscribe to sceneLoaded
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     /// <summary>
-    /// Call this to transition to a new scene
+    /// Call this to transition to a new scene with fade
     /// </summary>
     public void FadeToScene(string sceneName)
     {
         if (fadePanel == null)
         {
-            Debug.LogWarning("Fade Panel not assigned!");
+            Debug.LogWarning("Fade Panel not assigned! Loading scene without fade.");
             SceneManager.LoadScene(sceneName); // fallback
             return;
         }
@@ -48,10 +57,10 @@ public class SceneTransition : MonoBehaviour
         // Fade to black
         yield return StartCoroutine(Fade(0f, 1f, fadeDuration, EaseInOutQuad));
 
-        // Load the scene
+        // Load the new scene
         SceneManager.LoadScene(sceneName);
 
-        // Wait a frame to ensure scene fully loads
+        // Wait a frame to ensure scene is fully loaded
         yield return null;
 
         // Optional tiny delay for smoothness
@@ -63,6 +72,8 @@ public class SceneTransition : MonoBehaviour
 
     private IEnumerator Fade(float startAlpha, float endAlpha, float duration, System.Func<float, float> easing)
     {
+        if (fadePanel == null) yield break;
+
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -85,5 +96,16 @@ public class SceneTransition : MonoBehaviour
     public void LoadSceneFromButton(string sceneName)
     {
         FadeToScene(sceneName);
+    }
+
+    // Fade in automatically on scene load
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (fadePanel != null)
+        {
+            // Start fully visible and fade in
+            fadePanel.alpha = 1f;
+            StartCoroutine(Fade(1f, 0f, fadeDuration, EaseInOutQuad));
+        }
     }
 }
