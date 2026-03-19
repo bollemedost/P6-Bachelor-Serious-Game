@@ -53146,6 +53146,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1900624933}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1900624935}
   m_SourcePrefab: {fileID: 100100000, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
 --- !u!4 &1900624931 stripped
 Transform:
@@ -53177,13 +53180,45 @@ MonoBehaviour:
       bodyAnim: 0
     - time: 5
       bodyAnim: 3
-    - time: 6
+    - time: 8
       bodyAnim: 0
 --- !u!95 &1900624934 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
   m_PrefabInstance: {fileID: 1900624930}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1900624935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900624932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1900624934}
+  talkingEvents:
+  - gameEvent: {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 0
+    - time: 2
+      bodyAnim: 3
+    - time: 6
+      bodyAnim: 0
+    - time: 20
+      bodyAnim: 3
+    - time: 27
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 240b2cd614ebedc4883591a132b6aac9, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 2
+      bodyAnim: 0
 --- !u!1 &1917208789
 GameObject:
   m_ObjectHideFlags: 0
@@ -66445,7 +66480,7 @@ MonoBehaviour:
   animator: {fileID: 5866666020583890490}
   sequence:
   - time: 0
-    bodyAnim: 0
+    bodyAnim: 3
 --- !u!114 &5866666020583890492
 MonoBehaviour:
   m_ObjectHideFlags: 0
