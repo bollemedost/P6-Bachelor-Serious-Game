@@ -49874,16 +49874,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 1900624934}
   talkingEvents:
   - gameEvent: {fileID: 11400000, guid: 915ed39d43e5b9146bae2a1862e87bf4, type: 2}
     sequence:
     - time: 0
-      bodyAnim: 0
-    - time: 5
       bodyAnim: 3
-    - time: 6
+    - time: 5
       bodyAnim: 0
+    - time: 8
+      bodyAnim: 3
+    - time: 10
+      bodyAnim: 0
+--- !u!95 &1900624934 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
+  m_PrefabInstance: {fileID: 1900624930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1906926356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59689,8 +59696,14 @@ MonoBehaviour:
   animator: {fileID: 7737085976781690926}
   sequence:
   - time: 0
-    bodyAnim: 3
+    bodyAnim: 0
   - time: 5
+    bodyAnim: 3
+  - time: 8
+    bodyAnim: 0
+  - time: 10
+    bodyAnim: 3
+  - time: 14
     bodyAnim: 0
 --- !u!4 &1493592529795203778
 Transform:
