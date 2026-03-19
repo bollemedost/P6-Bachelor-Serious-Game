@@ -6097,11 +6097,15 @@ MonoBehaviour:
   sequence:
   - time: 0
     bodyAnim: 3
-  - time: 4
+  - time: 7
     bodyAnim: 0
-  - time: 6
-    bodyAnim: 3
   - time: 10
+    bodyAnim: 3
+  - time: 15
+    bodyAnim: 0
+  - time: 18
+    bodyAnim: 3
+  - time: 30
     bodyAnim: 0
 --- !u!114 &66928367
 MonoBehaviour:
@@ -45347,11 +45351,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1646765437}
   talkingEvents:
-  - gameEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+  - gameEvent: {fileID: 11400000, guid: b94ed40c8c797c24db0780d2342dde20, type: 2}
     sequence:
-    - time: 0
+    - time: 7
       bodyAnim: 3
-    - time: 6
+    - time: 10
+      bodyAnim: 0
+    - time: 15
+      bodyAnim: 3
+    - time: 18
       bodyAnim: 0
 --- !u!95 &1646765437
 Animator:
