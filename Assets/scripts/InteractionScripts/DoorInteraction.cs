@@ -166,12 +166,12 @@ public class DoorInteraction : Interactable
             eventManager.CompleteEvent(doorEvent);
 
         if (!string.IsNullOrEmpty(sceneToLoad))
-        {
-            if (SceneTransition.Instance != null)
-                SceneTransition.Instance.FadeToScene(sceneToLoad);
-            else
-                UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
-        }
+{
+    if (SceneFadeIn.instance != null)
+        SceneFadeIn.instance.FadeOutAndLoadScene(sceneToLoad);
+    else
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
+}
 
         isInteracting = false;
     }
