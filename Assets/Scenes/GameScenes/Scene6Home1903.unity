@@ -20363,13 +20363,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 5866666020374002521}
   talkingEvents:
-  - gameEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+  - gameEvent: {fileID: 11400000, guid: 501cafe2d38d75042b97239dfdbe29e1, type: 2}
     sequence:
     - time: 0
       bodyAnim: 3
-    - time: 6
+    - time: 5
       bodyAnim: 0
   - gameEvent: {fileID: 11400000, guid: 5dbf83b90cbd3a44b85268ab294f66c8, type: 2}
     sequence:
@@ -35353,12 +35353,10 @@ MonoBehaviour:
   animator: {fileID: 8236963201270954817}
   sequence:
   - time: 0
-    bodyAnim: 3
-  - time: 5
     bodyAnim: 0
-  - time: 6
+  - time: 5
     bodyAnim: 3
-  - time: 10
+  - time: 20
     bodyAnim: 0
 --- !u!1 &980455623505647841
 GameObject:
