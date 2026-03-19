@@ -6161,7 +6161,7 @@ MonoBehaviour:
   walkBoolName: isWalking
   loadSceneAfterInteraction: 1
   sceneToLoad: Transition1
-  sceneLoadDelay: 0.5
+  sceneLoadDelay: 1.5
   checkPlayerCoins: 0
   requiredCoins: 50
   enoughCoinsEvent: {fileID: 0}
@@ -18536,6 +18536,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611237106}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &617871673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617871675}
+  - component: {fileID: 617871674}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &617871674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617871673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c042933f54ec1e4d91b160cbcb97bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiCanvasGroups:
+  - {fileID: 1943621389}
+  fadeDuration: 0.5
+  delay: 1.2
+--- !u!4 &617871675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617871673}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.280095, y: -7.269336, z: -21.57744}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &624481703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24454,7 +24502,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 999
   m_TargetDisplay: 0
 --- !u!224 &927413468
 RectTransform:
@@ -60153,7 +60201,6 @@ SceneRoots:
   - {fileID: 1917352966}
   - {fileID: 367807687}
   - {fileID: 1943621394}
-  - {fileID: 927413468}
   - {fileID: 946447565}
   - {fileID: 516799850}
   - {fileID: 2124034452}
@@ -60164,3 +60211,5 @@ SceneRoots:
   - {fileID: 1523959737}
   - {fileID: 413284170}
   - {fileID: 1058149794}
+  - {fileID: 927413468}
+  - {fileID: 617871675}

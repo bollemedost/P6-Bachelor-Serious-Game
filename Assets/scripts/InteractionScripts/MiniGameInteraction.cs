@@ -77,14 +77,9 @@ public class MiniGameInteraction : MonoBehaviour
             if (debugLogs)
                 Debug.Log($"[MiniGameInteraction] Loading '{miniGameSceneName}' for event '{(miniGameEvent ? miniGameEvent.name : "null")}'");
 
-            // Load the minigame scene
-            if (SceneTransition.Instance != null)
+            if (SceneFadeIn.instance != null)
             {
-                SceneTransition.Instance.FadeToScene(miniGameSceneName);
-            }
-            else
-            {
-                SceneManager.LoadScene(miniGameSceneName);
+                SceneFadeIn.instance.FadeOutAndLoadScene(miniGameSceneName);
             }
         }
     }

@@ -418,9 +418,9 @@ public class NPCInteraction : Interactable
         yield return new WaitForSeconds(sceneLoadDelay);
 
         // Now load scene safely
-        if (SceneTransition.Instance != null)
+        if (SceneFadeIn.instance != null)
         {
-            SceneTransition.Instance.FadeToScene(sceneToLoad);
+            SceneFadeIn.instance.FadeOutAndLoadScene(sceneToLoad);
         }
         else
         {

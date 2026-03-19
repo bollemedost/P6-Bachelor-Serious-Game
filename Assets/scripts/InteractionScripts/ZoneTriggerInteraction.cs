@@ -136,14 +136,12 @@ public class ZoneTriggerInteraction : MonoBehaviour
         if (string.IsNullOrEmpty(sceneToLoad))
             return;
 
-        if (SceneTransition.Instance != null)
+        if (SceneFadeIn.instance != null)
         {
-            // Use fade system if it exists
-            SceneTransition.Instance.FadeToScene(sceneToLoad);
+            SceneFadeIn.instance.FadeOutAndLoadScene(sceneToLoad);
         }
         else
         {
-            // Fallback without fade
             SceneManager.LoadScene(sceneToLoad);
         }
     }

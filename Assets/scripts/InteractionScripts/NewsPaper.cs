@@ -235,21 +235,21 @@
             // ===============================
             // NEW BRANCH: SCENE LOAD MODE
             // ===============================
-           if (loadSceneInsteadOfExit && !string.IsNullOrEmpty(sceneToLoad))
+            if (loadSceneInsteadOfExit && !string.IsNullOrEmpty(sceneToLoad))
             {
                 while (!Input.GetKeyDown(KeyCode.E))
                     yield return null;
 
-                // ✅ Re-enable player BEFORE scene load
+                // Re-enable player BEFORE scene load
                 isInteracting = false;
                 MovementStateManager.canMove = true;
                 MovementStateManager.canRotate = true;
 
                 yield return new WaitForSeconds(sceneLoadDelay);
 
-                if (SceneTransition.Instance != null)
+                if (SceneFadeIn.instance != null)
                 {
-                    SceneTransition.Instance.FadeToScene(sceneToLoad);
+                    SceneFadeIn.instance.FadeOutAndLoadScene(sceneToLoad);
                 }
                 else
                 {

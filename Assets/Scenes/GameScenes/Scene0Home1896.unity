@@ -367,7 +367,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 58d0d64937a2c314db022c7f4c3fcec2, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -462,11 +462,11 @@ Transform:
   m_GameObject: {fileID: 115833721}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.804904, y: 8.503747, z: 0.89530945}
+  m_LocalPosition: {x: 9.028097, y: 2.9918709, z: -19.755909}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1258785559}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &123637367
 GameObject:
@@ -1618,7 +1618,7 @@ RectTransform:
   m_GameObject: {fileID: 342800552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1840034293}
@@ -14659,7 +14659,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 264594183}
-  - {fileID: 115833723}
   m_Father: {fileID: 1831930418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1260168088
@@ -16769,10 +16768,7 @@ MonoBehaviour:
   fadeCanvasGroup: {fileID: 342800553}
   fadeDuration: 2
   startDelay: 0.1
-  uiCanvasGroups:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  uiCanvasGroups: []
   uiFadeDuration: 0.5
   uiFadeDelay: 1.2
 --- !u!114 &1840034290
@@ -16836,7 +16832,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 999
   m_TargetDisplay: 0
 --- !u!224 &1840034293
 RectTransform:
@@ -50487,3 +50483,4 @@ SceneRoots:
   - {fileID: 281339748}
   - {fileID: 1324749263}
   - {fileID: 591123927}
+  - {fileID: 115833723}

@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonSceneManager : MonoBehaviour
 {
@@ -8,6 +6,14 @@ public class ButtonSceneManager : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(sceneName);
+        if (SceneFadeIn.instance != null)
+        {
+            SceneFadeIn.instance.FadeOutAndLoadScene(sceneName);
+        }
+        else
+        {
+            Debug.LogWarning("SceneFadeIn instance not found. Loading without fade.");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        }
     }
 }
