@@ -8074,9 +8074,17 @@ MonoBehaviour:
   talkingEvents:
   - gameEvent: {fileID: 11400000, guid: eded1c902bb042f419f20306387ce410, type: 2}
     sequence:
-    - time: 5
+    - time: 0
       bodyAnim: 3
-    - time: 10
+    - time: 2
+      bodyAnim: 0
+    - time: 3
+      bodyAnim: 3
+    - time: 6
+      bodyAnim: 0
+    - time: 7
+      bodyAnim: 3
+    - time: 9
       bodyAnim: 0
 --- !u!1001 &517425889
 PrefabInstance:
@@ -40984,7 +40992,15 @@ MonoBehaviour:
   sequence:
   - time: 2
     bodyAnim: 3
-  - time: 10
+  - time: 3
+    bodyAnim: 0
+  - time: 6
+    bodyAnim: 3
+  - time: 7
+    bodyAnim: 0
+  - time: 9
+    bodyAnim: 3
+  - time: 22
     bodyAnim: 0
 --- !u!136 &6685484909826355591
 CapsuleCollider:
