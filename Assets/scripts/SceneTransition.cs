@@ -7,20 +7,22 @@ public class SceneTransition : MonoBehaviour
     public static SceneTransition Instance;
 
     [Header("Fade Settings")]
-    public CanvasGroup fadePanel;        // Assign a CanvasGroup on a full-screen black panel
-    public float fadeDuration = 1f;      // Duration for fade in/out
+    public CanvasGroup fadePanel;
+    public float fadeDuration = 1f;
 
     private void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Ensure fadePanel starts fully transparent
             if (fadePanel != null)
+            {
                 fadePanel.alpha = 0f;
+                fadePanel.interactable = false;
+                fadePanel.blocksRaycasts = false;
+            }
         }
         else
         {
@@ -28,7 +30,6 @@ public class SceneTransition : MonoBehaviour
             return;
         }
 
-        // Subscribe to sceneLoaded
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -37,15 +38,12 @@ public class SceneTransition : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    /// <summary>
-    /// Call this to transition to a new scene with fade
-    /// </summary>
     public void FadeToScene(string sceneName)
     {
         if (fadePanel == null)
         {
             Debug.LogWarning("Fade Panel not assigned! Loading scene without fade.");
-            SceneManager.LoadScene(sceneName); // fallback
+            SceneManager.LoadScene(sceneName);
             return;
         }
 
@@ -54,25 +52,19 @@ public class SceneTransition : MonoBehaviour
 
     private IEnumerator FadeAndLoad(string sceneName)
     {
-        // Fade to black
-        yield return StartCoroutine(Fade(0f, 1f, fadeDuration, EaseInOutQuad));
-
-        // Load the new scene
+        yield return StartCoroutine(Fade(0f, 1f, fadeDuration, true));
         SceneManager.LoadScene(sceneName);
-
-        // Wait a frame to ensure scene is fully loaded
         yield return null;
-
-        // Optional tiny delay for smoothness
         yield return new WaitForSeconds(0.05f);
-
-        // Fade back from black
-        yield return StartCoroutine(Fade(1f, 0f, fadeDuration, EaseInOutQuad));
+        yield return StartCoroutine(Fade(1f, 0f, fadeDuration, false));
     }
 
-    private IEnumerator Fade(float startAlpha, float endAlpha, float duration, System.Func<float, float> easing)
+    private IEnumerator Fade(float startAlpha, float endAlpha, float duration, bool blockRaycasts)
     {
         if (fadePanel == null) yield break;
+
+        fadePanel.interactable = blockRaycasts;
+        fadePanel.blocksRaycasts = blockRaycasts;
 
         float elapsed = 0f;
 
@@ -80,14 +72,24 @@ public class SceneTransition : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            fadePanel.alpha = Mathf.Lerp(startAlpha, endAlpha, easing(t));
+            fadePanel.alpha = Mathf.Lerp(startAlpha, endAlpha, EaseInOutQuad(t));
             yield return null;
         }
 
         fadePanel.alpha = endAlpha;
+
+        if (endAlpha <= 0.01f)
+        {
+            fadePanel.interactable = false;
+            fadePanel.blocksRaycasts = false;
+        }
+        else
+        {
+            fadePanel.interactable = true;
+            fadePanel.blocksRaycasts = true;
+        }
     }
 
-    // Ease in/out quadratic function for smoother fade
     private float EaseInOutQuad(float t)
     {
         return t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
@@ -98,14 +100,14 @@ public class SceneTransition : MonoBehaviour
         FadeToScene(sceneName);
     }
 
-    // Fade in automatically on scene load
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (fadePanel != null)
         {
-            // Start fully visible and fade in
             fadePanel.alpha = 1f;
-            StartCoroutine(Fade(1f, 0f, fadeDuration, EaseInOutQuad));
+            fadePanel.interactable = true;
+            fadePanel.blocksRaycasts = true;
+            StartCoroutine(Fade(1f, 0f, fadeDuration, false));
         }
     }
 }
