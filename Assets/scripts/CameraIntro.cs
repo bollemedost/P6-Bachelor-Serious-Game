@@ -13,8 +13,15 @@ public class CameraIntro : MonoBehaviour
     public float blendDuration = 0.5f;     // Smooth blend to gameplay cam
     public float rotationUnlockDelay = 0.1f; // Small delay before allowing rotation
 
+    [Header("Audio")]
+    public AudioSource introAudio;          // Assign in Inspector
+
     void Start()
     {
+        // Play audio if assigned
+        if (introAudio != null)
+            introAudio.Play();
+
         StartCoroutine(PlayCinematic());
     }
 
