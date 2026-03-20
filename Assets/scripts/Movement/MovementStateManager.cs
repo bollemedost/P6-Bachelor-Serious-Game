@@ -26,11 +26,9 @@ public class MovementStateManager : MonoBehaviour
 
     [SerializeField] Transform camTransform;
 
-    // --- STATIC FLAGS ---
-    public static bool canMove = true;   // Lock movement during interactions
-    public static bool canRotate = true; // Lock rotation during interactions
+    public static bool canMove = true;
+    public static bool canRotate = true;
 
-    // --- PRIVATE LOCK FLAG ---
     private bool isLocked = false;
 
     void Awake()
@@ -41,13 +39,31 @@ public class MovementStateManager : MonoBehaviour
     void OnEnable()
     {
         controls.Enable();
-        controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+        controls.Player.Move.performed += OnMovePerformed;
+        controls.Player.Move.canceled += OnMoveCanceled;
     }
 
     void OnDisable()
     {
+        controls.Player.Move.performed -= OnMovePerformed;
+        controls.Player.Move.canceled -= OnMoveCanceled;
         controls.Disable();
+    }
+
+    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    {
+        if (isLocked || !canMove)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+
+        moveInput = ctx.ReadValue<Vector2>();
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext ctx)
+    {
+        moveInput = Vector2.zero;
     }
 
     void Start()
@@ -61,29 +77,37 @@ public class MovementStateManager : MonoBehaviour
 
     void Update()
     {
-        // --- ALWAYS APPLY GRAVITY ---
         ApplyGravity();
 
-        // --- BLOCK MOVEMENT & ROTATION IF LOCKED OR CAN'T MOVE ---
         if (!canMove || isLocked)
         {
             dir = Vector3.zero;
+            moveInput = Vector2.zero;
 
             if (anim != null)
             {
-                anim.SetFloat("hzInput", 0);
-                anim.SetFloat("vInput", 0);
+                anim.SetFloat("hzInput", 0f);
+                anim.SetFloat("vInput", 0f);
+
+                if (HasBoolParameter("Walking"))
+                    anim.SetBool("Walking", false);
             }
 
-            return; // Skip walking & rotation only
+            return;
         }
 
-        // Normal movement
         GetDirectionAndMove();
 
         Vector3 localDir = transform.InverseTransformDirection(dir);
-        anim.SetFloat("hzInput", localDir.x);
-        anim.SetFloat("vInput", localDir.z);
+
+        if (anim != null)
+        {
+            anim.SetFloat("hzInput", localDir.x);
+            anim.SetFloat("vInput", localDir.z);
+
+            if (HasBoolParameter("Walking"))
+                anim.SetBool("Walking", dir.magnitude > 0.1f);
+        }
 
         currentState.UpdateState(this);
     }
@@ -109,12 +133,15 @@ public class MovementStateManager : MonoBehaviour
 
         dir = camForward * vInput + camRight * hzInput;
 
-        // --- Only rotate if allowed ---
         if (dir.magnitude > 0.1f && canRotate)
         {
             Vector3 lookDir = dir.normalized;
             lookDir.y = 0;
-            Quaternion targetRot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), 10f * Time.deltaTime);
+            Quaternion targetRot = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(lookDir),
+                10f * Time.deltaTime
+            );
             transform.rotation = targetRot;
         }
 
@@ -129,22 +156,61 @@ public class MovementStateManager : MonoBehaviour
 
     void ApplyGravity()
     {
-        if (!IsGrounded()) velocity.y += gravity * Time.deltaTime;
-        else if (velocity.y < 0) velocity.y = -2f;
+        if (!IsGrounded())
+            velocity.y += gravity * Time.deltaTime;
+        else if (velocity.y < 0)
+            velocity.y = -2f;
 
         controller.Move(velocity * Time.deltaTime);
     }
 
-    // --- PUBLIC METHOD TO LOCK MOVEMENT ---
     public void LockMovement(bool locked)
     {
         isLocked = locked;
 
-        if (locked && anim != null)
+        moveInput = Vector2.zero;
+        dir = Vector3.zero;
+
+        if (locked)
         {
-            anim.SetFloat("hzInput", 0);
-            anim.SetFloat("vInput", 0);
-            anim.CrossFade("Idle", 0.1f); // smoothly transition to Idle
+            canMove = false;
+            canRotate = false;
+
+            if (anim != null)
+            {
+                anim.SetFloat("hzInput", 0f);
+                anim.SetFloat("vInput", 0f);
+
+                if (HasBoolParameter("Walking"))
+                    anim.SetBool("Walking", false);
+            }
         }
+        else
+        {
+            canMove = true;
+            canRotate = true;
+
+            if (anim != null)
+            {
+                anim.SetFloat("hzInput", 0f);
+                anim.SetFloat("vInput", 0f);
+
+                if (HasBoolParameter("Walking"))
+                    anim.SetBool("Walking", false);
+            }
+        }
+    }
+
+    private bool HasBoolParameter(string paramName)
+    {
+        if (anim == null) return false;
+
+        foreach (var param in anim.parameters)
+        {
+            if (param.name == paramName && param.type == AnimatorControllerParameterType.Bool)
+                return true;
+        }
+
+        return false;
     }
 }

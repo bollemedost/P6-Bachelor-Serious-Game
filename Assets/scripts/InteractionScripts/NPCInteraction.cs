@@ -16,8 +16,8 @@ public class NPCInteraction : Interactable
     [System.Serializable]
     public class NPCEvent
     {
-        public GameEvent gameEvent;             // Triggered at start
-        public GameEvent finishedEvent;         // Optional, triggered after dialogue finishes
+        public GameEvent gameEvent;
+        public GameEvent finishedEvent;
         public AudioClip dialogueClip;
         public TalkingAnimations talkingSequence;
 
@@ -38,6 +38,9 @@ public class NPCInteraction : Interactable
     [Header("Player Settings")]
     public Transform playerTransform;
     public Transform playerInteractionPoint;
+
+    [Header("Player Movement Reference")]
+    public MovementStateManager playerMovement;
 
     [Header("Dialogue Canvas")]
     public GameObject dialogueCanvas;
@@ -85,6 +88,9 @@ public class NPCInteraction : Interactable
         eventManager = Object.FindFirstObjectByType<EventManager>();
         audioSource = GetComponent<AudioSource>();
 
+        if (playerMovement == null && playerTransform != null)
+            playerMovement = playerTransform.GetComponent<MovementStateManager>();
+
         if (dialogueCanvas != null)
             dialogueCanvas.SetActive(false);
     }
@@ -102,17 +108,12 @@ public class NPCInteraction : Interactable
 
     private void StartInteraction()
     {
-        // ================= COIN BRANCH =================
         if (checkPlayerCoins && CoinManager.Instance != null)
         {
             if (CoinManager.Instance.TotalCoins >= requiredCoins)
-            {
                 currentEvent = enoughCoinsEvent;
-            }
             else
-            {
                 currentEvent = notEnoughCoinsEvent;
-            }
         }
 
         currentNPCEvent = GetEvent(currentEvent);
@@ -122,55 +123,57 @@ public class NPCInteraction : Interactable
             return;
         }
 
-        // IMPORTANT:
-        // Only lock AFTER we know the interaction can actually start.
         LockInteraction();
-
         isInteracting = true;
 
-        // Disable player movement
-        MovementStateManager.canMove = false;
-        MovementStateManager.canRotate = false;
+        if (playerMovement != null)
+        {
+            playerMovement.LockMovement(true);
 
-        // Move player to interaction point
+            if (playerMovement.anim != null)
+            {
+                playerMovement.anim.SetFloat("hzInput", 0f);
+                playerMovement.anim.SetFloat("vInput", 0f);
+                playerMovement.anim.SetBool("Walking", false);
+                playerMovement.anim.SetBool("isTalking", true);
+            }
+        }
+        else
+        {
+            MovementStateManager.canMove = false;
+            MovementStateManager.canRotate = false;
+        }
+
         if (playerInteractionPoint != null && playerTransform != null)
             playerTransform.position = playerInteractionPoint.position;
 
-        // Camera switch
         if (playerCam != null && npcCam != null)
         {
             npcCam.Priority = 10;
             playerCam.Priority = 0;
         }
 
-        // Hide player UI immediately
         if (playerUICanvasGroup != null)
             playerUICanvasGroup.alpha = 0f;
 
-        // Hide regular canvas
         if (canvas != null)
             canvas.SetActive(false);
 
-        // Show dialogue canvas
         if (dialogueCanvas != null)
             dialogueCanvas.SetActive(true);
 
-        // Play talking animations
         if (currentNPCEvent.talkingSequence != null)
             currentNPCEvent.talkingSequence.PlaySequence();
 
-        // Play dialogue audio
         if (currentNPCEvent.dialogueClip != null)
         {
             audioSource.clip = currentNPCEvent.dialogueClip;
             audioSource.Play();
         }
 
-        // Trigger start event
         if (eventManager != null && currentNPCEvent.gameEvent != null)
             eventManager.CompleteEvent(currentNPCEvent.gameEvent);
 
-        // Start dialogue timeline
         StartCoroutine(HandleDialogueTimeline());
     }
 
@@ -178,7 +181,6 @@ public class NPCInteraction : Interactable
     {
         int currentIndex = 0;
 
-        // Disable ALL dialogue images from ALL events
         foreach (var evt in npcEvents)
         {
             if (evt.timedImages == null) continue;
@@ -233,30 +235,39 @@ public class NPCInteraction : Interactable
         isInteracting = false;
         interactionCompleted = true;
 
-        // Enable player movement
-        MovementStateManager.canMove = true;
-        MovementStateManager.canRotate = true;
+        if (playerMovement != null)
+        {
+            if (playerMovement.anim != null)
+            {
+                playerMovement.anim.SetBool("isTalking", false);
+                playerMovement.anim.SetBool("Walking", false);
+                playerMovement.anim.SetFloat("hzInput", 0f);
+                playerMovement.anim.SetFloat("vInput", 0f);
+            }
 
-        // Camera switch back
+            playerMovement.LockMovement(false);
+        }
+        else
+        {
+            MovementStateManager.canMove = true;
+            MovementStateManager.canRotate = true;
+        }
+
         if (playerCam != null && npcCam != null)
         {
             playerCam.Priority = 10;
             npcCam.Priority = 0;
         }
 
-        // Stop animations
         if (currentNPCEvent != null && currentNPCEvent.talkingSequence != null)
             currentNPCEvent.talkingSequence.StopSequence();
 
-        // Stop audio
         if (audioSource != null && audioSource.isPlaying)
             audioSource.Stop();
 
-        // Hide dialogue canvas immediately
         if (dialogueCanvas != null)
             dialogueCanvas.SetActive(false);
 
-        // Hide timed images
         if (currentNPCEvent != null && currentNPCEvent.timedImages != null)
         {
             foreach (var entry in currentNPCEvent.timedImages)
@@ -266,7 +277,6 @@ public class NPCInteraction : Interactable
             }
         }
 
-        // Fade player UI back in ONLY if NOT loading a new scene
         if (!loadSceneAfterInteraction && playerUICanvasGroup != null)
         {
             StopAllCoroutines();
@@ -276,15 +286,12 @@ public class NPCInteraction : Interactable
         if (canvas != null)
             canvas.SetActive(false);
 
-        // Trigger finished event if assigned
         if (eventManager != null && currentNPCEvent != null && currentNPCEvent.finishedEvent != null)
             eventManager.CompleteEvent(currentNPCEvent.finishedEvent);
 
-        // Walk after interaction
         if (walkAfterInteraction && waypoints != null && waypoints.Length > 0)
             StartCoroutine(StartWalkWithDelay());
 
-        // Optional scene load after NPC interaction
         if (loadSceneAfterInteraction && !string.IsNullOrEmpty(sceneToLoad))
         {
             StartCoroutine(LoadSceneAfterDialogueFinished());
@@ -292,8 +299,6 @@ public class NPCInteraction : Interactable
 
         UnlockInteraction();
     }
-
-    // =============================== WALKING LOGIC ===============================
 
     private IEnumerator StartWalkWithDelay()
     {
@@ -349,8 +354,6 @@ public class NPCInteraction : Interactable
         isWalking = false;
     }
 
-    // =============================== HELPER METHODS ===============================
-
     private void FaceEachOther()
     {
         if (playerTransform == null) return;
@@ -399,13 +402,11 @@ public class NPCInteraction : Interactable
 
     private IEnumerator LoadSceneAfterDialogueFinished()
     {
-        // Wait until audio is completely finished
         while (audioSource != null && audioSource.isPlaying)
         {
             yield return null;
         }
 
-        // Wait until talking animation is completely finished
         if (currentNPCEvent != null && currentNPCEvent.talkingSequence != null)
         {
             while (currentNPCEvent.talkingSequence.IsPlaying)
@@ -414,10 +415,8 @@ public class NPCInteraction : Interactable
             }
         }
 
-        // Extra configurable delay
         yield return new WaitForSeconds(sceneLoadDelay);
 
-        // Now load scene safely
         if (SceneFadeIn.instance != null)
         {
             SceneFadeIn.instance.FadeOutAndLoadScene(sceneToLoad);
