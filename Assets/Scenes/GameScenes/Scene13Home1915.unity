@@ -35470,6 +35470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1423189617445473020}
   - component: {fileID: 1768788505370873927}
+  - component: {fileID: 1768788505370873928}
   m_Layer: 0
   m_Name: LampTall
   m_TagString: Untagged
@@ -35494,6 +35495,29 @@ MonoBehaviour:
   flickerAmount: 0.1
   flickerSpeed: 5
   randomFlicker: 1
+--- !u!136 &1768788505370873928
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768788505370873926}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25734365
+  m_Height: 2.3064125
+  m_Direction: 1
+  m_Center: {x: -0.17194319, y: 0.6532052, z: -0.07071316}
 --- !u!1 &1794315485520603447
 GameObject:
   m_ObjectHideFlags: 0
