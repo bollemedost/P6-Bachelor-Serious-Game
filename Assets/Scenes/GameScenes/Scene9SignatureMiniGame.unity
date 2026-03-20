@@ -18980,10 +18980,14 @@ MonoBehaviour:
     timedImages:
     - timeStamp: 0
       dialogueImageObject: {fileID: 2054110773}
-    - timeStamp: 1
+    - timeStamp: 1.5
       dialogueImageObject: {fileID: 1392698207}
-    - timeStamp: 2
+    - timeStamp: 3.5
       dialogueImageObject: {fileID: 1858005265}
+    - timeStamp: 7
+      dialogueImageObject: {fileID: 1238334802}
+    - timeStamp: 12
+      dialogueImageObject: {fileID: 1420442154}
     givesSignature: 0
   currentEvent: {fileID: 11400000, guid: 51a02397b746144409eb0791e5cbecb7, type: 2}
   playerCam: {fileID: 1216436767}
@@ -20883,7 +20887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.742754, y: 36.49953}
+  m_AnchoredPosition: {x: -20.742754, y: 54.7}
   m_SizeDelta: {x: 168.01382, y: 23.4281}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &424524768
@@ -20908,8 +20912,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Johanne Meyer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -25431,7 +25435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.742754, y: 36.49953}
+  m_AnchoredPosition: {x: -20.742754, y: 35.8}
   m_SizeDelta: {x: 168.01382, y: 23.4281}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &573260013
@@ -25456,8 +25460,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Johanne Meyer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -25803,7 +25807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.742754, y: 36.49953}
+  m_AnchoredPosition: {x: -20.742754, y: 35.8}
   m_SizeDelta: {x: 168.01382, y: 23.4281}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &587693749
@@ -25828,8 +25832,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Johanne Meyer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -25904,6 +25908,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587693747}
+  m_CullTransparentMesh: 1
+--- !u!1 &589848144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 589848145}
+  - component: {fileID: 589848147}
+  - component: {fileID: 589848146}
+  m_Layer: 5
+  m_Name: Image (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &589848145
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589848144}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00002861023}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1420442155}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -20.679008, y: 53.5}
+  m_SizeDelta: {x: 41.358, y: 32.5526}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &589848146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589848144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c8fada77d08cf4b64b1c1609d5a3c4e6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &589848147
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589848144}
   m_CullTransparentMesh: 1
 --- !u!1 &589908689
 GameObject:
@@ -29498,7 +29577,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694603591}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.20000002, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -29506,8 +29585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.882002, y: -9.730196}
-  m_SizeDelta: {x: 424.0257, y: 41.4178}
+  m_AnchoredPosition: {x: -1.3, y: -3}
+  m_SizeDelta: {x: 411.04028, y: 41.4178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &694603593
 MonoBehaviour:
@@ -29530,10 +29609,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Jutta har allerede pr\xE6senteret mig for underskriftsindsamlingen og
-    jeg skrev under i sidste uge"
+    jeg skrev under i sidste uge."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -42482,7 +42561,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.882002, y: -9.730196}
+  m_AnchoredPosition: {x: -0.4, y: -9.730196}
   m_SizeDelta: {x: 424.0257, y: 41.4178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &960592134
@@ -42506,10 +42585,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Jeg indsamler underskrifter s\xE5 kvinder kan f\xE5 stemmeret, har de
-    lyst til at give deres?"
+    lyst til at give deres stemme?"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -45577,6 +45656,7 @@ RectTransform:
   - {fileID: 1858005266}
   - {fileID: 1238334803}
   - {fileID: 1420442155}
+  - {fileID: 1704360649}
   m_Father: {fileID: 543450653360868004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -45879,9 +45959,9 @@ MonoBehaviour:
     timedImages:
     - timeStamp: 0
       dialogueImageObject: {fileID: 214794074}
-    - timeStamp: 5
+    - timeStamp: 4
       dialogueImageObject: {fileID: 995290505}
-    - timeStamp: 8
+    - timeStamp: 6
       dialogueImageObject: {fileID: 526970799}
     givesSignature: 0
   currentEvent: {fileID: 11400000, guid: ad940e57fe0c1744aa48da986113e002, type: 2}
@@ -46009,8 +46089,8 @@ MonoBehaviour:
     bodyAnim: 0
   - time: 4
     bodyAnim: 3
-  - time: 10
-    bodyAnim: 0
+  - time: 6
+    bodyAnim: 3
 --- !u!136 &1045831047
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -59753,7 +59833,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.742754, y: 36.49953}
+  m_AnchoredPosition: {x: -20.742754, y: 35.8}
   m_SizeDelta: {x: 168.01382, y: 23.4281}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1349665233
@@ -59778,8 +59858,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Agnes
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -60582,7 +60662,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dav hvem er de?
+  m_text: Dav, hvem er de?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -67629,14 +67709,15 @@ RectTransform:
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 589848145}
   - {fileID: 694603592}
   - {fileID: 424524767}
   m_Father: {fileID: 1043542589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -158.1}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: -152.58937}
+  m_SizeDelta: {x: 100, y: 111.0213}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1420442156
 MonoBehaviour:
@@ -67658,7 +67739,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 30f758b012be244e69d0585153a24a75, type: 3}
+  m_Texture: {fileID: 2800000, guid: 4bbc9198147954440af575a0f00f5da9, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -68705,7 +68786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.882002, y: -9.730196}
+  m_AnchoredPosition: {x: -0, y: -9.730196}
   m_SizeDelta: {x: 424.0257, y: 41.4178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1456249917
@@ -68731,8 +68812,8 @@ MonoBehaviour:
   m_text: "Jeg er kvindesagsfork\xE6mper og jeg k\xE6mper hver dag for at vi f\xE5r
     stemmeret."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -69477,9 +69558,9 @@ MonoBehaviour:
     timedImages:
     - timeStamp: 0
       dialogueImageObject: {fileID: 658388693}
-    - timeStamp: 5
+    - timeStamp: 4
       dialogueImageObject: {fileID: 1293225593}
-    - timeStamp: 10
+    - timeStamp: 9
       dialogueImageObject: {fileID: 1017400342}
     givesSignature: 0
   currentEvent: {fileID: 11400000, guid: 2c2aee9d42990c540bf7a1034bf74030, type: 2}
@@ -69510,8 +69591,8 @@ MonoBehaviour:
     bodyAnim: 0
   - time: 4
     bodyAnim: 3
-  - time: 13
-    bodyAnim: 0
+  - time: 9
+    bodyAnim: 3
 --- !u!82 &1485194698
 AudioSource:
   m_ObjectHideFlags: 0
@@ -72626,7 +72707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.882002, y: -9.730196}
+  m_AnchoredPosition: {x: -0, y: -8.3}
   m_SizeDelta: {x: 424.0257, y: 41.4178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1631137575
@@ -72649,10 +72730,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Goddag jeg er Johanne Meyer '
+  m_text: 'Goddag. Jeg er Johanne Meyer. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
+  m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -75467,6 +75548,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b1f5df36f9e8114c88a262a50be4d37, type: 3}
   m_PrefabInstance: {fileID: 1701851467}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1704360648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1704360649}
+  - component: {fileID: 1704360651}
+  - component: {fileID: 1704360650}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1704360649
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704360648}
+  m_LocalRotation: {x: -0, y: 0.5685619, z: -0, w: 0.82264054}
+  m_LocalPosition: {x: 0, y: 0, z: -1.7386246}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1043542589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -415.81854, y: -224.79842}
+  m_SizeDelta: {x: 41.358, y: 32.5526}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1704360650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704360648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c8fada77d08cf4b64b1c1609d5a3c4e6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1704360651
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704360648}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1705300805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -86337,6 +86493,8 @@ MonoBehaviour:
       bodyAnim: 3
     - time: 4
       bodyAnim: 0
+    - time: 6
+      bodyAnim: 0
   - gameEvent: {fileID: 11400000, guid: 4503b04fdeb86a94f969e1bb03b2f302, type: 2}
     sequence:
     - time: 0
@@ -86421,11 +86579,11 @@ MonoBehaviour:
     sequence:
     - time: 0
       bodyAnim: 3
-    - time: 2
+    - time: 1.5
       bodyAnim: 0
-    - time: 3
+    - time: 3.5
       bodyAnim: 3
-    - time: 8
+    - time: 7
       bodyAnim: 0
 --- !u!95 &1900624934 stripped
 Animator:
@@ -107446,14 +107604,12 @@ MonoBehaviour:
   sequence:
   - time: 0
     bodyAnim: 0
-  - time: 1
+  - time: 1.5
     bodyAnim: 3
-  - time: 3
+  - time: 3.5
     bodyAnim: 0
   - time: 7
     bodyAnim: 3
-  - time: 16
-    bodyAnim: 0
 --- !u!136 &5866666021711679712
 CapsuleCollider:
   m_ObjectHideFlags: 0
