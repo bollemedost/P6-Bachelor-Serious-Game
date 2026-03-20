@@ -4,7 +4,7 @@ using System.Collections;
 [System.Serializable]
 public class AnimationStep
 {
-    public string triggerName; // Animator Trigger name
+    public string triggerName; // Animator state name
     public float duration = 4f; // How long this animation lasts before moving to next
 }
 
@@ -15,21 +15,22 @@ public class NPCConversation : MonoBehaviour
     public AnimationStep[] animationSequence; // Ordered sequence of animations
 
     [Header("Audio Settings")]
-    public AudioSource audioSource; // Assign looping conversation audio
+    public AudioSource audioSource; // Assign conversation audio
     public Transform player;        // Assign the player transform
-    public float hearingDistance = 15f; // Distance where audio fades in
-    public float fadeSpeed = 2f;        // Speed of audio fade
+    public float hearingDistance = 15f; // Distance where audio starts
+    public float fadeSpeed = 2f;        // Optional fade-in speed
 
-    private float targetVolume;
+    private bool hasPlayed = false;
+    private float targetVolume = 0f;
 
     void Start()
     {
-        if(audioSource != null)
+        if (audioSource != null)
         {
-            audioSource.loop = true;
-            audioSource.playOnAwake = false;
+            audioSource.loop = false;          // Do not repeat
+            audioSource.playOnAwake = false;   // Do not start automatically
             audioSource.pitch = Random.Range(0.95f, 1.05f);
-            audioSource.volume = 0f;
+            audioSource.volume = 0f;           // Start silent for fade-in
         }
 
         StartCoroutine(PlaySequence());
@@ -37,32 +38,42 @@ public class NPCConversation : MonoBehaviour
 
     void Update()
     {
-        if(player == null || audioSource == null) return;
+        if (player == null || audioSource == null || audioSource.clip == null)
+            return;
 
         float distance = Vector3.Distance(player.position, transform.position);
-        targetVolume = (distance <= hearingDistance) ? 1f : 0f;
 
-        // Smoothly fade volume
-        audioSource.volume = Mathf.MoveTowards(audioSource.volume, targetVolume, fadeSpeed * Time.deltaTime);
-
-        if(audioSource.volume > 0 && !audioSource.isPlaying)
+        // Start the audio only once when player gets close enough
+        if (distance <= hearingDistance && !hasPlayed)
+        {
             audioSource.Play();
+            hasPlayed = true;
+            targetVolume = 1f;
+        }
 
-        if(audioSource.volume == 0 && targetVolume == 0 && audioSource.isPlaying)
-            audioSource.Stop();
+        // Fade in only while the sound is playing
+        if (audioSource.isPlaying)
+        {
+            audioSource.volume = Mathf.MoveTowards(
+                audioSource.volume,
+                targetVolume,
+                fadeSpeed * Time.deltaTime
+            );
+        }
     }
 
-   IEnumerator PlaySequence()
+    IEnumerator PlaySequence()
     {
-        if(animationSequence.Length == 0) yield break;
+        if (animationSequence == null || animationSequence.Length == 0)
+            yield break;
 
         int index = 0;
 
-        while(true)
+        while (true)
         {
             AnimationStep step = animationSequence[index];
 
-            if(animator != null && !string.IsNullOrEmpty(step.triggerName))
+            if (animator != null && !string.IsNullOrEmpty(step.triggerName))
             {
                 // Smoothly blend into the next animation
                 animator.CrossFade(step.triggerName, 0.2f);
