@@ -18495,17 +18495,17 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: d09507b1b062c48f4830bbf9cfaef126, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.3822129
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -18624,7 +18624,7 @@ MonoBehaviour:
     duration: 20
   audioSource: {fileID: 1116011664}
   player: {fileID: 1776723295}
-  hearingDistance: 15
+  hearingDistance: 3
   fadeSpeed: 2
 --- !u!1 &1132975197
 GameObject:
