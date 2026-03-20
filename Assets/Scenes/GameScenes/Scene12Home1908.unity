@@ -51086,6 +51086,18 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+      propertyPath: soundDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 8629722530419432785}
+    - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+      propertyPath: interactClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a84f19e9e3407458eb55bb482a4e79a7, type: 3}
+    - target: {fileID: 8883867834410579427, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
       propertyPath: playerUICanvasGroup
       value: 
       objectReference: {fileID: 1595699400}
@@ -51102,6 +51114,11 @@ PrefabInstance:
       addedObject: {fileID: 451022781}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+--- !u!82 &8629722530419432785 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9122997286641992746, guid: 9e967fba44c6eb443a5a172492b6c2a9, type: 3}
+  m_PrefabInstance: {fileID: 8629722530419432784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8644043684213373925
 Transform:
   m_ObjectHideFlags: 0
