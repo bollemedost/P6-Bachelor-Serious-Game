@@ -18975,7 +18975,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 51a02397b746144409eb0791e5cbecb7, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
+    dialogueClip: {fileID: 8300000, guid: b268ee7089e6a43f3b58008a0090ba8d, type: 3}
     talkingSequence: {fileID: 5866666021711679711}
     timedImages:
     - timeStamp: 0
@@ -32389,7 +32389,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 5b920a1cd008ec84dac3301db6624a0a, type: 2}
-    dialogueClip: {fileID: 8300000, guid: be5d0582cf1784202a5990a0b362ab5b, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 4bcb3b283aa054f339ec129c3b8e3b1f, type: 3}
     talkingSequence: {fileID: 830344237}
     timedImages:
     - timeStamp: 0
@@ -32428,8 +32428,14 @@ MonoBehaviour:
   animator: {fileID: 5866666021086998969}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 2
     bodyAnim: 3
-  - time: 5
+  - time: 7
+    bodyAnim: 0
+  - time: 11
+    bodyAnim: 3
+  - time: 21
     bodyAnim: 0
 --- !u!82 &830344238
 AudioSource:
@@ -34209,8 +34215,10 @@ MonoBehaviour:
   animator: {fileID: 871678018}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 4
     bodyAnim: 3
-  - time: 3
+  - time: 9
     bodyAnim: 0
 --- !u!114 &871678016
 MonoBehaviour:
@@ -34229,7 +34237,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: f6543ad33cff0f74e96ecc6ec49d0488, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 85fd91cb064424c57a91a329c80dc94e, type: 3}
+    dialogueClip: {fileID: 8300000, guid: db5d1d52f502e417785e7f50d53bc037, type: 3}
     talkingSequence: {fileID: 871678015}
     timedImages:
     - timeStamp: 0
@@ -44148,7 +44156,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 357246c93d5a49d4d90d38e4927877b8, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 40d55d6ebc4d5468abe8dfcc966296b2, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 3463967b2a20e4ac0847ac4024896352, type: 3}
     talkingSequence: {fileID: 989485855}
     timedImages:
     - timeStamp: 0
@@ -44181,8 +44189,10 @@ MonoBehaviour:
   animator: {fileID: 989485858}
   sequence:
   - time: 0
-    bodyAnim: 3
+    bodyAnim: 0
   - time: 3
+    bodyAnim: 3
+  - time: 6
     bodyAnim: 0
 --- !u!82 &989485856
 AudioSource:
@@ -45864,7 +45874,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: ad940e57fe0c1744aa48da986113e002, type: 2}
-    dialogueClip: {fileID: 8300000, guid: c175b0c245453453087486db62e829a3, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 1db19bcc200db47f4b67d69fa4cea47b, type: 3}
     talkingSequence: {fileID: 1045831046}
     timedImages:
     - timeStamp: 0
@@ -45996,8 +46006,10 @@ MonoBehaviour:
   animator: {fileID: 1045831048}
   sequence:
   - time: 0
-    bodyAnim: 3
+    bodyAnim: 0
   - time: 4
+    bodyAnim: 3
+  - time: 10
     bodyAnim: 0
 --- !u!136 &1045831047
 CapsuleCollider:
@@ -69460,7 +69472,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 2c2aee9d42990c540bf7a1034bf74030, type: 2}
-    dialogueClip: {fileID: 8300000, guid: bab75a22b7c5e4e31875969757b35b2b, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 13819654cbab84b7399878b9bf85e8c1, type: 3}
     talkingSequence: {fileID: 1485194697}
     timedImages:
     - timeStamp: 0
@@ -69495,8 +69507,10 @@ MonoBehaviour:
   animator: {fileID: 5866666020424841298}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 4
     bodyAnim: 3
-  - time: 5
+  - time: 13
     bodyAnim: 0
 --- !u!82 &1485194698
 AudioSource:
@@ -81412,7 +81426,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: c92fc3923b1e0fd40953d464642d026f, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 621105a2863284d5eb65720c6c2d732c, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 4e1db5a856444429fac1b3dd439debac, type: 3}
     talkingSequence: {fileID: 1747183857}
     timedImages:
     - timeStamp: 0
@@ -81447,8 +81461,10 @@ MonoBehaviour:
   animator: {fileID: 1747183860}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 4
     bodyAnim: 3
-  - time: 3
+  - time: 15
     bodyAnim: 0
 --- !u!82 &1747183858
 AudioSource:
@@ -81765,8 +81781,10 @@ MonoBehaviour:
   animator: {fileID: 1750116643}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 4
     bodyAnim: 3
-  - time: 3
+  - time: 6
     bodyAnim: 0
 --- !u!114 &1750116641
 MonoBehaviour:
@@ -81785,7 +81803,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 24caf623dc42e3340b2ec7231a5fb1b0, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 0422049412a824a159bffb8dfce7046b, type: 3}
+    dialogueClip: {fileID: 8300000, guid: f13aa20bd2a934242a299e3f8adb951b, type: 3}
     talkingSequence: {fileID: 1750116640}
     timedImages:
     - timeStamp: 0
@@ -86311,16 +86329,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 1900624934}
   talkingEvents:
-  - gameEvent: {fileID: 11400000, guid: 915ed39d43e5b9146bae2a1862e87bf4, type: 2}
+  - gameEvent: {fileID: 11400000, guid: 357246c93d5a49d4d90d38e4927877b8, type: 2}
     sequence:
     - time: 0
+      bodyAnim: 3
+    - time: 4
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 4503b04fdeb86a94f969e1bb03b2f302, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 2
       bodyAnim: 0
     - time: 5
       bodyAnim: 3
-    - time: 6
+    - time: 11
       bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 55119c98cbed69740ba07930f597c167, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 2
+      bodyAnim: 0
+    - time: 5
+      bodyAnim: 3
+    - time: 11
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 5bbea58a2bd39c94f9682fe3bf6c39ff, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 2
+      bodyAnim: 0
+    - time: 3
+      bodyAnim: 3
+    - time: 9
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 24caf623dc42e3340b2ec7231a5fb1b0, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 4
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: c92fc3923b1e0fd40953d464642d026f, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 4
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: ad940e57fe0c1744aa48da986113e002, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 4
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 5b920a1cd008ec84dac3301db6624a0a, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 2
+      bodyAnim: 0
+    - time: 6
+      bodyAnim: 3
+    - time: 11
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 2c2aee9d42990c540bf7a1034bf74030, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 4
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 2697479fb5ccd174bbd03f0727576f55, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 2
+      bodyAnim: 0
+    - time: 4
+      bodyAnim: 3
+    - time: 8
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: f6543ad33cff0f74e96ecc6ec49d0488, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 4
+      bodyAnim: 0
+  - gameEvent: {fileID: 11400000, guid: 51a02397b746144409eb0791e5cbecb7, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 2
+      bodyAnim: 0
+    - time: 3
+      bodyAnim: 3
+    - time: 8
+      bodyAnim: 0
+--- !u!95 &1900624934 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
+  m_PrefabInstance: {fileID: 1900624930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1907905373
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93212,7 +93323,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 55119c98cbed69740ba07930f597c167, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 4a60c028f37ac42d9b88253bddc83478, type: 3}
+    dialogueClip: {fileID: 8300000, guid: e20be0c3e13314e3f90754afc7836610, type: 3}
     talkingSequence: {fileID: 2134205826}
     timedImages:
     - timeStamp: 0
@@ -93346,8 +93457,14 @@ MonoBehaviour:
   animator: {fileID: 5866666019916208365}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 1
     bodyAnim: 3
-  - time: 4
+  - time: 6
+    bodyAnim: 0
+  - time: 10
+    bodyAnim: 3
+  - time: 18
     bodyAnim: 0
 --- !u!1001 &2134648482
 PrefabInstance:
@@ -105208,7 +105325,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 5bbea58a2bd39c94f9682fe3bf6c39ff, type: 2}
-    dialogueClip: {fileID: 8300000, guid: 802fb24fed8a24190ae76beb2ea67f3c, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 6dbca341bdf154a1b8cf97f69cbfc721, type: 3}
     talkingSequence: {fileID: 5159130380621331344}
     timedImages:
     - timeStamp: 0
@@ -105264,8 +105381,14 @@ MonoBehaviour:
   animator: {fileID: 5159130380621331342}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 1
     bodyAnim: 3
-  - time: 4
+  - time: 3
+    bodyAnim: 0
+  - time: 8
+    bodyAnim: 3
+  - time: 22
     bodyAnim: 0
 --- !u!82 &5159130380621331345
 AudioSource:
@@ -106393,7 +106516,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 4503b04fdeb86a94f969e1bb03b2f302, type: 2}
-    dialogueClip: {fileID: 8300000, guid: cc2a8c6fe1f0246199b51d225ca6f36d, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 5fa133f2983ce49bba1b805e35568196, type: 3}
     talkingSequence: {fileID: 5664476922943883186}
     timedImages:
     - timeStamp: 0
@@ -106432,8 +106555,14 @@ MonoBehaviour:
   animator: {fileID: 5664476922943883184}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 2
     bodyAnim: 3
-  - time: 3
+  - time: 6
+    bodyAnim: 0
+  - time: 10
+    bodyAnim: 3
+  - time: 20
     bodyAnim: 0
 --- !u!82 &5664476922943883187
 AudioSource:
@@ -106788,7 +106917,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 2697479fb5ccd174bbd03f0727576f55, type: 2}
-    dialogueClip: {fileID: 8300000, guid: d8493a6b2ec3c4290bc6573764c3e34a, type: 3}
+    dialogueClip: {fileID: 8300000, guid: 9c29840cb385748c0bb19e7d6fe59a14, type: 3}
     talkingSequence: {fileID: 5706976114696757742}
     timedImages:
     - timeStamp: 0
@@ -106827,8 +106956,14 @@ MonoBehaviour:
   animator: {fileID: 1340028636810322220}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 2
     bodyAnim: 3
-  - time: 3
+  - time: 4
+    bodyAnim: 0
+  - time: 8
+    bodyAnim: 3
+  - time: 18
     bodyAnim: 0
 --- !u!82 &5706976114696757743
 AudioSource:
@@ -107310,8 +107445,14 @@ MonoBehaviour:
   animator: {fileID: 5866666021711679710}
   sequence:
   - time: 0
+    bodyAnim: 0
+  - time: 1
     bodyAnim: 3
   - time: 3
+    bodyAnim: 0
+  - time: 7
+    bodyAnim: 3
+  - time: 16
     bodyAnim: 0
 --- !u!136 &5866666021711679712
 CapsuleCollider:
