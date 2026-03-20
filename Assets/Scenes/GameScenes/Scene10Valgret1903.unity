@@ -428,9 +428,11 @@ MonoBehaviour:
   animator: {fileID: 19352439}
   sequence:
   - time: 0
-    bodyAnim: 3
-  - time: 4
     bodyAnim: 0
+  - time: 3
+    bodyAnim: 3
+  - time: 8
+    bodyAnim: 3
 --- !u!114 &19352437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45240,11 +45242,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1646765437}
   talkingEvents:
-  - gameEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+  - gameEvent: {fileID: 11400000, guid: dd5361a9a9447524c87fbb63d9524175, type: 2}
     sequence:
     - time: 0
       bodyAnim: 3
-    - time: 6
+    - time: 3
+      bodyAnim: 0
+    - time: 8
       bodyAnim: 0
 --- !u!95 &1646765437
 Animator:
