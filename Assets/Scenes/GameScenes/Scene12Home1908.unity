@@ -16938,11 +16938,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   talkingEvents:
-  - gameEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+  - gameEvent: {fileID: 11400000, guid: 5b612d649608b0a459568af7e5bc545e, type: 2}
     sequence:
     - time: 0
-      bodyAnim: 3
+      bodyAnim: 0
     - time: 6
+      bodyAnim: 3
+    - time: 23
       bodyAnim: 0
   - gameEvent: {fileID: 11400000, guid: 5dbf83b90cbd3a44b85268ab294f66c8, type: 2}
     sequence:
@@ -30618,15 +30620,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: sequence.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
-      propertyPath: sequence.Array.data[2].time
+      propertyPath: sequence.Array.data[1].time
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[2].time
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: sequence.Array.data[3].time
-      value: 10
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[4].time
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[5].time
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[6].time
+      value: 17.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[7].time
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[8].time
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[9].time
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[10].time
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[11].time
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[1].bodyAnim
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: sequence.Array.data[2].bodyAnim
@@ -30635,6 +30677,18 @@ PrefabInstance:
     - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: sequence.Array.data[3].bodyAnim
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[8].bodyAnim
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[9].bodyAnim
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474027117999322685, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: sequence.Array.data[10].bodyAnim
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: fadeDelay
