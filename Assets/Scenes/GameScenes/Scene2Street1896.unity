@@ -19337,7 +19337,7 @@ MonoBehaviour:
   interactionCooldown: 40
   audioSource: {fileID: 567265124}
   giveMoneyClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
-  firstTimeDialogueClip: {fileID: 8300000, guid: b1e1298168847494e93a207eb7f58c32, type: 3}
+  firstTimeDialogueClip: {fileID: 8300000, guid: 610c412f637e1479cb634f66b676dd24, type: 3}
 --- !u!82 &567265124
 AudioSource:
   m_ObjectHideFlags: 0
@@ -53161,9 +53161,9 @@ MonoBehaviour:
     sequence:
     - time: 0
       bodyAnim: 0
-    - time: 5
+    - time: 4
       bodyAnim: 3
-    - time: 8
+    - time: 6
       bodyAnim: 0
 --- !u!95 &1900624934 stripped
 Animator:
@@ -53190,11 +53190,11 @@ MonoBehaviour:
       bodyAnim: 0
     - time: 2
       bodyAnim: 3
-    - time: 6
+    - time: 8
       bodyAnim: 0
-    - time: 20
+    - time: 21
       bodyAnim: 3
-    - time: 27
+    - time: 29
       bodyAnim: 0
   - gameEvent: {fileID: 11400000, guid: 240b2cd614ebedc4883591a132b6aac9, type: 2}
     sequence:
@@ -66544,7 +66544,7 @@ MonoBehaviour:
       dialogueImageObject: {fileID: 1369986568}
     - timeStamp: 18.5
       dialogueImageObject: {fileID: 597310807}
-    - timeStamp: 21
+    - timeStamp: 20
       dialogueImageObject: {fileID: 267903749}
   currentEvent: {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
   playerCam: {fileID: 1216436767}
