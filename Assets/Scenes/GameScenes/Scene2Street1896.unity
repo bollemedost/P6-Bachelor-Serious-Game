@@ -38669,9 +38669,6 @@ PrefabInstance:
       addedObject: {fileID: 1753613749}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1753613748}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1753613750}
   m_SourcePrefab: {fileID: 100100000, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
 --- !u!1001 &1351965196
@@ -43689,9 +43686,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1681915432}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1681915431}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
       insertIndex: -1
@@ -43705,11 +43699,6 @@ Transform:
 --- !u!1 &1681915429 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
-  m_PrefabInstance: {fileID: 1681915427}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1681915430 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
   m_PrefabInstance: {fileID: 1681915427}
   m_PrefabAsset: {fileID: 0}
 --- !u!136 &1681915431
@@ -43735,24 +43724,6 @@ CapsuleCollider:
   m_Height: 5.2163167
   m_Direction: 1
   m_Center: {x: 0.08037776, y: 2.108157, z: -1.0092571e-10}
---- !u!114 &1681915432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681915429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cdeff1b5e2c2ef42947779c5d35c8d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1681915430}
-  animationSequence: []
-  audioSource: {fileID: 1681915433}
-  player: {fileID: 569178096}
-  hearingDistance: 3
-  fadeSpeed: 2
 --- !u!82 &1681915433
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43764,7 +43735,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 0a2e05f128ebc43808035c4a97d54925, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -45858,40 +45829,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
   m_PrefabInstance: {fileID: 1345583215}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1753613746 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
-  m_PrefabInstance: {fileID: 1345583215}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1753613747 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6a4d078fafc711944a63efdab00469b8, type: 3}
   m_PrefabInstance: {fileID: 1345583215}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1753613748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753613745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cdeff1b5e2c2ef42947779c5d35c8d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 1753613746}
-  animationSequence:
-  - triggerName: SitIdle
-    duration: 2
-  - triggerName: SitTalk1
-    duration: 8
-  - triggerName: SitAngry
-    duration: 3
-  audioSource: {fileID: 1753613749}
-  player: {fileID: 569178096}
-  hearingDistance: 3
-  fadeSpeed: 2
 --- !u!82 &1753613749
 AudioSource:
   m_ObjectHideFlags: 0
@@ -60004,6 +59946,7 @@ MonoBehaviour:
   introDuration: 1
   blendDuration: 1.5
   rotationUnlockDelay: 0.1
+  introAudio: {fileID: 0}
 --- !u!114 &2006807894
 MonoBehaviour:
   m_ObjectHideFlags: 0

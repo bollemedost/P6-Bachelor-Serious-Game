@@ -1252,7 +1252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinSlider: {fileID: 86670564}
-  maxCoins: 100
+  maxCoins: 1000
 --- !u!114 &86670564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7537,6 +7537,7 @@ MonoBehaviour:
   introDuration: 2
   blendDuration: 1.5
   rotationUnlockDelay: 0.1
+  introAudio: {fileID: 0}
 --- !u!114 &507731949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38660,6 +38661,7 @@ MonoBehaviour:
   npcCam: {fileID: 807747706914014515}
   playerTransform: {fileID: 1776723295}
   playerInteractionPoint: {fileID: 0}
+  playerMovement: {fileID: 0}
   dialogueCanvas: {fileID: 0}
   playerUICanvasGroup: {fileID: 51675424}
   fadeDuration: 0.5
