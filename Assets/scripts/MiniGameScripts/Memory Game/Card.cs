@@ -15,10 +15,24 @@ public class Card : MonoBehaviour
 
     public bool isSelected;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip flipSound;
+
+    private AudioSource audioSource;
+
     private void Awake()
     {
         if (iconImage == null)
             iconImage = GetComponentInChildren<Image>(true);
+
+        // Sørg for der er en AudioSource
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f; // 2D lyd (vigtigt!)
     }
 
     public void OnCardClick()
@@ -35,13 +49,28 @@ public class Card : MonoBehaviour
 
     public void Show()
     {
-        if (iconImage != null) iconImage.sprite = frontSprite;
+        if (iconImage != null)
+            iconImage.sprite = frontSprite;
+
         isSelected = true;
+
+        // 🔊 Spil flip-lyd
+        PlayFlipSound();
     }
 
     public void Hide()
     {
-        if (iconImage != null) iconImage.sprite = hiddenIconSprite;
+        if (iconImage != null)
+            iconImage.sprite = hiddenIconSprite;
+
         isSelected = false;
+    }
+
+    private void PlayFlipSound()
+    {
+        if (flipSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(flipSound);
+        }
     }
 }

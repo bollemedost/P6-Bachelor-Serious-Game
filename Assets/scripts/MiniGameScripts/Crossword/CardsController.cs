@@ -34,6 +34,11 @@ public class CardsController : MonoBehaviour
     [Tooltip("Assign your MinigameCompleteUI (canvas script) here.")]
     [SerializeField] private MinigameCompleteUI completeUI;
 
+    [Header("Match Audio")]
+    [SerializeField] private AudioClip correctMatchSound;
+    [SerializeField] private AudioClip wrongMatchSound;
+
+    private AudioSource audioSource;
     private int currentLevel = 0;
 
     [Header("Board")]
@@ -62,6 +67,14 @@ public class CardsController : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f; // 2D lyd
+
         StartLevel(0);
     }
 
@@ -154,8 +167,8 @@ public class CardsController : MonoBehaviour
         {
             matchesFound++;
 
-            // ADD COINS (GREEN)
             CoinManager.EnsureExists().AddCoin(coinsForCorrectMatch);
+            PlaySound(correctMatchSound);
 
             if (matchesFound >= GetExpectedMatchesThisLevel())
             {
@@ -165,8 +178,8 @@ public class CardsController : MonoBehaviour
         }
         else
         {
-            // REMOVE COINS (RED)
             CoinManager.EnsureExists().AddCoin(coinsForWrongMatch);
+            PlaySound(wrongMatchSound);
 
             if (a != null) a.Hide();
             if (b != null) b.Hide();
@@ -187,6 +200,7 @@ public class CardsController : MonoBehaviour
             if (pairList[i].spriteA != null && pairList[i].spriteB != null)
                 count++;
         }
+
         return count;
     }
 
@@ -223,6 +237,14 @@ public class CardsController : MonoBehaviour
         {
             int r = Random.Range(0, i + 1);
             (list[i], list[r]) = (list[r], list[i]);
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 }
