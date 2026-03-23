@@ -5596,7 +5596,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tak fadder - God arbejds lyst!
+  m_text: Tak fader. God arbejds lyst!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -16256,8 +16256,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Kvinderne k\xE6mper. Jeg ved det lykkedes. Men hvis de er fattige den
-    dag i f\xE5r stemmeret, vil de ikke blive i stand til at tage din rettighed i
-    brug."
+    dag i f\xE5r stemmeret, vil de ikke blive i stand til at tage deres rettighed
+    i brug."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -19322,15 +19322,15 @@ MonoBehaviour:
     uiObject: {fileID: 369323230}
   - timeStamp: 2
     uiObject: {fileID: 1468723186}
-  - timeStamp: 8.5
+  - timeStamp: 9
     uiObject: {fileID: 1238811658}
-  - timeStamp: 15
+  - timeStamp: 16
     uiObject: {fileID: 4350217}
-  - timeStamp: 23
+  - timeStamp: 24
     uiObject: {fileID: 2110801936}
-  - timeStamp: 27
+  - timeStamp: 29
     uiObject: {fileID: 127122163}
-  - timeStamp: 33.5
+  - timeStamp: 35
     uiObject: {fileID: 120737656}
   requiredCoins: 1
   maxDonations: 1
@@ -19491,6 +19491,7 @@ MonoBehaviour:
   gravity: -9.81
   anim: {fileID: 0}
   camTransform: {fileID: 1216436765}
+  footstepSource: {fileID: 0}
 --- !u!143 &569178095
 CharacterController:
   m_ObjectHideFlags: 0
@@ -53226,8 +53227,6 @@ MonoBehaviour:
       bodyAnim: 0
     - time: 4
       bodyAnim: 3
-    - time: 6
-      bodyAnim: 0
 --- !u!95 &1900624934 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
@@ -53251,14 +53250,12 @@ MonoBehaviour:
     sequence:
     - time: 0
       bodyAnim: 0
-    - time: 2
+    - time: 3
       bodyAnim: 3
-    - time: 8
+    - time: 7
       bodyAnim: 0
-    - time: 21
+    - time: 23
       bodyAnim: 3
-    - time: 29
-      bodyAnim: 0
   - gameEvent: {fileID: 11400000, guid: 240b2cd614ebedc4883591a132b6aac9, type: 2}
     sequence:
     - time: 0
@@ -62236,10 +62233,8 @@ MonoBehaviour:
     timedImages:
     - timeStamp: 0
       dialogueImageObject: {fileID: 1917208789}
-    - timeStamp: 6
+    - timeStamp: 4
       dialogueImageObject: {fileID: 233351459}
-    - timeStamp: 8
-      dialogueImageObject: {fileID: 0}
   currentEvent: {fileID: 11400000, guid: 18d0086acae5aa94b9b0077a238b7122, type: 2}
   playerCam: {fileID: 1216436767}
   npcCam: {fileID: 4273326914943661376}
@@ -64906,7 +64901,7 @@ MonoBehaviour:
   sequence:
   - time: 0
     bodyAnim: 3
-  - time: 5
+  - time: 4
     bodyAnim: 0
 --- !u!4 &3269079381470697891
 Transform:
@@ -66576,6 +66571,12 @@ MonoBehaviour:
   animator: {fileID: 5866666020583890490}
   sequence:
   - time: 0
+    bodyAnim: 3
+  - time: 3
+    bodyAnim: 0
+  - time: 7
+    bodyAnim: 3
+  - time: 23
     bodyAnim: 0
 --- !u!114 &5866666020583890492
 MonoBehaviour:
@@ -66604,11 +66605,11 @@ MonoBehaviour:
       dialogueImageObject: {fileID: 1848352511}
     - timeStamp: 7
       dialogueImageObject: {fileID: 2128256686}
-    - timeStamp: 14
+    - timeStamp: 15
       dialogueImageObject: {fileID: 1369986568}
-    - timeStamp: 18.5
-      dialogueImageObject: {fileID: 597310807}
     - timeStamp: 20
+      dialogueImageObject: {fileID: 597310807}
+    - timeStamp: 23
       dialogueImageObject: {fileID: 267903749}
   currentEvent: {fileID: 11400000, guid: 9d22de549db1f554bb2b8830f10daa02, type: 2}
   playerCam: {fileID: 1216436767}
