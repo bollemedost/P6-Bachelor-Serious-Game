@@ -31,6 +31,9 @@ public class MovementStateManager : MonoBehaviour
 
     private bool isLocked = false;
 
+    [Header("Footsteps")]
+    public AudioSource footstepSource;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -83,37 +86,16 @@ public class MovementStateManager : MonoBehaviour
         {
             dir = Vector3.zero;
             moveInput = Vector2.zero;
-
-            if (anim != null)
-            {
-                anim.SetFloat("hzInput", 0f);
-                anim.SetFloat("vInput", 0f);
-
-                if (HasBoolParameter("Walking"))
-                    anim.SetBool("Walking", false);
-            }
-
             return;
         }
 
         GetDirectionAndMove();
-
-        Vector3 localDir = transform.InverseTransformDirection(dir);
-
-        if (anim != null)
-        {
-            anim.SetFloat("hzInput", localDir.x);
-            anim.SetFloat("vInput", localDir.z);
-
-            if (HasBoolParameter("Walking"))
-                anim.SetBool("Walking", dir.magnitude > 0.1f);
-        }
-
         currentState.UpdateState(this);
     }
 
     public void SwitchState(MovementBaseState state)
     {
+        currentState.ExitState(this);
         currentState = state;
         currentState.EnterState(this);
     }
@@ -137,21 +119,32 @@ public class MovementStateManager : MonoBehaviour
         {
             Vector3 lookDir = dir.normalized;
             lookDir.y = 0;
+
             Quaternion targetRot = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(lookDir),
                 10f * Time.deltaTime
             );
+
             transform.rotation = targetRot;
         }
 
-        controller.Move(dir.normalized * moveSpeed * Time.deltaTime);
+        controller.Move(dir * moveSpeed * Time.deltaTime);
     }
 
     bool IsGrounded()
     {
-        spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
-        return Physics.CheckSphere(spherePos, controller.radius - 0.05f, groundMask);
+        spherePos = new Vector3(
+            transform.position.x,
+            transform.position.y - groundYOffset,
+            transform.position.z
+        );
+
+        return Physics.CheckSphere(
+            spherePos,
+            controller.radius - 0.05f,
+            groundMask
+        );
     }
 
     void ApplyGravity()
@@ -171,46 +164,12 @@ public class MovementStateManager : MonoBehaviour
         moveInput = Vector2.zero;
         dir = Vector3.zero;
 
-        if (locked)
+        canMove = !locked;
+        canRotate = !locked;
+
+        if (locked && footstepSource != null)
         {
-            canMove = false;
-            canRotate = false;
-
-            if (anim != null)
-            {
-                anim.SetFloat("hzInput", 0f);
-                anim.SetFloat("vInput", 0f);
-
-                if (HasBoolParameter("Walking"))
-                    anim.SetBool("Walking", false);
-            }
+            footstepSource.Stop();
         }
-        else
-        {
-            canMove = true;
-            canRotate = true;
-
-            if (anim != null)
-            {
-                anim.SetFloat("hzInput", 0f);
-                anim.SetFloat("vInput", 0f);
-
-                if (HasBoolParameter("Walking"))
-                    anim.SetBool("Walking", false);
-            }
-        }
-    }
-
-    private bool HasBoolParameter(string paramName)
-    {
-        if (anim == null) return false;
-
-        foreach (var param in anim.parameters)
-        {
-            if (param.name == paramName && param.type == AnimatorControllerParameterType.Bool)
-                return true;
-        }
-
-        return false;
     }
 }
