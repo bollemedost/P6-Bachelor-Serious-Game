@@ -25,6 +25,7 @@ public class slot : MonoBehaviour, IDropHandler
     public AudioSource audioSource;
     public AudioClip correctSound;
     public AudioClip wrongSound;
+    public AudioClip dropSound;
 
     [Tooltip("Delay før forkert lyd afspilles")]
     public float wrongSoundDelay = 0.2f;
@@ -44,40 +45,45 @@ public class slot : MonoBehaviour, IDropHandler
     public bool IsCorrectPlaced => isCorrectPlaced;
 
     public void OnDrop(PointerEventData eventData)
+{
+    if (transform.childCount != 0)
+        return;
+
+    GameObject dropped = eventData.pointerDrag;
+    draggableItemSpeach draggable = dropped.GetComponent<draggableItemSpeach>();
+
+    if (draggable == null)
+        return;
+
+    if (audioSource != null && dropSound != null)
     {
-        if (transform.childCount != 0)
-            return;
-
-        GameObject dropped = eventData.pointerDrag;
-        draggableItemSpeach draggable = dropped.GetComponent<draggableItemSpeach>();
-
-        if (draggable == null)
-            return;
-
-        RectTransform droppedRect = dropped.GetComponent<RectTransform>();
-
-        if (acceptAnyItem)
-        {
-            draggable.parentAfterDrag = transform;
-            ApplyItemTransform(droppedRect, anySlotScale);
-            return;
-        }
-
-        if (correctItemIDs.Contains(draggable.itemID))
-        {
-            draggable.parentAfterDrag = transform;
-            draggable.LockItem();
-
-            ApplyItemTransform(droppedRect, specificSlotScale);
-            HandleCorrect();
-        }
-        else
-        {
-            draggable.parentAfterDrag = draggable.originalParent;
-            ThrowTomato(droppedRect);
-            HandleWrong();
-        }
+        audioSource.PlayOneShot(dropSound);
     }
+
+    RectTransform droppedRect = dropped.GetComponent<RectTransform>();
+
+    if (acceptAnyItem)
+    {
+        draggable.parentAfterDrag = transform;
+        ApplyItemTransform(droppedRect, anySlotScale);
+        return;
+    }
+
+    if (correctItemIDs.Contains(draggable.itemID))
+    {
+        draggable.parentAfterDrag = transform;
+        draggable.LockItem();
+
+        ApplyItemTransform(droppedRect, specificSlotScale);
+        HandleCorrect();
+    }
+    else
+    {
+        draggable.parentAfterDrag = draggable.originalParent;
+        ThrowTomato(droppedRect);
+        HandleWrong();
+    }
+}
 
     void ApplyItemTransform(RectTransform rect, float scale)
     {
