@@ -5851,6 +5851,7 @@ MonoBehaviour:
   introDuration: 2
   blendDuration: 1.5
   rotationUnlockDelay: 0.1
+  introAudio: {fileID: 0}
 --- !u!114 &425426174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9564,7 +9565,7 @@ MonoBehaviour:
   npcAnimationDuration: 2
   audioSource: {fileID: 615389367}
   timedAudios:
-  - clip: {fileID: 8300000, guid: 4235f2ba888032d478553523c7b4dc86, type: 3}
+  - clip: {fileID: 8300000, guid: 0a2e05f128ebc43808035c4a97d54925, type: 3}
     time: 0
 --- !u!65 &615389369
 BoxCollider:
@@ -9585,8 +9586,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5742212, y: 1, z: 3.154476}
-  m_Center: {x: 0.24951227, y: 0, z: 1.480503}
+  m_Size: {x: 1.0162252, y: 1, z: 5.828867}
+  m_Center: {x: 0.4705142, y: 0, z: 2.8176985}
 --- !u!4 &615389370
 Transform:
   m_ObjectHideFlags: 0
@@ -9595,12 +9596,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615389366}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5276972, z: -0, w: 0.8494326}
-  m_LocalPosition: {x: -0.425193, y: 0.20499998, z: 2.0060437}
-  m_LocalScale: {x: 5.9264984, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.7847146, z: -0, w: 0.61985725}
+  m_LocalPosition: {x: 1.38, y: -0.34300232, z: 1.68}
+  m_LocalScale: {x: 5.9264994, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1329585353}
+  m_Father: {fileID: 1932810634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &616930094
 GameObject:
@@ -10473,7 +10474,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2918007061440450739, guid: b5721da6c3e1378438d1642232db8288, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: b5721da6c3e1378438d1642232db8288, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 615389370}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b5721da6c3e1378438d1642232db8288, type: 3}
       insertIndex: -1
@@ -35501,10 +35505,7 @@ PrefabInstance:
     - {fileID: 2719920459166767796, guid: e79511997858d1e4c9de7c01859df804, type: 3}
     - {fileID: 2594668544224757667, guid: e79511997858d1e4c9de7c01859df804, type: 3}
     - {fileID: 8961716110123167440, guid: e79511997858d1e4c9de7c01859df804, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 813651119607018072, guid: e79511997858d1e4c9de7c01859df804, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 615389370}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79511997858d1e4c9de7c01859df804, type: 3}
 --- !u!95 &1329585349 stripped
@@ -37794,13 +37795,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482090315}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.67, y: 0.20499998, z: 1.27}
+  m_LocalRotation: {x: -0, y: 0.63733125, z: -0, w: 0.77059}
+  m_LocalPosition: {x: 7.55, y: 0.20499998, z: -15.47}
   m_LocalScale: {x: 5.926499, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1922307291}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 79.186, z: 0}
 --- !u!82 &1482090317
 AudioSource:
   m_ObjectHideFlags: 0
@@ -37916,7 +37917,7 @@ MonoBehaviour:
   sceneToLoad: 
   waitForInteractionToFinish: 0
   playerAnimator: {fileID: 0}
-  playerTriggerName: Wave
+  playerTriggerName: 
   playerUpperBodyLayerName: UpperBody
   playerAnimationDuration: 2
   playerEarlyExitTime: 0.2
@@ -37927,7 +37928,7 @@ MonoBehaviour:
   npcAnimationDuration: 2
   audioSource: {fileID: 1482090317}
   timedAudios:
-  - clip: {fileID: 8300000, guid: 4235f2ba888032d478553523c7b4dc86, type: 3}
+  - clip: {fileID: 8300000, guid: 3e751d72d935a454fb7a693303db5419, type: 3}
     time: 0
 --- !u!65 &1482090319
 BoxCollider:
@@ -37948,8 +37949,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0006639, y: 1, z: 2.979399}
-  m_Center: {x: -0.00033259642, y: 0, z: 0.98969793}
+  m_Size: {x: 0.6877888, y: 1, z: 9.731659}
+  m_Center: {x: -0.19523253, y: 0, z: 1.774723}
 --- !u!1 &1485738922
 GameObject:
   m_ObjectHideFlags: 0
@@ -40113,8 +40114,8 @@ MonoBehaviour:
     duration: 2
   - triggerName: DrunkIdle3
     duration: 2
-  audioSource: {fileID: 0}
-  player: {fileID: 0}
+  audioSource: {fileID: 1636383723}
+  player: {fileID: 1900624931}
   hearingDistance: 3
   fadeSpeed: 2
 --- !u!136 &1636383721
@@ -40160,13 +40161,13 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 5.6337624
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -50933,7 +50934,7 @@ MonoBehaviour:
   - triggerName: DrunkIdle3
     duration: 2
   audioSource: {fileID: 1932810636}
-  player: {fileID: 0}
+  player: {fileID: 1900624931}
   hearingDistance: 3
   fadeSpeed: 2
 --- !u!82 &1932810636
@@ -50948,7 +50949,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -50957,7 +50958,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.0441341
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -60544,6 +60545,7 @@ MonoBehaviour:
   npcCam: {fileID: 807747707956732266}
   playerTransform: {fileID: 569178096}
   playerInteractionPoint: {fileID: 0}
+  playerMovement: {fileID: 0}
   dialogueCanvas: {fileID: 2082855739}
   playerUICanvasGroup: {fileID: 1166722643}
   fadeDuration: 0.5
