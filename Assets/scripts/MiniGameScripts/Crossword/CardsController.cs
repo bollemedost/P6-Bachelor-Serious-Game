@@ -10,6 +10,9 @@ public class CardsController : MonoBehaviour
         public string matchId;
         public Sprite spriteA;
         public Sprite spriteB;
+
+        [Header("Audio for text card only")]
+        public AudioClip textSound;
     }
 
     [System.Serializable]
@@ -57,11 +60,13 @@ public class CardsController : MonoBehaviour
     {
         public string id;
         public Sprite sprite;
+        public AudioClip sound;
 
-        public CardData(string id, Sprite sprite)
+        public CardData(string id, Sprite sprite, AudioClip sound)
         {
             this.id = id;
             this.sprite = sprite;
+            this.sound = sound;
         }
     }
 
@@ -73,7 +78,7 @@ public class CardsController : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
 
         audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 0f; // 2D lyd
+        audioSource.spatialBlend = 0f;
 
         StartLevel(0);
     }
@@ -119,8 +124,11 @@ public class CardsController : MonoBehaviour
                 continue;
             }
 
-            cardsToSpawn.Add(new CardData(p.matchId, p.spriteA));
-            cardsToSpawn.Add(new CardData(p.matchId, p.spriteB));
+            // spriteA = billede → ingen lyd
+            cardsToSpawn.Add(new CardData(p.matchId, p.spriteA, null));
+
+            // spriteB = tekst → får lyd
+            cardsToSpawn.Add(new CardData(p.matchId, p.spriteB, p.textSound));
         }
 
         Shuffle(cardsToSpawn);
@@ -134,7 +142,7 @@ public class CardsController : MonoBehaviour
             c.controller = this;
 
             var d = cardsToSpawn[i];
-            c.SetData(d.id, d.sprite);
+            c.SetData(d.id, d.sprite, d.sound);
 
             c.Hide();
         }
