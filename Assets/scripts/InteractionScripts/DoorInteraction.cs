@@ -62,15 +62,24 @@ public class DoorInteraction : Interactable
 
         float distance = Vector3.Distance(transform.position, player.position);
 
+        // Only show interaction UI if player is in range AND interaction has never happened
         if (distance <= interactDistance && !hasInteracted)
+        {
             UpdateCanvasState();
+
+            // Input check: only call Interact once
+            if (!isInteracting && Input.GetKeyDown(KeyCode.E))
+            {
+                Interact();
+            }
+        }
         else
         {
             if (lockedCanvas != null) lockedCanvas.SetActive(false);
             if (interactCanvas != null) interactCanvas.SetActive(false);
         }
 
-        // Timed dialogue UI
+        // Timed dialogue UI (unchanged)
         if (isInteracting && timedUI != null && currentUIIndex < timedUI.Length)
         {
             interactionTimer += Time.deltaTime;
@@ -122,11 +131,19 @@ public class DoorInteraction : Interactable
 
     public override void Interact()
     {
-        if (!isUnlocked || eventManager == null || isInteracting) return;
+        // Safety checks
+        if (!isUnlocked || eventManager == null || isInteracting || hasInteracted)
+            return;
 
-        hasInteracted = true; // prevent interact UI from coming back
-        if (interactCanvas != null) interactCanvas.SetActive(false);
+        // Immediately block further interactions
+        isInteracting = true;
+        hasInteracted = true;
 
+        // Hide interact UI permanently
+        if (interactCanvas != null)
+            interactCanvas.SetActive(false);
+
+        // Start the interaction coroutine
         StartCoroutine(HandleDoorInteraction());
     }
 

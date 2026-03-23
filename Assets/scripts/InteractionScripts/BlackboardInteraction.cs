@@ -77,7 +77,9 @@ public class BlackboardInteraction : MonoBehaviour
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);
 
-        fadeCoroutine = StartCoroutine(FadeCanvas(keyUICanvasGroup, 0f, fadeDuration, fadeDelay));
+        // Instantly hide canvas (no fade, no delay)
+        if (keyUICanvasGroup != null)
+            keyUICanvasGroup.alpha = 0f;
     }
 
     private IEnumerator FadeCanvas(CanvasGroup cg, float targetAlpha, float duration, float delay)

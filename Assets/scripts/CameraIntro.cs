@@ -9,44 +9,59 @@ public class CameraIntro : MonoBehaviour
     public CinemachineVirtualCamera gameplayCam;
 
     [Header("Timing")]
-    public float introDuration = 2f;       // Duration of cinematic
-    public float blendDuration = 0.5f;     // Smooth blend to gameplay cam
-    public float rotationUnlockDelay = 0.1f; // Small delay before allowing rotation
+    public float introDuration = 2f;       
+    public float blendDuration = 0.5f;     
+    public float rotationUnlockDelay = 0.1f; 
+
+    [Header("Zoom Settings (FOV)")]
+    public float introFOV = 80f;      // Starting FOV (Wide)
+    public float gameplayFOV = 75f;   // Final FOV (Tighter)
 
     [Header("Audio")]
-    public AudioSource introAudio;          // Assign in Inspector
+    public AudioSource introAudio;
 
     void Start()
     {
-        // Play audio if assigned
         if (introAudio != null)
             introAudio.Play();
+
+        // Ensure cameras start at the correct FOV
+        gameplayCam.m_Lens.FieldOfView = introFOV;
 
         StartCoroutine(PlayCinematic());
     }
 
     private IEnumerator PlayCinematic()
     {
-        // Find player and lock movement/rotation
         MovementStateManager player = FindObjectOfType<MovementStateManager>();
+        AimStateManager aimState = FindObjectOfType<AimStateManager>();
+
         if (player != null) player.LockMovement(true);
         MovementStateManager.canRotate = false;
 
-        // Wait for cinematic duration
         yield return new WaitForSeconds(introDuration);
 
-        // Switch camera priorities
+        // 1. Swap Priorities to start the transition
         cinematicCam.Priority = 5;
         gameplayCam.Priority = 20;
 
-        // Smooth blend
-        CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
-        if (brain != null) brain.m_DefaultBlend.m_Time = blendDuration;
+        // 2. Sync the rotation immediately
+        if (aimState != null)
+        {
+            aimState.MatchRotation(cinematicCam.transform.rotation);
+        }
 
-        // Unlock movement
-        if (player != null) player.LockMovement(false);
+        // 3. UNLOCK MOVEMENT IMMEDIATELY (Don't wait for the blend!)
+        if (player != null) 
+        {
+            player.LockMovement(false);
+            Debug.Log("Movement Unlocked instantly!");
+        }
 
-        // Optional delay before unlocking rotation to prevent snapping
+        // 4. Wait for the camera to actually finish its flight
+        yield return new WaitForSeconds(blendDuration);
+        
+        // 5. Unlock rotation last to prevent snapping during the blend
         yield return new WaitForSeconds(rotationUnlockDelay);
         MovementStateManager.canRotate = true;
     }

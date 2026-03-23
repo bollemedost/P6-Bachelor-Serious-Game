@@ -7,21 +7,29 @@ public class SceneTransition : MonoBehaviour
     public static SceneTransition Instance;
 
     [Header("Fade Settings")]
-    public CanvasGroup fadePanel;
-    public float fadeDuration = 1f;
+    public CanvasGroup fadePanelPrefab; // Assign a fullscreen black panel prefab here
+    public float fadeDuration = 1f;     // Duration of fade in/out
 
-    private void Awake()
+    private CanvasGroup fadePanel;
+
+    private void Awake()    
     {
+        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            if (fadePanel != null)
+            // Instantiate fadePanel prefab and make it a child of this singleton
+            if (fadePanelPrefab != null)
             {
+                fadePanel = Instantiate(fadePanelPrefab, transform);
                 fadePanel.alpha = 0f;
-                fadePanel.interactable = false;
-                fadePanel.blocksRaycasts = false;
+                fadePanel.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("FadePanelPrefab not assigned!");
             }
         }
         else
@@ -38,76 +46,83 @@ public class SceneTransition : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    /// <summary>
+    /// Call this to fade out and load a new scene
+    /// </summary>
     public void FadeToScene(string sceneName)
     {
         if (fadePanel == null)
         {
-            Debug.LogWarning("Fade Panel not assigned! Loading scene without fade.");
+            Debug.LogWarning("Fade panel missing! Loading scene without fade.");
             SceneManager.LoadScene(sceneName);
             return;
         }
 
-        StartCoroutine(FadeAndLoad(sceneName));
+        StartCoroutine(FadeOutAndLoad(sceneName));
     }
 
-    private IEnumerator FadeAndLoad(string sceneName)
+    private IEnumerator FadeOutAndLoad(string sceneName)
     {
-        yield return StartCoroutine(Fade(0f, 1f, fadeDuration, true));
-        SceneManager.LoadScene(sceneName);
-        yield return null;
-        yield return new WaitForSeconds(0.05f);
-        yield return StartCoroutine(Fade(1f, 0f, fadeDuration, false));
-    }
+        // Ensure fadePanel is on top and visible
+        fadePanel.transform.SetAsLastSibling();
+        fadePanel.alpha = 0f;
+        fadePanel.gameObject.SetActive(true);
 
-    private IEnumerator Fade(float startAlpha, float endAlpha, float duration, bool blockRaycasts)
-    {
-        if (fadePanel == null) yield break;
-
-        fadePanel.interactable = blockRaycasts;
-        fadePanel.blocksRaycasts = blockRaycasts;
-
+        // --- Fade to black ---
         float elapsed = 0f;
-
-        while (elapsed < duration)
+        while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
-            fadePanel.alpha = Mathf.Lerp(startAlpha, endAlpha, EaseInOutQuad(t));
+            float t = Mathf.Clamp01(elapsed / fadeDuration);
+            fadePanel.alpha = EaseInOutQuad(t);
+            yield return null;
+        }
+        fadePanel.alpha = 1f;
+
+        // --- Load the new scene ---
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
+        op.allowSceneActivation = true;
+        while (!op.isDone) yield return null;
+
+        // Small frame delay to ensure scene is rendered
+        yield return null;
+
+        // --- Fade back in ---
+        elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / fadeDuration);
+            fadePanel.alpha = 1f - EaseInOutQuad(t);
             yield return null;
         }
 
-        fadePanel.alpha = endAlpha;
-
-        if (endAlpha <= 0.01f)
-        {
-            fadePanel.interactable = false;
-            fadePanel.blocksRaycasts = false;
-        }
-        else
-        {
-            fadePanel.interactable = true;
-            fadePanel.blocksRaycasts = true;
-        }
+        fadePanel.alpha = 0f;
+        fadePanel.gameObject.SetActive(false);
     }
 
+    // Easing function for smooth fade
     private float EaseInOutQuad(float t)
     {
         return t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
     }
 
+    /// <summary>
+    /// Call this from UI buttons
+    /// </summary>
     public void LoadSceneFromButton(string sceneName)
     {
         FadeToScene(sceneName);
     }
 
+    /// <summary>
+    /// Optional: ensure fadePanel stays on top after scene load
+    /// </summary>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (fadePanel != null)
         {
-            fadePanel.alpha = 1f;
-            fadePanel.interactable = true;
-            fadePanel.blocksRaycasts = true;
-            StartCoroutine(Fade(1f, 0f, fadeDuration, false));
+            fadePanel.transform.SetAsLastSibling();
         }
     }
 }

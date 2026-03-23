@@ -28,6 +28,14 @@ public class AimStateManager : MonoBehaviour
 
     void Start()
     {
+        // If you forgot to drag it in the inspector, this will try to find it
+        if (camFollowPos == null)
+        {
+            // Adjust "CameraPivot" to whatever the name of your child object is
+            Transform found = transform.Find("CameraPivot"); 
+            if (found != null) camFollowPos = found;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -58,5 +66,27 @@ public class AimStateManager : MonoBehaviour
 
         // horizontal
         transform.rotation = Quaternion.Euler(0f, xAxis, 0f);
+    }
+
+    // Inside AimStateManager.cs
+
+    public void MatchRotation(Quaternion targetRotation)
+    {
+        // If camFollowPos is missing, log a helpful error but don't CRASH the coroutine
+        if (camFollowPos == null)
+        {
+            Debug.LogError($"AimStateManager on {gameObject.name} is missing camFollowPos! Assign it in the Inspector.");
+            return; 
+        }
+
+        Vector3 angles = targetRotation.eulerAngles;
+        xAxis = angles.y;
+
+        float x = angles.x;
+        if (x > 180) x -= 360; 
+        yAxis = x;
+        
+        transform.rotation = Quaternion.Euler(0f, xAxis, 0f);
+        camFollowPos.localRotation = Quaternion.Euler(yAxis, 0f, 0f);
     }
 }

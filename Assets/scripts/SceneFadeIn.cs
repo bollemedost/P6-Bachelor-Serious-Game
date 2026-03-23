@@ -151,7 +151,7 @@ private IEnumerator FadeInSceneAndUIForScene(CanvasGroup[] sceneUI)
         fadeCanvasGroup.alpha = 0f;
         fadeCanvasGroup.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(uiFadeDelay);
+        yield return new WaitForSeconds(uiFadeDelay);       
 
         foreach (CanvasGroup cg in uiCanvasGroups)
         {
