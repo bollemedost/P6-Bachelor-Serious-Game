@@ -434,6 +434,7 @@ GameObject:
   - component: {fileID: 1000554510}
   - component: {fileID: 1000554509}
   - component: {fileID: 1000554511}
+  - component: {fileID: 1000554512}
   m_Layer: 0
   m_Name: VideoPlayer
   m_TagString: Untagged
@@ -459,7 +460,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 0
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
@@ -499,13 +500,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000554508}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b64904a63a187447ac9410c456ef4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 1000554509}
   sceneToLoad: Scene11Home1908
+--- !u!114 &1000554512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000554508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f2a45e057f6de4f9e6a4a6c8f50dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 1000554509}
+  videoFileName: Transition2Video.mp4
+  nextSceneName: Scene11Home1908
 --- !u!1 &1089289006
 GameObject:
   m_ObjectHideFlags: 0
