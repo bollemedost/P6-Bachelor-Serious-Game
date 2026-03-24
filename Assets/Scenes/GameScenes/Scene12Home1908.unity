@@ -31119,7 +31119,7 @@ PrefabInstance:
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[0].gameEvent
       value: 
-      objectReference: {fileID: 11400000, guid: 5b612d649608b0a459568af7e5bc545e, type: 2}
+      objectReference: {fileID: 11400000, guid: 6a81afbbdb0d4d741a43f18e08cd4e4c, type: 2}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[1].gameEvent
       value: 
@@ -31132,6 +31132,10 @@ PrefabInstance:
       propertyPath: npcEvents.Array.data[1].dialogueClip
       value: 
       objectReference: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: npcEvents.Array.data[0].finishedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 40df574f04cabe249bd11509319f0c21, type: 2}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[1].talkingSequence
       value: 
@@ -31584,9 +31588,17 @@ PrefabInstance:
       value: Scene13Home1915
       objectReference: {fileID: 0}
     - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: prerequisiteEvents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: 'prerequisiteEvents.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 5b612d649608b0a459568af7e5bc545e, type: 2}
+      objectReference: {fileID: 11400000, guid: 6a81afbbdb0d4d741a43f18e08cd4e4c, type: 2}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: 'prerequisiteEvents.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 40df574f04cabe249bd11509319f0c21, type: 2}
     - target: {fileID: 5695291182417612650, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_IsActive
       value: 0

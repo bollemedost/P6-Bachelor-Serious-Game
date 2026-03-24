@@ -40119,9 +40119,17 @@ PrefabInstance:
       value: Scene7Street1903
       objectReference: {fileID: 0}
     - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: prerequisiteEvents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: 'prerequisiteEvents.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 501cafe2d38d75042b97239dfdbe29e1, type: 2}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: 'prerequisiteEvents.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 06e350663d67d4f45b74dda56b912580, type: 2}
     - target: {fileID: 5695291182417612650, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -50171,7 +50179,7 @@ MonoBehaviour:
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 501cafe2d38d75042b97239dfdbe29e1, type: 2}
-    finishedEvent: {fileID: 0}
+    finishedEvent: {fileID: 11400000, guid: 06e350663d67d4f45b74dda56b912580, type: 2}
     dialogueClip: {fileID: 8300000, guid: 44c830d78a91a4c508b039e466ee7aa5, type: 3}
     talkingSequence: {fileID: 965176642610412379}
     timedImages:

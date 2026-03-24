@@ -27895,6 +27895,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
     - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
+      propertyPath: npcEvents.Array.data[0].finishedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 62ce1a11db8564647bca110eb60b5e3c, type: 2}
+    - target: {fileID: 2847586321648007167, guid: 94c6bae11ab93d64f92780184ada4251, type: 3}
       propertyPath: npcEvents.Array.data[1].talkingSequence
       value: 
       objectReference: {fileID: 5227754304388460740}
@@ -28346,9 +28350,17 @@ PrefabInstance:
       value: Scene11Street1908
       objectReference: {fileID: 0}
     - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: prerequisiteEvents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: 'prerequisiteEvents.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 5b612d649608b0a459568af7e5bc545e, type: 2}
+    - target: {fileID: 4819421126062107319, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
+      propertyPath: 'prerequisiteEvents.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 62ce1a11db8564647bca110eb60b5e3c, type: 2}
     - target: {fileID: 5695291182417612650, guid: cafdd9328451e2b4180cbefb209ba573, type: 3}
       propertyPath: m_IsActive
       value: 0
