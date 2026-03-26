@@ -51535,9 +51535,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2250948825219295249, guid: 0701feba0a442a7459473dbb2458eff6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2250948825219295249, guid: 0701feba0a442a7459473dbb2458eff6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2250948825219295249, guid: 0701feba0a442a7459473dbb2458eff6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2250948825219295249, guid: 0701feba0a442a7459473dbb2458eff6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 3684801532575939903, guid: 0701feba0a442a7459473dbb2458eff6, type: 3}
       propertyPath: coinValue
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3684801532575939903, guid: 0701feba0a442a7459473dbb2458eff6, type: 3}
+      propertyPath: interactDistance
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6539892344410199520, guid: 0701feba0a442a7459473dbb2458eff6, type: 3}
       propertyPath: m_Name
@@ -59566,8 +59586,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9111289637692982781}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.38526878, z: -0, w: 0.9228045}
-  m_LocalPosition: {x: -2.5, y: -1.221, z: -4.46}
+  m_LocalRotation: {x: -0, y: 0.33422628, z: -0, w: 0.9424929}
+  m_LocalPosition: {x: -9.75, y: -1.221, z: -10.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59581,7 +59601,7 @@ Transform:
   - {fileID: 6520860063606063820}
   - {fileID: 2082855740}
   m_Father: {fileID: 1122183503}
-  m_LocalEulerAnglesHint: {x: 0, y: 45.321, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 39.051, z: 0}
 --- !u!4 &971648524614383754
 Transform:
   m_ObjectHideFlags: 0
@@ -60621,7 +60641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 2891233045885611131}
-  interactDistance: 4
+  interactDistance: 0
   playerTag: Player
   npcEvents:
   - gameEvent: {fileID: 11400000, guid: 915ed39d43e5b9146bae2a1862e87bf4, type: 2}
@@ -61635,7 +61655,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 2.4430776
+  MinDistance: 1.1726689
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -61887,7 +61907,7 @@ Transform:
   m_GameObject: {fileID: 5587379593914215631}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0, z: 0.69}
+  m_LocalPosition: {x: 0.382, y: 0, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63154,7 +63174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcInteraction: {fileID: 2847586322871081462}
   playerTransform: {fileID: 569178096}
-  triggerDistance: 2
+  triggerDistance: 1.5
   triggerOnlyOnce: 1
   requireCorrectScene: 1
   requiredSceneName: Scene4Street1896
