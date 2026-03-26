@@ -46272,8 +46272,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045831042}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.24826722, z: 0, w: 0.9686916}
-  m_LocalPosition: {x: 37.4, y: 13.889, z: 13.68}
+  m_LocalRotation: {x: -0, y: -0.14001724, z: -0, w: 0.99014914}
+  m_LocalPosition: {x: 37.76, y: 13.889, z: 13.68}
   m_LocalScale: {x: 0.37, y: 0.37, z: 0.37}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -46283,7 +46283,7 @@ Transform:
   - {fileID: 251555241}
   - {fileID: 543155696}
   m_Father: {fileID: 322845027}
-  m_LocalEulerAnglesHint: {x: 0, y: -28.75, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -16.098, z: 0}
 --- !u!114 &1045831044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46308,7 +46308,7 @@ MonoBehaviour:
       dialogueImageObject: {fileID: 214794074}
     - timeStamp: 4
       dialogueImageObject: {fileID: 995290505}
-    - timeStamp: 6
+    - timeStamp: 5
       dialogueImageObject: {fileID: 526970799}
     givesSignature: 0
   currentEvent: {fileID: 11400000, guid: ad940e57fe0c1744aa48da986113e002, type: 2}
@@ -46438,6 +46438,8 @@ MonoBehaviour:
     bodyAnim: 3
   - time: 6
     bodyAnim: 3
+  - time: 11
+    bodyAnim: 0
 --- !u!136 &1045831047
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -107956,6 +107958,8 @@ MonoBehaviour:
     bodyAnim: 0
   - time: 7
     bodyAnim: 3
+  - time: 16
+    bodyAnim: 0
 --- !u!136 &5866666021711679712
 CapsuleCollider:
   m_ObjectHideFlags: 0
