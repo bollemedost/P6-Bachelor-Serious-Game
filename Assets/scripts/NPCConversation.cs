@@ -21,10 +21,14 @@ public class NPCConversation : MonoBehaviour
     public float fadeSpeed = 2f;
     public bool randomPitch = true;
 
+    [Header("Stop Settings")]
+    public string idleStateName = "Idle";
+
     private bool audioStarted = false;      // Audio has started
     private bool audioFinished = false;     // Audio has finished completely
     private float targetVolume = 0f;
     private Coroutine animationCoroutine;
+    private bool isStopped = false;
 
     void Start()
     {
@@ -45,6 +49,9 @@ public class NPCConversation : MonoBehaviour
 
     void Update()
     {
+        if (isStopped)
+            return;
+
         if (player == null || audioSource == null || audioSource.clip == null)
             return;
 
@@ -76,7 +83,7 @@ public class NPCConversation : MonoBehaviour
     {
         int index = 0;
 
-        while (animationSequence.Length > 0)
+        while (!isStopped && animationSequence.Length > 0)
         {
             AnimationStep step = animationSequence[index];
 
@@ -89,5 +96,31 @@ public class NPCConversation : MonoBehaviour
             if (index >= animationSequence.Length)
                 index = 0; // loop sequence indefinitely
         }
+
+        animationCoroutine = null;
+    }
+
+    public void StopConversation()
+    {
+        isStopped = true;
+
+        if (animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+            animationCoroutine = null;
+        }
+
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+            audioSource.volume = 0f;
+        }
+
+        audioStarted = false;
+        audioFinished = true;
+        targetVolume = 0f;
+
+        if (animator != null && !string.IsNullOrEmpty(idleStateName))
+            animator.CrossFade(idleStateName, 0.15f);
     }
 }

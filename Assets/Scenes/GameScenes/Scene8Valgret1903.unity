@@ -5782,6 +5782,8 @@ MonoBehaviour:
     - timeStamp: 21
       dialogueImageObject: {fileID: 324473228}
   currentEvent: {fileID: 11400000, guid: dd5361a9a9447524c87fbb63d9524175, type: 2}
+  conversationsToStopOnInteract:
+  - {fileID: 1900764479}
   playerCam: {fileID: 510334039}
   npcCam: {fileID: 731780460}
   playerTransform: {fileID: 1474592326}
@@ -24680,7 +24682,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Jeg har v\xE6ret her med min k\xE6re modder f\xF8rhen, og den sidste forkvinde
+  m_text: "Jeg har v\xE6ret her med min k\xE6re moder f\xF8rhen, og den sidste forkvinde
     i Valgretsforeningen"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -49963,6 +49965,8 @@ MonoBehaviour:
   player: {fileID: 1646765435}
   hearingDistance: 2
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!1001 &1906067823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49981,15 +49985,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7073967971188951269, guid: 79af104ba3bb365468bfe75a83a580cf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -47.373
+      value: -48.664
       objectReference: {fileID: 0}
     - target: {fileID: 7073967971188951269, guid: 79af104ba3bb365468bfe75a83a580cf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9636502
+      value: 0.303
       objectReference: {fileID: 0}
     - target: {fileID: 7073967971188951269, guid: 79af104ba3bb365468bfe75a83a580cf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.338
+      value: 7.462
       objectReference: {fileID: 0}
     - target: {fileID: 7073967971188951269, guid: 79af104ba3bb365468bfe75a83a580cf, type: 3}
       propertyPath: m_LocalRotation.w

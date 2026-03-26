@@ -31,6 +31,9 @@ public class NPCInteraction : Interactable
     [Header("Event To Trigger Right Now")]
     public GameEvent currentEvent;
 
+    [Header("Scene Only - Conversations To Stop When This NPC Starts")]
+    public NPCConversation[] conversationsToStopOnInteract;
+
     [Header("Cameras")]
     public CinemachineVirtualCamera playerCam;
     public CinemachineVirtualCamera npcCam;
@@ -121,6 +124,17 @@ public class NPCInteraction : Interactable
         {
             Debug.LogWarning($"No NPCEvent found for {currentEvent?.name}");
             return;
+        }
+
+        // QUICK SCENE-SPECIFIC FIX:
+        // Stop any background conversations assigned in this scene.
+        if (conversationsToStopOnInteract != null)
+        {
+            foreach (var convo in conversationsToStopOnInteract)
+            {
+                if (convo != null)
+                    convo.StopConversation();
+            }
         }
 
         LockInteraction();
