@@ -24,6 +24,8 @@ public class PlayerTalkingAnimations : MonoBehaviour
         PickUpCoin1,
         PickUpCoin2,
         Interact,
+        SitTalk1,
+        SitIdle,
     }
 
     [System.Serializable]

@@ -24,11 +24,16 @@ public class NPCConversation : MonoBehaviour
     [Header("Stop Settings")]
     public string idleStateName = "Idle";
 
+    [Header("Game Event")]
+    public EventManager eventManager;
+    public GameEvent audioStartedEvent;
+
     private bool audioStarted = false;      // Audio has started
     private bool audioFinished = false;     // Audio has finished completely
     private float targetVolume = 0f;
     private Coroutine animationCoroutine;
     private bool isStopped = false;
+    private bool eventTriggered = false;
 
     void Start()
     {
@@ -59,10 +64,17 @@ public class NPCConversation : MonoBehaviour
 
         // Start audio only once
         if (!audioStarted && distance <= hearingDistance)
-        {
+        { 
             audioSource.Play();
             audioStarted = true;
             targetVolume = 1f;
+
+            // Trigger game event
+            if (eventManager != null && audioStartedEvent != null)
+            {
+             eventManager.CompleteEvent(audioStartedEvent);
+             eventTriggered = true;
+            }
         }
 
         // Fade in/out based on distance
