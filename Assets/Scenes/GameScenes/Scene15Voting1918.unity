@@ -4440,6 +4440,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 15
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!1001 &278701941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4986,6 +4988,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 15
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!1001 &289703147
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32964,6 +32968,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 15
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!43 &2075073793
 Mesh:
   m_ObjectHideFlags: 0
@@ -39186,6 +39192,7 @@ MonoBehaviour:
     - timeStamp: 0
       dialogueImageObject: {fileID: 572649186}
   currentEvent: {fileID: 11400000, guid: f06c7d9ca58e5e14b92d4ba4735301b1, type: 2}
+  conversationsToStopOnInteract: []
   playerCam: {fileID: 1560167481}
   npcCam: {fileID: 662969354}
   playerTransform: {fileID: 242623835}
