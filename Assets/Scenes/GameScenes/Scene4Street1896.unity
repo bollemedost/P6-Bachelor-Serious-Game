@@ -3431,11 +3431,11 @@ Transform:
   m_GameObject: {fileID: 262339801}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.804904, y: 8.503747, z: 0.89530945}
+  m_LocalPosition: {x: 9.028097, y: 2.9918709, z: -19.755909}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1219741235}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &262339803
 AudioSource:
@@ -3450,13 +3450,13 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: bf67184a9220286448eed13de8be23a2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.481
+  m_Pitch: 0.26
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 147
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -6167,6 +6167,8 @@ MonoBehaviour:
   fadeDuration: 0.5
   fadeDelay: 0.1
   objectiveSound: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
+  soundBG: {fileID: 0}
+  backgroundVolumeMultiplierDuringObjective: 0.25
 --- !u!4 &462953527
 Transform:
   m_ObjectHideFlags: 0
@@ -33836,7 +33838,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 22875307}
-  - {fileID: 262339802}
   m_Father: {fileID: 1728155857}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1219741236
@@ -59587,7 +59588,7 @@ Transform:
   m_GameObject: {fileID: 9111289637692982781}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.33422628, z: -0, w: 0.9424929}
-  m_LocalPosition: {x: -9.75, y: -1.221, z: -10.05}
+  m_LocalPosition: {x: -9.75, y: -1.221, z: -10.162}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -61655,7 +61656,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1.1726689
+  MinDistance: 0.6750318
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -63174,7 +63175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcInteraction: {fileID: 2847586322871081462}
   playerTransform: {fileID: 569178096}
-  triggerDistance: 1.5
+  triggerDistance: 1.2
   triggerOnlyOnce: 1
   requireCorrectScene: 1
   requiredSceneName: Scene4Street1896
@@ -63218,6 +63219,7 @@ SceneRoots:
   - {fileID: 1643942637}
   - {fileID: 569178096}
   - {fileID: 1452417960}
+  - {fileID: 262339802}
   - {fileID: 1728155857}
   - {fileID: 548435704}
   - {fileID: 99246777}
