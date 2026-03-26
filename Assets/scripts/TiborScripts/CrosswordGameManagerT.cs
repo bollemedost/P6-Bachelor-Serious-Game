@@ -93,9 +93,28 @@ public class CrosswordGameManagerT : MonoBehaviour
             TMP_Text letterText = newCell.transform.Find("LetterText").GetComponent<TMP_Text>();
             TMP_Text clueNumberText = newCell.transform.Find("ClueNumberText").GetComponent<TMP_Text>();
 
+            // FORCE LETTER TEXT TO BE PERFECTLY CENTERED IN THE BOX
+            RectTransform letterRT = letterText.GetComponent<RectTransform>();
+            letterRT.anchorMin = Vector2.zero;
+            letterRT.anchorMax = Vector2.one;
+            letterRT.pivot = new Vector2(0.5f, 0.5f);
+            letterRT.anchoredPosition = Vector2.zero;
+            letterRT.offsetMin = Vector2.zero;
+            letterRT.offsetMax = Vector2.zero;
+
+            letterText.alignment = TextAlignmentOptions.Center;
+            letterText.verticalAlignment = VerticalAlignmentOptions.Middle;
+
+            // REMOVE/HIDE THE SMALL NUMBER TEXT
+            if (clueNumberText != null)
+            {
+                clueNumberText.text = "";
+                clueNumberText.gameObject.SetActive(false);
+            }
+
             slot.letterText = letterText;
             slot.clueNumberText = clueNumberText;
-            slot.Setup(data.letter, data.clueNumber);
+            slot.Setup(data.letter, ""); // pass empty clue number so none appear
 
             Vector2Int key = new Vector2Int(data.x, data.y);
             slotMap[key] = slot;
@@ -115,9 +134,6 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         // 3
         AddWordHorizontal(c, 0, 3, "FOLKEHOLD", "3");
-
-        // left vertical
-        //AddWordVertical(c, 0, 3, "FEMTEN", "");
 
         // 4
         AddWordHorizontal(c, -1, 7, "FEMOGTYVE", "4");
