@@ -4,36 +4,43 @@ using System.Collections;
 [System.Serializable]
 public class AnimationStep
 {
-    public string triggerName; // Animator state name
-    public float duration = 4f; // How long this animation lasts before moving to next
+    public string triggerName;  // Animator trigger/state
+    public float duration = 4f; // Duration of this step
 }
 
 public class NPCConversation : MonoBehaviour
 {
     [Header("Animator Settings")]
     public Animator animator;
-    public AnimationStep[] animationSequence; // Ordered sequence of animations
+    public AnimationStep[] animationSequence;
 
     [Header("Audio Settings")]
-    public AudioSource audioSource; // Assign conversation audio
-    public Transform player;        // Assign the player transform
-    public float hearingDistance = 15f; // Distance where audio starts
-    public float fadeSpeed = 2f;        // Optional fade-in speed
+    public AudioSource audioSource;
+    public Transform player;
+    public float hearingDistance = 15f;
+    public float fadeSpeed = 2f;
+    public bool randomPitch = true;
 
-    private bool hasPlayed = false;
+    private bool audioStarted = false;      // Audio has started
+    private bool audioFinished = false;     // Audio has finished completely
     private float targetVolume = 0f;
+    private Coroutine animationCoroutine;
 
     void Start()
     {
         if (audioSource != null)
         {
-            audioSource.loop = false;          // Do not repeat
-            audioSource.playOnAwake = false;   // Do not start automatically
-            audioSource.pitch = Random.Range(0.95f, 1.05f);
-            audioSource.volume = 0f;           // Start silent for fade-in
+            audioSource.loop = false;
+            audioSource.playOnAwake = false;
+            audioSource.volume = 0f;
+
+            if (randomPitch)
+                audioSource.pitch = Random.Range(0.95f, 1.05f);
         }
 
-        StartCoroutine(PlaySequence());
+        // Start looping animation sequence immediately
+        if (animationSequence != null && animationSequence.Length > 0)
+            animationCoroutine = StartCoroutine(PlayAnimationSequence());
     }
 
     void Update()
@@ -43,47 +50,44 @@ public class NPCConversation : MonoBehaviour
 
         float distance = Vector3.Distance(player.position, transform.position);
 
-        // Start the audio only once when player gets close enough
-        if (distance <= hearingDistance && !hasPlayed)
+        // Start audio only once
+        if (!audioStarted && distance <= hearingDistance)
         {
             audioSource.Play();
-            hasPlayed = true;
+            audioStarted = true;
             targetVolume = 1f;
         }
 
-        // Fade in only while the sound is playing
-        if (audioSource.isPlaying)
+        // Fade in/out based on distance
+        if (audioStarted && !audioFinished)
         {
-            audioSource.volume = Mathf.MoveTowards(
-                audioSource.volume,
-                targetVolume,
-                fadeSpeed * Time.deltaTime
-            );
+            targetVolume = distance <= hearingDistance ? 1f : 0f;
+            audioSource.volume = Mathf.MoveTowards(audioSource.volume, targetVolume, fadeSpeed * Time.deltaTime);
+
+            if (!audioSource.isPlaying && audioSource.volume <= 0.01f)
+            {
+                audioFinished = true;
+                audioSource.volume = 0f;
+            }
         }
     }
 
-    IEnumerator PlaySequence()
+    IEnumerator PlayAnimationSequence()
     {
-        if (animationSequence == null || animationSequence.Length == 0)
-            yield break;
-
         int index = 0;
 
-        while (true)
+        while (animationSequence.Length > 0)
         {
             AnimationStep step = animationSequence[index];
 
             if (animator != null && !string.IsNullOrEmpty(step.triggerName))
-            {
-                // Smoothly blend into the next animation
                 animator.CrossFade(step.triggerName, 0.2f);
-            }
 
-            // Wait for the duration of this step
             yield return new WaitForSeconds(step.duration);
 
-            // Move to next step, loop to start if at the end
-            index = (index + 1) % animationSequence.Length;
+            index++;
+            if (index >= animationSequence.Length)
+                index = 0; // loop sequence indefinitely
         }
     }
 }
