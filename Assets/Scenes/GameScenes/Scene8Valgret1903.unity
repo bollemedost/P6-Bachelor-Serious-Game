@@ -5801,8 +5801,11 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 5866666021850284922}
   walkBoolName: isWalking
-  loadSceneAfterInteraction: 0
-  sceneToLoad: 
+  lockedCanvas: {fileID: 0}
+  interactCanvas: {fileID: 0}
+  prerequisiteEvents: []
+  loadSceneAfterInteraction: 1
+  sceneToLoad: Scene9SignatureMiniGame
   sceneLoadDelay: 0.5
   checkPlayerCoins: 0
   requiredCoins: 50
@@ -23860,7 +23863,7 @@ RectTransform:
   m_GameObject: {fileID: 894841940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 927413468}
@@ -49967,6 +49970,8 @@ MonoBehaviour:
   fadeSpeed: 2
   randomPitch: 1
   idleStateName: Idle
+  eventManager: {fileID: 0}
+  audioStartedEvent: {fileID: 0}
 --- !u!1001 &1906067823
 PrefabInstance:
   m_ObjectHideFlags: 0
