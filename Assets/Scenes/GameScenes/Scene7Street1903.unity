@@ -3284,6 +3284,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 3
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!82 &179075003
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3630,6 +3632,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 15
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!95 &183969999
 Animator:
   serializedVersion: 7
@@ -12922,8 +12926,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.076249, y: 0.1478802, z: 2.123322}
-  m_Center: {x: 2.37, y: -1.26, z: -0.7565715}
+  m_Size: {x: 4.335148, y: 0.4109859, z: 2.1233222}
+  m_Center: {x: 3.499457, y: -1.391475, z: -0.7565715}
 --- !u!65 &445084951
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16222,6 +16226,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 3
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!1 &659842288
 GameObject:
   m_ObjectHideFlags: 0
@@ -17102,6 +17108,8 @@ MonoBehaviour:
   fadeDuration: 0.5
   fadeDelay: 0.1
   objectiveSound: {fileID: 8300000, guid: a2a9660a889c549339c1fa32883283ae, type: 3}
+  soundBG: {fileID: 0}
+  backgroundVolumeMultiplierDuringObjective: 0.25
 --- !u!4 &736795526
 Transform:
   m_ObjectHideFlags: 0
@@ -40860,6 +40868,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 15
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!95 &1267121585
 Animator:
   serializedVersion: 7
@@ -60627,6 +60637,8 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 15
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
 --- !u!1001 &1861478805
 PrefabInstance:
   m_ObjectHideFlags: 0
