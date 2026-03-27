@@ -14,7 +14,6 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     private GameObject dragVisual;
 
-    // Added so the WHOLE box can move and then return back
     private Transform originalParent;
     private int originalSiblingIndex;
     private Vector2 originalAnchoredPosition;
@@ -41,14 +40,12 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Keep your old variables so nothing else breaks
         dragVisual = gameObject;
 
         originalParent = transform.parent;
         originalSiblingIndex = transform.GetSiblingIndex();
         originalAnchoredPosition = rectTransform.anchoredPosition;
 
-        // Move the WHOLE button to the top canvas while dragging
         transform.SetParent(canvas.transform, true);
         transform.SetAsLastSibling();
 
@@ -59,6 +56,9 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
         DragLetterDataT.CurrentLetter = this;
         DragLetterDataT.CurrentDragVisual = dragVisual;
+
+        if (CrosswordGameManagerT.Instance != null)
+            CrosswordGameManagerT.Instance.PlayPickUpSound();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -68,7 +68,6 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Put the whole button back where it came from
         transform.SetParent(originalParent, true);
         transform.SetSiblingIndex(originalSiblingIndex);
         rectTransform.anchoredPosition = originalAnchoredPosition;

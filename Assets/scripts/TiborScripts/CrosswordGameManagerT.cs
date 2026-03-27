@@ -21,6 +21,17 @@ public class CrosswordGameManagerT : MonoBehaviour
     public GameObject crosswordCellPrefab;
     public GameObject letterButtonPrefab;
 
+    [Header("Audio")]
+    public AudioSource sfxSource;
+    public AudioSource pickUpSource;
+
+    public AudioClip pickUpLetterSound;
+    public AudioClip correctPlaceLetterSound;
+    public AudioClip wrongPlaceLetterSound;
+
+    [Range(0.5f, 2f)]
+    public float pickUpPitch = 1.3f;
+
     [Header("Completion UI")]
     public MinigameCompleteUI completeUI;
     public int completionCoins = 20;
@@ -55,6 +66,33 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         if (completeUI != null && completeUI.root != null)
             completeUI.root.SetActive(false);
+
+        if (sfxSource == null)
+            sfxSource = GetComponent<AudioSource>();
+
+        if (pickUpSource == null)
+            pickUpSource = sfxSource;
+    }
+
+    public void PlayPickUpSound()
+    {
+        if (pickUpSource != null && pickUpLetterSound != null)
+        {
+            pickUpSource.pitch = pickUpPitch;
+            pickUpSource.PlayOneShot(pickUpLetterSound);
+        }
+    }
+
+    public void PlayCorrectPlaceSound()
+    {
+        if (sfxSource != null && correctPlaceLetterSound != null)
+            sfxSource.PlayOneShot(correctPlaceLetterSound);
+    }
+
+    public void PlayWrongPlaceSound()
+    {
+        if (sfxSource != null && wrongPlaceLetterSound != null)
+            sfxSource.PlayOneShot(wrongPlaceLetterSound);
     }
 
     void BuildBoardExact()
@@ -94,7 +132,6 @@ public class CrosswordGameManagerT : MonoBehaviour
             TMP_Text letterText = newCell.transform.Find("LetterText").GetComponent<TMP_Text>();
             TMP_Text clueNumberText = newCell.transform.Find("ClueNumberText").GetComponent<TMP_Text>();
 
-            // FORCE LETTER TEXT TO BE PERFECTLY CENTERED IN THE BOX
             RectTransform letterRT = letterText.GetComponent<RectTransform>();
             letterRT.anchorMin = Vector2.zero;
             letterRT.anchorMax = Vector2.one;
@@ -106,7 +143,6 @@ public class CrosswordGameManagerT : MonoBehaviour
             letterText.alignment = TextAlignmentOptions.Center;
             letterText.verticalAlignment = VerticalAlignmentOptions.Middle;
 
-            // REMOVE/HIDE THE SMALL NUMBER TEXT
             if (clueNumberText != null)
             {
                 clueNumberText.text = "";
@@ -115,7 +151,7 @@ public class CrosswordGameManagerT : MonoBehaviour
 
             slot.letterText = letterText;
             slot.clueNumberText = clueNumberText;
-            slot.Setup(data.letter, ""); // pass empty clue number so none appear
+            slot.Setup(data.letter, "");
 
             Vector2Int key = new Vector2Int(data.x, data.y);
             slotMap[key] = slot;
@@ -134,54 +170,26 @@ public class CrosswordGameManagerT : MonoBehaviour
             int x = pos.x;
             int y = pos.y;
 
-            // --- NIELSINE (vertical at x=7, y=0 -> 7)
-            // Show first N, L and the last E
             if (x == 7 && (y == 0 || y == 3 || y == 7))
-            {
                 slot.TryPlaceLetter(correctLetter);
-            }
 
-            // --- FEM (vertical at x=4, y=2 -> 4)
-            // Show E
             if (x == 4 && y == 3)
-            {
                 slot.TryPlaceLetter(correctLetter);
-            }
 
-            // --- FOLKEHOLD (horizontal at y=3, x=0 -> 8)
-            // Show F and D
             if (y == 3 && (x == 0 || x == 8))
-            {
                 slot.TryPlaceLetter(correctLetter);
-            }
 
-            // --- FEMOGTYVE (horizontal at y=7, x=-1 -> 8)
-            // Show O and G
             if (y == 7 && (x == 2 || x == 3))
-            {
                 slot.TryPlaceLetter(correctLetter);
-            }
 
-            // --- GRUNDLOVEN (vertical at x=3, y=7 -> 17)
-            // Show D and O
             if (x == 3 && (y == 11 || y == 13))
-            {
                 slot.TryPlaceLetter(correctLetter);
-            }
 
-            // --- TREDIVE (horizontal at y=11, x=0 -> 6)
-            // Show R, I and V
             if (y == 11 && (x == 1 || x == 4 || x == 5))
-            {
                 slot.TryPlaceLetter(correctLetter);
-            }
 
-            // --- FRUENTIMMER (horizontal at y=15, x=0 -> 10)
-            // Show U, M, M
             if (y == 15 && (x == 2 || x == 7 || x == 8))
-            {
                 slot.TryPlaceLetter(correctLetter);
-            }
         }
     }
 
@@ -189,25 +197,12 @@ public class CrosswordGameManagerT : MonoBehaviour
     {
         List<CellData> c = new List<CellData>();
 
-        // 1
         AddWordVertical(c, 7, 0, "NIELSINE", "1");
-
-        // 2
         AddWordVertical(c, 4, 2, "FEM", "2");
-
-        // 3
         AddWordHorizontal(c, 0, 3, "FOLKEHOLD", "3");
-
-        // 4
         AddWordHorizontal(c, -1, 7, "FEMOGTYVE", "4");
-
-        // 5
         AddWordVertical(c, 3, 7, "GRUNDLOVEN", "5");
-
-        // 6
         AddWordHorizontal(c, 0, 11, "TREDIVE", "6");
-
-        // 7
         AddWordHorizontal(c, 0, 15, "FRUENTIMMER", "7");
 
         return RemoveDuplicatesKeepFirst(c);

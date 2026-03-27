@@ -19,6 +19,9 @@ public class DropTargetT : MonoBehaviour, IDropHandler
 
         if (correct)
         {
+            if (CrosswordGameManagerT.Instance != null)
+                CrosswordGameManagerT.Instance.PlayCorrectPlaceSound();
+
             CoinManager.EnsureExists().AddCoin(2);
 
             if (CoinTextFeedback.Instance != null)
@@ -28,6 +31,9 @@ public class DropTargetT : MonoBehaviour, IDropHandler
         }
         else
         {
+            if (CrosswordGameManagerT.Instance != null)
+                CrosswordGameManagerT.Instance.PlayWrongPlaceSound();
+
             Debug.Log("Wrong letter");
         }
     }
