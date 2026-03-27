@@ -5725,7 +5725,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Det er din fadders indkaldelse til at stemme.
+  m_text: Det er din faders indkaldelse til at stemme.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -6066,7 +6066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Farvel mor, jeg g\xE5r i skole."
+  m_text: "Farvel moder, jeg g\xE5r i skole."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -13683,8 +13683,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Derfor har vi ikke samme rettigheder som m\xE6nd og dermed ikke ret til
-    at stemme."
+  m_text: "Derfor har vi ikke samme rettigheder, som m\xE6nd, og dermed ikke ret
+    til at stemme."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -19891,7 +19891,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Det er fordi at vi kvinder er fruentimmer og ikke fuldgyldige borgere.
+  m_text: Det er fordi, at vi kvinder er fruentimmer og ikke fuldgyldige borgere.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -20817,7 +20817,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Mor, hvorfor er du her n\xE5r far er p\xE5 arbejde?"
+  m_text: "Mor, hvorfor er du her, n\xE5r far er p\xE5 arbejde?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -21209,7 +21209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Samfundet mener at det vil skade b\xE5de kvinderne og samfundet, hvis
+  m_text: "Samfundet mener, at det vil skade b\xE5de kvinderne og samfundet, hvis
     vi forlod hjemmet for at engagere os i det offentlige liv."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -23595,6 +23595,10 @@ MonoBehaviour:
   player: {fileID: 0}
   hearingDistance: 8
   fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
+  eventManager: {fileID: 0}
+  audioStartedEvent: {fileID: 0}
 --- !u!95 &1772330756
 Animator:
   serializedVersion: 7
@@ -53398,6 +53402,7 @@ MonoBehaviour:
     - timeStamp: 20
       dialogueImageObject: {fileID: 1033081668}
   currentEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+  conversationsToStopOnInteract: []
   playerCam: {fileID: 1560167481}
   npcCam: {fileID: 1307599232167248389}
   playerTransform: {fileID: 242623835}
@@ -53415,6 +53420,9 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 0}
   walkBoolName: isWalking
+  lockedCanvas: {fileID: 0}
+  interactCanvas: {fileID: 0}
+  prerequisiteEvents: []
   loadSceneAfterInteraction: 0
   sceneToLoad: 
   sceneLoadDelay: 0.5
