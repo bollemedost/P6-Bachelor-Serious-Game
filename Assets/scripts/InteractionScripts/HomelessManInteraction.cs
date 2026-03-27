@@ -49,6 +49,14 @@ public class HomelessManInteraction : Interactable
     [Header("Homeless Man Event")]
     public HomelessEvent homelessEvent;
 
+    [Header("Cameras")]
+    public Cinemachine.CinemachineVirtualCamera playerCam;
+    public Cinemachine.CinemachineVirtualCamera homelessCam;
+
+    [Header("Player Settings")]
+    public Transform playerTransform;
+    public Transform playerInteractionPoint; // optional (snap position)
+
     private bool hasTriggeredFinishedEvent = false;
     private bool isUnlocked = false;
     private bool hasPlayedDialogue = false;
@@ -72,6 +80,10 @@ public class HomelessManInteraction : Interactable
 
     protected override void Update()
     {
+        if (isOnCooldown) // means interaction is happening
+        {
+            FaceEachOther();
+        }
         base.Update();
 
         if (player == null) return;
@@ -169,6 +181,17 @@ public class HomelessManInteraction : Interactable
         // Only lock once we KNOW the interaction is really happening
         LockInteraction();
 
+        // SNAP player to interaction point (optional but recommended)
+        if (playerInteractionPoint != null && playerTransform != null)
+            playerTransform.position = playerInteractionPoint.position;
+
+        // CAMERA SWITCH
+        if (playerCam != null && homelessCam != null)
+        {
+            homelessCam.Priority = 10;
+            playerCam.Priority = 0;
+        }
+
         // START EVENT
         if (eventManager != null && homelessEvent != null && homelessEvent.startEvent != null)
         {
@@ -223,6 +246,29 @@ public class HomelessManInteraction : Interactable
         }
     }
 
+    private void FaceEachOther()
+    {
+        if (playerTransform == null) return;
+
+        // Player looks at homeless man
+        Vector3 lookDir = transform.position - playerTransform.position;
+        lookDir.y = 0;
+        if (lookDir != Vector3.zero)
+            playerTransform.rotation = Quaternion.Slerp(
+                playerTransform.rotation,
+                Quaternion.LookRotation(lookDir),
+                Time.deltaTime * 5f);
+
+        // Homeless man looks at player (optional but nicer)
+        Vector3 npcLookDir = playerTransform.position - transform.position;
+        npcLookDir.y = 0;
+        if (npcLookDir != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(npcLookDir),
+                Time.deltaTime * 5f);
+    }
+
    private IEnumerator InteractionCooldownRoutine()
     {
         isOnCooldown = true;
@@ -257,7 +303,7 @@ public class HomelessManInteraction : Interactable
             }
         }
 
-        // FINISHED EVENT (NOW PERFECTLY TIMED)
+        //  FINISHED EVENT (NOW PERFECTLY TIMED)
         if (!hasTriggeredFinishedEvent && donationCount >= maxDonations)
         {
             hasTriggeredFinishedEvent = true;
@@ -274,6 +320,13 @@ public class HomelessManInteraction : Interactable
         MovementStateManager.canRotate = true;
 
         UnlockInteraction();
+
+        // RESET CAMERA
+        if (playerCam != null && homelessCam != null)
+        {
+            playerCam.Priority = 10;
+            homelessCam.Priority = 0;
+        }
     }
 
     protected override bool IsCurrentlyInteracting()
