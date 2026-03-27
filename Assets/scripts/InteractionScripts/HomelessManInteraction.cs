@@ -10,6 +10,13 @@ public class HomelessManInteraction : Interactable
         public GameObject uiObject;
     }
 
+    [System.Serializable]
+    public class HomelessEvent
+    {
+        public GameEvent startEvent;
+        public GameEvent finishedEvent;
+    }
+
     [Header("Event Settings")]
     public GameEvent giveHomelessManMoneyEvent;
     public GameEvent[] prerequisiteEvents;
@@ -39,6 +46,10 @@ public class HomelessManInteraction : Interactable
     public AudioClip giveMoneyClip;
     public AudioClip firstTimeDialogueClip;
 
+    [Header("Homeless Man Event")]
+    public HomelessEvent homelessEvent;
+
+    private bool hasTriggeredFinishedEvent = false;
     private bool isUnlocked = false;
     private bool hasPlayedDialogue = false;
 
@@ -158,6 +169,12 @@ public class HomelessManInteraction : Interactable
         // Only lock once we KNOW the interaction is really happening
         LockInteraction();
 
+        // START EVENT
+        if (eventManager != null && homelessEvent != null && homelessEvent.startEvent != null)
+        {
+            eventManager.CompleteEvent(homelessEvent.startEvent);
+        }
+
         // LOCK PLAYER MOVEMENT/ROTATION DURING THIS INTERACTION
         MovementStateManager.canMove = false;
         MovementStateManager.canRotate = false;
@@ -206,17 +223,26 @@ public class HomelessManInteraction : Interactable
         }
     }
 
-    private IEnumerator InteractionCooldownRoutine()
+   private IEnumerator InteractionCooldownRoutine()
     {
         isOnCooldown = true;
 
         if (interactCanvas != null)
             interactCanvas.SetActive(false);
 
-        yield return new WaitForSeconds(interactionCooldown);
+        // WAIT FOR AUDIO TO FINISH
+        if (audioSource != null)
+        {
+            while (audioSource.isPlaying)
+            {
+                yield return null;
+            }
+        }
+
+        // (Optional) small buffer if you want smoother transition
+        yield return new WaitForSeconds(0.2f);
 
         isOnCooldown = false;
-
         dialogueRunning = false;
 
         if (dialogueCanvas != null)
@@ -231,7 +257,19 @@ public class HomelessManInteraction : Interactable
             }
         }
 
-        // UNLOCK PLAYER MOVEMENT/ROTATION AFTER INTERACTION FINISHES
+        // FINISHED EVENT (NOW PERFECTLY TIMED)
+        if (!hasTriggeredFinishedEvent && donationCount >= maxDonations)
+        {
+            hasTriggeredFinishedEvent = true;
+
+            if (eventManager != null && homelessEvent != null && homelessEvent.finishedEvent != null)
+            {
+                Debug.Log("Homeless man interaction fully completed!");
+                eventManager.CompleteEvent(homelessEvent.finishedEvent);
+            }
+        }
+
+        // UNLOCK PLAYER
         MovementStateManager.canMove = true;
         MovementStateManager.canRotate = true;
 
