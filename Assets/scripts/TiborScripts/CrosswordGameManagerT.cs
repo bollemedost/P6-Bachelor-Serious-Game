@@ -47,6 +47,7 @@ public class CrosswordGameManagerT : MonoBehaviour
     void Start()
     {
         BuildBoardExact();
+        PreFillLetters();
         SpawnAlphabet();
 
         if (completeUI == null)
@@ -119,6 +120,68 @@ public class CrosswordGameManagerT : MonoBehaviour
             Vector2Int key = new Vector2Int(data.x, data.y);
             slotMap[key] = slot;
             answerMap[key] = data.letter;
+        }
+    }
+
+    void PreFillLetters()
+    {
+        foreach (var pair in slotMap)
+        {
+            Vector2Int pos = pair.Key;
+            CrosswordSlotT slot = pair.Value;
+            string correctLetter = answerMap[pos];
+
+            int x = pos.x;
+            int y = pos.y;
+
+            // --- NIELSINE (vertical at x=7, y=0 -> 7)
+            // Show first N, L and the last E
+            if (x == 7 && (y == 0 || y == 3 || y == 7))
+            {
+                slot.TryPlaceLetter(correctLetter);
+            }
+
+            // --- FEM (vertical at x=4, y=2 -> 4)
+            // Show E
+            if (x == 4 && y == 3)
+            {
+                slot.TryPlaceLetter(correctLetter);
+            }
+
+            // --- FOLKEHOLD (horizontal at y=3, x=0 -> 8)
+            // Show F and D
+            if (y == 3 && (x == 0 || x == 8))
+            {
+                slot.TryPlaceLetter(correctLetter);
+            }
+
+            // --- FEMOGTYVE (horizontal at y=7, x=-1 -> 8)
+            // Show O and G
+            if (y == 7 && (x == 2 || x == 3))
+            {
+                slot.TryPlaceLetter(correctLetter);
+            }
+
+            // --- GRUNDLOVEN (vertical at x=3, y=7 -> 17)
+            // Show D and O
+            if (x == 3 && (y == 11 || y == 13))
+            {
+                slot.TryPlaceLetter(correctLetter);
+            }
+
+            // --- TREDIVE (horizontal at y=11, x=0 -> 6)
+            // Show R, I and V
+            if (y == 11 && (x == 1 || x == 4 || x == 5))
+            {
+                slot.TryPlaceLetter(correctLetter);
+            }
+
+            // --- FRUENTIMMER (horizontal at y=15, x=0 -> 10)
+            // Show U, M, M
+            if (y == 15 && (x == 2 || x == 7 || x == 8))
+            {
+                slot.TryPlaceLetter(correctLetter);
+            }
         }
     }
 
