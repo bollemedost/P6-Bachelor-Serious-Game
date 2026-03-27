@@ -57,6 +57,9 @@ public class HomelessManInteraction : Interactable
     public Transform playerTransform;
     public Transform playerInteractionPoint; // optional (snap position)
 
+    [Header("Reference")]
+    public Transform homelessManTransform;
+
     private bool hasTriggeredFinishedEvent = false;
     private bool isUnlocked = false;
     private bool hasPlayedDialogue = false;
@@ -248,20 +251,22 @@ public class HomelessManInteraction : Interactable
 
     private void FaceEachOther()
     {
-        if (playerTransform == null) return;
+        if (playerTransform == null || homelessManTransform == null) return;
 
-        // Player looks at homeless man
-        Vector3 lookDir = transform.position - playerTransform.position;
+        // Player looks at homeless man (NOT the mug)
+        Vector3 lookDir = homelessManTransform.position - playerTransform.position;
         lookDir.y = 0;
+
         if (lookDir != Vector3.zero)
             playerTransform.rotation = Quaternion.Slerp(
                 playerTransform.rotation,
                 Quaternion.LookRotation(lookDir),
                 Time.deltaTime * 5f);
 
-        // Homeless man looks at player (optional but nicer)
+        // Mug (optional) still faces player if you want
         Vector3 npcLookDir = playerTransform.position - transform.position;
         npcLookDir.y = 0;
+
         if (npcLookDir != Vector3.zero)
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
