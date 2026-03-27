@@ -65,6 +65,13 @@ public class NPCInteraction : Interactable
     public Animator animator;
     public string walkBoolName = "isWalking";
 
+    [Header("Interaction UI")]
+    public GameObject lockedCanvas;
+    public GameObject interactCanvas;
+
+    [Header("Prerequisite Events (Optional)")]
+    public GameEvent[] prerequisiteEvents;
+
     [Header("Scene Transition (Optional)")]
     public bool loadSceneAfterInteraction = false;
     public string sceneToLoad;
@@ -96,12 +103,82 @@ public class NPCInteraction : Interactable
 
         if (dialogueCanvas != null)
             dialogueCanvas.SetActive(false);
+        if (lockedCanvas != null)
+            lockedCanvas.SetActive(false);
+
+        if (interactCanvas != null)
+            interactCanvas.SetActive(false);
     }
 
     public override void Interact()
     {
-        if (!isInteracting && !interactionCompleted)
-            StartInteraction();
+        if (isInteracting || interactionCompleted)
+            return;
+
+        if (!ArePrerequisitesMet())
+            return;
+
+        StartInteraction();
+    }
+
+
+    private bool ArePrerequisitesMet()
+    {
+        if (eventManager == null || prerequisiteEvents == null || prerequisiteEvents.Length == 0)
+            return true;
+
+        foreach (var prereq in prerequisiteEvents)
+        {
+            if (!eventManager.IsEventCompleted(prereq))
+                return false;
+        }
+
+        return true;
+    }
+
+    private void UpdateCanvasState()
+    {
+        bool unlocked = ArePrerequisitesMet();
+
+        if (unlocked)
+        {
+            if (interactCanvas != null)
+            interactCanvas.SetActive(true);
+
+            if (lockedCanvas != null)
+            lockedCanvas.SetActive(false);
+        }
+        else
+        {
+            if (lockedCanvas != null)
+            lockedCanvas.SetActive(true);
+
+            if (interactCanvas != null)
+            interactCanvas.SetActive(false);
+        }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (player == null || isInteracting)
+            return;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if (distance <= interactDistance)
+        {
+            UpdateCanvasState();
+        }
+        else
+        {
+            if (lockedCanvas != null)
+                lockedCanvas.SetActive(false);
+
+            if (interactCanvas != null)
+                interactCanvas.SetActive(false);
+    }
     }
 
     protected override bool IsCurrentlyInteracting()
