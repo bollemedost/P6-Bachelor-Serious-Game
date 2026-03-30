@@ -7,6 +7,10 @@ public class UlkasseMinigameFinishT : MonoBehaviour
     [Header("Finish Condition")]
     public slot[] allSlots;
 
+    [Header("Optional Audio Finish Requirement")]
+    public bool waitForNarrationToFinish = true;
+    public UlkassePart1AudioManager audioManager;
+
     [Header("Next Scene")]
     public string nextSceneName = "Scene13Home1915";
 
@@ -20,14 +24,13 @@ public class UlkasseMinigameFinishT : MonoBehaviour
 
     private bool finished = false;
     private bool waitingForContinue = false;
+    private bool slotsCompleted = false;
 
     void Start()
     {
-        // Always hide panel at scene start
         if (completionPanel != null)
             completionPanel.SetActive(false);
 
-        // Hook up button automatically
         if (continueButton != null)
         {
             continueButton.onClick.RemoveListener(OnContinuePressed);
@@ -40,9 +43,39 @@ public class UlkasseMinigameFinishT : MonoBehaviour
         if (finished) return;
         if (allSlots == null || allSlots.Length == 0) return;
 
-        if (AreAllSlotsCompleted())
+        if (!slotsCompleted)
         {
-            FinishMinigame();
+            if (AreAllSlotsCompleted())
+            {
+                slotsCompleted = true;
+
+                if (debugLogs)
+                    Debug.Log("[UlkasseMinigameFinishT] All slots completed.");
+
+                if (!waitForNarrationToFinish)
+                {
+                    FinishMinigame();
+                    return;
+                }
+            }
+        }
+
+        if (slotsCompleted && waitForNarrationToFinish)
+        {
+            bool narrationDone = true;
+
+            if (audioManager != null)
+            {
+                narrationDone = audioManager.IsSequenceFinished && !audioManager.IsNarrationPlaying;
+            }
+
+            if (narrationDone)
+            {
+                if (debugLogs)
+                    Debug.Log("[UlkasseMinigameFinishT] Narration finished after all slots were completed.");
+
+                FinishMinigame();
+            }
         }
     }
 
@@ -69,6 +102,8 @@ public class UlkasseMinigameFinishT : MonoBehaviour
 
     void FinishMinigame()
     {
+        if (finished) return;
+
         finished = true;
 
         if (showCompletionMessageBeforeSceneChange)

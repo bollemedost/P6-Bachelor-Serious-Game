@@ -1,14 +1,17 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class draggableItemSpeach : MonoBehaviour, 
+public class draggableItemSpeach : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public string itemID;  // Set in Inspector
     public Image image;
+
+    [Header("Speech")]
+    public AudioClip dragSpeechClip;
+    public bool playSpeechOnBeginDrag = true;
+    public bool stopSpeechOnEndDrag = false;
 
     [HideInInspector] public Transform parentAfterDrag;
     [HideInInspector] public Transform originalParent;
@@ -24,7 +27,14 @@ public class draggableItemSpeach : MonoBehaviour,
 
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
-        image.raycastTarget = false;
+
+        if (image != null)
+            image.raycastTarget = false;
+
+        if (playSpeechOnBeginDrag && UlkassePart1AudioManager.Instance != null)
+        {
+            UlkassePart1AudioManager.Instance.PlayDraggedItemSpeech(dragSpeechClip);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -38,7 +48,14 @@ public class draggableItemSpeach : MonoBehaviour,
         if (isLocked) return;
 
         transform.SetParent(parentAfterDrag);
-        image.raycastTarget = true;
+
+        if (image != null)
+            image.raycastTarget = true;
+
+        if (stopSpeechOnEndDrag && UlkassePart1AudioManager.Instance != null)
+        {
+            UlkassePart1AudioManager.Instance.StopDraggedItemSpeech();
+        }
     }
 
     public void LockItem()
@@ -46,6 +63,8 @@ public class draggableItemSpeach : MonoBehaviour,
         isLocked = true;
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
-        image.raycastTarget = false;
+
+        if (image != null)
+            image.raycastTarget = false;
     }
 }

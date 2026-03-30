@@ -44,8 +44,12 @@ public class MinigameCompleteUI : MonoBehaviour
 
     public void OnDoneClicked()
     {
+        // SAFETY: ensure reward always works
         if (!shown)
-            return;
+        {
+            Debug.LogWarning("[MinigameCompleteUI] Show() was not called. Forcing reward.");
+            shown = true;
+        }
 
         CoinManager.EnsureExists().AddCoin(rewardCoins);
 

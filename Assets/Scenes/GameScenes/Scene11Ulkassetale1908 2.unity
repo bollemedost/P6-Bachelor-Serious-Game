@@ -172,6 +172,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: "Kvinder k\xE6mper for stemmeret"
   image: {fileID: 8329450}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &8329449
@@ -289,6 +292,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Et brev
   image: {fileID: 13071145}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &13071144
@@ -1138,6 +1144,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Andrea Brochmann
   image: {fileID: 29317970}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &29317969
@@ -3880,6 +3889,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: "M\xE6nd ikke stemme"
   image: {fileID: 267969949}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &267969948
@@ -4561,6 +4573,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: En tale
   image: {fileID: 318537355}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &318537354
@@ -4902,9 +4917,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 663635996}
-        m_TargetAssemblyTypeName: UlkasseMinigameFinishT, Assembly-CSharp
-        m_MethodName: OnContinuePressed
+      - m_Target: {fileID: 282818175}
+        m_TargetAssemblyTypeName: MinigameCompleteUI, Assembly-CSharp
+        m_MethodName: OnDoneClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8573,6 +8588,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Matilde Bajer
   image: {fileID: 635782209}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &635782208
@@ -8810,6 +8828,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  waitForNarrationToFinish: 1
+  audioManager: {fileID: 0}
   nextSceneName: Scene12Home1908
   showCompletionMessageBeforeSceneChange: 1
   completionPanel: {fileID: 282818173}
@@ -9171,6 +9191,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Nielsine Nielsen
   image: {fileID: 677589049}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &677589048
@@ -9436,6 +9459,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: "Kvinder f\xE5r stemmeret og k\xE6mper"
   image: {fileID: 739874968}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &739874967
@@ -11235,6 +11261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: "kvinder og m\xE6nd er helt lige politisk i samfundet"
   image: {fileID: 883509805}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &883509804
@@ -13193,6 +13222,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 1915
   image: {fileID: 1028332646}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &1028332645
@@ -13703,6 +13735,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 1908
   image: {fileID: 1075238728}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &1075238727
@@ -16858,6 +16893,272 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
   m_PrefabInstance: {fileID: 1309269178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1326315090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1326315094}
+  - component: {fileID: 1326315093}
+  - component: {fileID: 1326315092}
+  - component: {fileID: 1326315091}
+  m_Layer: 0
+  m_Name: UlkasseNarrationAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1326315091
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326315090}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &1326315092
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326315090}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1326315093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326315090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97e157e3bb421f4e85d99a30b79d8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  narrationSource: {fileID: 1326315092}
+  dragItemSource: {fileID: 1326315091}
+  narrationSteps:
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 5b0a59dd664e64e18b61a3c247e667f9, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 5b0a59dd664e64e18b61a3c247e667f9, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 5b0a59dd664e64e18b61a3c247e667f9, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 5b0a59dd664e64e18b61a3c247e667f9, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 5b0a59dd664e64e18b61a3c247e667f9, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 5b0a59dd664e64e18b61a3c247e667f9, type: 3}
+    waitForNextCorrectPlacement: 1
+  watchedSlots: []
+  playOnStart: 1
+  stopNarrationWhenDraggingItem: 0
+  autoContinueDelay: 0.15
+  debugLogs: 1
+--- !u!4 &1326315094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326315090}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 817.8354, y: 573.7694, z: -35.91939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1329296316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23039,6 +23340,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: En avisartikel
   image: {fileID: 1736275972}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &1736275971
@@ -23563,6 +23867,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 1896
   image: {fileID: 1759907361}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &1759907360
@@ -24730,6 +25037,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: "Kvinder f\xE5r stemmeret til folketingsvalget"
   image: {fileID: 1855369115}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &1855369114
@@ -26045,6 +26355,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Kvinder er ikke interesserede
   image: {fileID: 1978347015}
+  dragSpeechClip: {fileID: 8300000, guid: 05a349af4df39a54cbba6ad10346ae2c, type: 3}
+  playSpeechOnBeginDrag: 1
+  stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
   originalParent: {fileID: 0}
 --- !u!114 &1978347014
@@ -28366,3 +28679,4 @@ SceneRoots:
   - {fileID: 401255550}
   - {fileID: 153689987}
   - {fileID: 1073767704}
+  - {fileID: 1326315094}

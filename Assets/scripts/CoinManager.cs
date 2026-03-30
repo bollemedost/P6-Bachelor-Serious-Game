@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class CoinManager : MonoBehaviour
 {
     public static CoinManager Instance { get; private set; }
@@ -15,20 +14,29 @@ public class CoinManager : MonoBehaviour
 
     private void Awake()
     {
+        // If another CoinManager already exists, keep the old one and destroy this duplicate
         if (Instance != null && Instance != this)
         {
+            if (debugLogs)
+                Debug.Log("[CoinManager] Duplicate CoinManager found. Destroying this one and keeping the existing instance.");
+
             Destroy(gameObject);
             return;
         }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        // First and only manager
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
 
-        // IMPORTANT: reset on fresh run
-        totalCoins = 0;
+            // IMPORTANT:
+            // Only reset coins on the very first CoinManager created in this play session.
+            totalCoins = 0;
 
-        if (debugLogs)
-            Debug.Log($"[CoinManager] New run => totalCoins reset to {totalCoins}");
+            if (debugLogs)
+                Debug.Log($"[CoinManager] New run => totalCoins reset to {totalCoins}");
+        }
     }
 
     public static CoinManager EnsureExists()
@@ -43,7 +51,8 @@ public class CoinManager : MonoBehaviour
     public void AddCoin(int amount)
     {
         totalCoins += amount;
-        if (totalCoins < 0) totalCoins = 0;
+        if (totalCoins < 0)
+            totalCoins = 0;
 
         if (debugLogs)
             Debug.Log($"[CoinManager] AddCoin({amount}) => totalCoins={totalCoins}");
