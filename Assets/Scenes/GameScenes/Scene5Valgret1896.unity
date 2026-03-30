@@ -6143,6 +6143,7 @@ MonoBehaviour:
     - timeStamp: 30
       dialogueImageObject: {fileID: 0}
   currentEvent: {fileID: 11400000, guid: b94ed40c8c797c24db0780d2342dde20, type: 2}
+  conversationsToStopOnInteract: []
   playerCam: {fileID: 510334039}
   npcCam: {fileID: 731780460}
   playerTransform: {fileID: 1474592326}
@@ -6160,6 +6161,9 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 0}
   walkBoolName: isWalking
+  lockedCanvas: {fileID: 0}
+  interactCanvas: {fileID: 0}
+  prerequisiteEvents: []
   loadSceneAfterInteraction: 1
   sceneToLoad: Transition1
   sceneLoadDelay: 1.5
@@ -23971,7 +23975,7 @@ RectTransform:
   m_GameObject: {fileID: 894841940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 927413468}
@@ -36791,7 +36795,7 @@ RectTransform:
   m_GameObject: {fileID: 1447416164}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 927413468}
