@@ -21104,6 +21104,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2d6d94857243c464cb2ab77307297819, type: 3}
       insertIndex: -1
       addedObject: {fileID: 776038345}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2d6d94857243c464cb2ab77307297819, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 776038346}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2d6d94857243c464cb2ab77307297819, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 776038347}
   m_SourcePrefab: {fileID: 100100000, guid: 2d6d94857243c464cb2ab77307297819, type: 3}
 --- !u!4 &776038341 stripped
 Transform:
@@ -21150,7 +21156,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776038342}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70f5ff58580081f499d45d9d2cb75317, type: 3}
   m_Name: 
@@ -21161,6 +21167,48 @@ MonoBehaviour:
     bodyAnim: 3
   - time: 6
     bodyAnim: 0
+--- !u!114 &776038346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776038342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 776038344}
+  talkingEvents:
+  - gameEvent: {fileID: 11400000, guid: 811d4860866c443d2a318734b6d1bafc, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 0
+    - time: 5
+      bodyAnim: 3
+--- !u!114 &776038347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776038342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdeff1b5e2c2ef42947779c5d35c8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 776038344}
+  animationSequence: []
+  audioSource: {fileID: 0}
+  player: {fileID: 0}
+  hearingDistance: 2
+  fadeSpeed: 2
+  randomPitch: 1
+  idleStateName: Idle
+  eventManager: {fileID: 638731887}
+  audioStartedEvent: {fileID: 11400000, guid: 811d4860866c443d2a318734b6d1bafc, type: 2}
 --- !u!1 &776294580
 GameObject:
   m_ObjectHideFlags: 0
@@ -49794,6 +49842,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b3b576fd7bad034fac5c53c82072f16, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1900764478}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b3b576fd7bad034fac5c53c82072f16, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1900764480}
   m_SourcePrefab: {fileID: 100100000, guid: 9b3b576fd7bad034fac5c53c82072f16, type: 3}
 --- !u!1 &1900764473 stripped
 GameObject:
@@ -49840,7 +49891,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900764473}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70f5ff58580081f499d45d9d2cb75317, type: 3}
   m_Name: 
@@ -49970,8 +50021,28 @@ MonoBehaviour:
   fadeSpeed: 2
   randomPitch: 1
   idleStateName: Idle
-  eventManager: {fileID: 0}
-  audioStartedEvent: {fileID: 0}
+  eventManager: {fileID: 638731887}
+  audioStartedEvent: {fileID: 11400000, guid: 811d4860866c443d2a318734b6d1bafc, type: 2}
+--- !u!114 &1900764480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900764473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9ca60a435f8b4645b6f5685c8c2a0e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1900764476}
+  talkingEvents:
+  - gameEvent: {fileID: 11400000, guid: 811d4860866c443d2a318734b6d1bafc, type: 2}
+    sequence:
+    - time: 0
+      bodyAnim: 3
+    - time: 5
+      bodyAnim: 0
 --- !u!1001 &1906067823
 PrefabInstance:
   m_ObjectHideFlags: 0
