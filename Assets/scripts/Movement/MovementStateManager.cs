@@ -39,6 +39,8 @@ public class MovementStateManager : MonoBehaviour
     // before walking is allowed again.
     private bool requireInputRelease = false;
 
+    private bool wasMovingBeforeLock = false;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -198,8 +200,14 @@ public class MovementStateManager : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    public void LockMovement(bool locked)
+   public void LockMovement(bool locked)
     {
+        if (locked)
+        {
+            // Check if player WAS moving when interaction started
+            wasMovingBeforeLock = moveInput.magnitude > 0.1f;
+        }
+
         isLocked = locked;
 
         moveInput = Vector2.zero;
@@ -208,11 +216,10 @@ public class MovementStateManager : MonoBehaviour
         canMove = !locked;
         canRotate = !locked;
 
-        // When unlocking after dialogue/interaction,
-        // force the player to release the move key once.
         if (!locked)
         {
-            requireInputRelease = true;
+            // ONLY require release if player was actually moving
+            requireInputRelease = wasMovingBeforeLock;
 
             if (anim != null)
             {
