@@ -83,6 +83,9 @@ private IEnumerator FadeInSceneAndUIForScene(CanvasGroup[] sceneUI)
     fadeCanvasGroup.alpha = 0f;
     fadeCanvasGroup.gameObject.SetActive(false);
 
+    // 👇 ADD THIS
+    FindFirstObjectByType<TutorialUI>()?.ShowTutorial();
+
     // Wait for UI fade delay
     yield return new WaitForSeconds(uiFadeDelay);
 
