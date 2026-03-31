@@ -27,6 +27,13 @@ public class WindowInteraction : Interactable
     [Header("Re-Enter Cooldown")]
     public float interactionCooldown = 0.5f;
 
+    [Header("Window Audio")]
+    public AudioSource outsideNoiseAudioSource;
+    [Tooltip("Outside sound should be 40% louder than inside, so default is 1.4")]
+    public float outsideVolumeMultiplier = 1.4f;
+    [Tooltip("How long the sound takes to fade when camera moves through the window")]
+    public float audioTransitionDuration = 2.5f;
+
     private bool isActive = false;
     private bool eventTriggered = false;
 
@@ -37,6 +44,9 @@ public class WindowInteraction : Interactable
     private MovementStateManager playerMovement;
 
     private Coroutine fadeCoroutine;
+    private Coroutine audioCoroutine;
+
+    private float insideVolume;
 
     public BlackboardInteraction blackboard;
 
@@ -45,6 +55,11 @@ public class WindowInteraction : Interactable
         base.Start();
         eventManager = FindFirstObjectByType<EventManager>();
         playerMovement = FindFirstObjectByType<MovementStateManager>();
+
+        if (outsideNoiseAudioSource != null)
+        {
+            insideVolume = outsideNoiseAudioSource.volume;
+        }
     }
 
     protected override void Update()
@@ -112,6 +127,9 @@ public class WindowInteraction : Interactable
             playerUICanvasGroup.alpha = 0f;
         }
 
+        // Gradually increase outside sound over 2.5 seconds
+        StartAudioFade(insideVolume * outsideVolumeMultiplier);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -122,7 +140,7 @@ public class WindowInteraction : Interactable
         }
 
         if (blackboard != null)
-        blackboard.Activate();
+            blackboard.Activate();
     }
 
     private void ExitWindow()
@@ -136,6 +154,9 @@ public class WindowInteraction : Interactable
             playerMovement.LockMovement(false);
 
         MovementStateManager.canRotate = true;
+
+        // Gradually return sound back to inside volume
+        StartAudioFade(insideVolume);
 
         if (playerUICanvasGroup != null)
         {
@@ -151,7 +172,33 @@ public class WindowInteraction : Interactable
         StartCoroutine(InteractionCooldownCoroutine());
 
         if (blackboard != null)
-        blackboard.Deactivate();
+            blackboard.Deactivate();
+    }
+
+    private void StartAudioFade(float targetVolume)
+    {
+        if (outsideNoiseAudioSource == null)
+            return;
+
+        if (audioCoroutine != null)
+            StopCoroutine(audioCoroutine);
+
+        audioCoroutine = StartCoroutine(FadeAudioVolume(outsideNoiseAudioSource, targetVolume, audioTransitionDuration));
+    }
+
+    private IEnumerator FadeAudioVolume(AudioSource source, float targetVolume, float duration)
+    {
+        float startVolume = source.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            source.volume = Mathf.Lerp(startVolume, targetVolume, elapsed / duration);
+            yield return null;
+        }
+
+        source.volume = targetVolume;
     }
 
     private IEnumerator EnableExitAfterDelay()
