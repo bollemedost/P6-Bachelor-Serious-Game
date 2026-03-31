@@ -23,6 +23,9 @@ public class TalkingAnimations : MonoBehaviour
         LookAtEmma,
         Laugh,
         Wave,
+        SitTalk1,
+        SitLaugh,
+        SitAngry,
     }
 
     [System.Serializable]
