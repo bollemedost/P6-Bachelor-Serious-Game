@@ -20135,7 +20135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1598823326}
-  interactDistance: 1.5
+  interactDistance: 1
   playerTag: Player
   giveHomelessManMoneyEvent: {fileID: 11400000, guid: 240b2cd614ebedc4883591a132b6aac9, type: 2}
   prerequisiteEvents:
@@ -20172,6 +20172,9 @@ MonoBehaviour:
   playerTransform: {fileID: 569178096}
   playerInteractionPoint: {fileID: 840249973}
   homelessManTransform: {fileID: 543450652273804352}
+  playerUICanvasGroup: {fileID: 1166722643}
+  fadeDuration: 0.5
+  fadeDelay: 0.3
 --- !u!82 &567265124
 AudioSource:
   m_ObjectHideFlags: 0
@@ -40728,7 +40731,7 @@ MonoBehaviour:
   npcAnimationDuration: 2
   audioSource: {fileID: 1321294057}
   timedAudios:
-  - clip: {fileID: 8300000, guid: 26c0a0c200a509b42a1ac5b2fb0d11d2, type: 3}
+  - clip: {fileID: 8300000, guid: 7b6114127522f479e85f3282ebf442a5, type: 3}
     time: 0
 --- !u!65 &1321294059
 BoxCollider:
@@ -40768,8 +40771,8 @@ Transform:
   m_GameObject: {fileID: 1321294056}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.7905, y: 0.365, z: 3.7293}
-  m_LocalScale: {x: 2.3634052, y: 1, z: 4.15949}
+  m_LocalPosition: {x: 12.4742, y: 0.365, z: 3.7293}
+  m_LocalScale: {x: 2.9960887, y: 1, z: 4.15949}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -43950,7 +43953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.912994
+      value: 13.906252
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalPosition.y
@@ -43958,11 +43961,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.9949846
+      value: 6.0074396
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.36231953
+      value: 0.18836622
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalRotation.x
@@ -43970,7 +43973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.932054
+      value: -0.98209894
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalRotation.z
@@ -43982,7 +43985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -137.515
+      value: -158.285
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ec904af4f93834aab6b47bb3e0e241, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -44823,15 +44826,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b5721da6c3e1378438d1642232db8288, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.144077
+      value: -9.116
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b5721da6c3e1378438d1642232db8288, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.8340373
+      value: 2.853
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b5721da6c3e1378438d1642232db8288, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.5272596
+      value: -3.459
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b5721da6c3e1378438d1642232db8288, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66409,9 +66412,9 @@ MonoBehaviour:
   walkAfterInteraction: 0
   walkStartDelay: 1
   waypoints: []
-  moveSpeed: 2
-  waypointStopDistance: 0.2
-  playerFollowDistance: 5
+  moveSpeed: 0
+  waypointStopDistance: 0
+  playerFollowDistance: 0
   animator: {fileID: 0}
   walkBoolName: isWalking
   lockedCanvas: {fileID: 0}

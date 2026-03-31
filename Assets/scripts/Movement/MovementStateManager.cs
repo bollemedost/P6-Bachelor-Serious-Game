@@ -200,11 +200,11 @@ public class MovementStateManager : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-   public void LockMovement(bool locked)
+    public void LockMovement(bool locked)
     {
         if (locked)
         {
-            // Check if player WAS moving when interaction started
+            // ✅ ONLY store if player was actually moving
             wasMovingBeforeLock = moveInput.magnitude > 0.1f;
         }
 
@@ -218,7 +218,7 @@ public class MovementStateManager : MonoBehaviour
 
         if (!locked)
         {
-            // ONLY require release if player was actually moving
+            // ✅ ONLY require release IF player was moving before
             requireInputRelease = wasMovingBeforeLock;
 
             if (anim != null)

@@ -69,6 +69,13 @@ public class HomelessManInteraction : Interactable
     private int currentUIIndex = 0;
     private bool dialogueRunning = false;
 
+    [Header("Player UI Canvas Group")]
+    public CanvasGroup playerUICanvasGroup;
+
+    [Header("UI Fade Settings")]
+    public float fadeDuration = 0.5f;
+    public float fadeDelay = 0.3f;
+
     protected override void Start()
     {
         base.Start();
@@ -194,6 +201,10 @@ public class HomelessManInteraction : Interactable
             homelessCam.Priority = 10;
             playerCam.Priority = 0;
         }
+
+        // HIDE PLAYER UI (same as NPCInteraction)
+        if (playerUICanvasGroup != null)
+            playerUICanvasGroup.alpha = 0f;
 
         // START EVENT
         if (eventManager != null && homelessEvent != null && homelessEvent.startEvent != null)
@@ -326,6 +337,13 @@ public class HomelessManInteraction : Interactable
 
         UnlockInteraction();
 
+        // SHOW PLAYER UI AGAIN (fade in like NPCInteraction)
+        if (playerUICanvasGroup != null)
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeInUI(playerUICanvasGroup, fadeDelay, fadeDuration));
+        }
+
         // RESET CAMERA
         if (playerCam != null && homelessCam != null)
         {
@@ -337,5 +355,26 @@ public class HomelessManInteraction : Interactable
     protected override bool IsCurrentlyInteracting()
     {
         return isOnCooldown;
+    }
+
+    private IEnumerator FadeInUI(CanvasGroup cg, float delay, float duration)
+    {
+        if (cg == null) yield break;
+
+        yield return new WaitForSeconds(delay);
+
+        float elapsed = 0f;
+        float startAlpha = cg.alpha;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
+            yield return null;
+        }
+
+        cg.alpha = 1f;
+        cg.interactable = true;
+        cg.blocksRaycasts = true;
     }
 }
