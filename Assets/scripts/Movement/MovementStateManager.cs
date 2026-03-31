@@ -34,6 +34,11 @@ public class MovementStateManager : MonoBehaviour
     [Header("Footsteps")]
     public AudioSource footstepSource;
 
+    // NEW:
+    // After interaction ends, player must release movement input once
+    // before walking is allowed again.
+    private bool requireInputRelease = false;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -67,6 +72,13 @@ public class MovementStateManager : MonoBehaviour
     private void OnMoveCanceled(InputAction.CallbackContext ctx)
     {
         moveInput = Vector2.zero;
+
+        // Once player releases movement after an interaction,
+        // walking can be allowed again.
+        if (requireInputRelease)
+        {
+            requireInputRelease = false;
+        }
     }
 
     void Start()
@@ -86,6 +98,35 @@ public class MovementStateManager : MonoBehaviour
         {
             dir = Vector3.zero;
             moveInput = Vector2.zero;
+
+            // Keep player visually idle while locked
+            if (anim != null)
+            {
+                anim.SetBool("Walking", false);
+                anim.SetFloat("hzInput", 0f);
+                anim.SetFloat("vInput", 0f);
+            }
+
+            return;
+        }
+
+        // IMPORTANT FIX:
+        // If interaction just ended and player is still holding movement,
+        // force idle until they release the input once.
+        if (requireInputRelease)
+        {
+            dir = Vector3.zero;
+
+            if (anim != null)
+            {
+                anim.SetBool("Walking", false);
+                anim.SetFloat("hzInput", 0f);
+                anim.SetFloat("vInput", 0f);
+            }
+
+            if (currentState != idle)
+                SwitchState(idle);
+
             return;
         }
 
@@ -166,6 +207,23 @@ public class MovementStateManager : MonoBehaviour
 
         canMove = !locked;
         canRotate = !locked;
+
+        // When unlocking after dialogue/interaction,
+        // force the player to release the move key once.
+        if (!locked)
+        {
+            requireInputRelease = true;
+
+            if (anim != null)
+            {
+                anim.SetBool("Walking", false);
+                anim.SetFloat("hzInput", 0f);
+                anim.SetFloat("vInput", 0f);
+            }
+
+            if (currentState != idle)
+                SwitchState(idle);
+        }
 
         if (locked && footstepSource != null)
         {
