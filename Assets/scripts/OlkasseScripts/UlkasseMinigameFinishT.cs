@@ -15,9 +15,13 @@ public class UlkasseMinigameFinishT : MonoBehaviour
     public string nextSceneName = "Scene13Home1915";
 
     [Header("Optional Completion Popup")]
-    public bool showCompletionMessageBeforeSceneChange = false;
+    public bool showCompletionMessageBeforeSceneChange = true;
     public GameObject completionPanel;
     public Button continueButton;
+
+    [Header("Small Safety Delay")]
+    [Tooltip("Prevents the panel from appearing in the exact same frame as the last placement/audio event.")]
+    public float finishDelay = 0.1f;
 
     [Header("Debug")]
     public bool debugLogs = true;
@@ -25,11 +29,15 @@ public class UlkasseMinigameFinishT : MonoBehaviour
     private bool finished = false;
     private bool waitingForContinue = false;
     private bool slotsCompleted = false;
+    private float slotsCompletedTime = -1f;
 
     void Start()
     {
         if (completionPanel != null)
             completionPanel.SetActive(false);
+
+        if (audioManager == null)
+            audioManager = UlkassePart1AudioManager.Instance;
 
         if (continueButton != null)
         {
@@ -43,39 +51,40 @@ public class UlkasseMinigameFinishT : MonoBehaviour
         if (finished) return;
         if (allSlots == null || allSlots.Length == 0) return;
 
-        if (!slotsCompleted)
+        if (!slotsCompleted && AreAllSlotsCompleted())
         {
-            if (AreAllSlotsCompleted())
-            {
-                slotsCompleted = true;
+            slotsCompleted = true;
+            slotsCompletedTime = Time.time;
 
-                if (debugLogs)
-                    Debug.Log("[UlkasseMinigameFinishT] All slots completed.");
-
-                if (!waitForNarrationToFinish)
-                {
-                    FinishMinigame();
-                    return;
-                }
-            }
+            if (debugLogs)
+                Debug.Log("[UlkasseMinigameFinishT] All slots completed.");
         }
 
-        if (slotsCompleted && waitForNarrationToFinish)
+        if (!slotsCompleted)
+            return;
+
+        if (Time.time < slotsCompletedTime + finishDelay)
+            return;
+
+        if (!waitForNarrationToFinish)
         {
-            bool narrationDone = true;
+            FinishMinigame();
+            return;
+        }
 
-            if (audioManager != null)
-            {
-                narrationDone = audioManager.IsSequenceFinished && !audioManager.IsAnyManagedAudioPlaying;
-            }
+        bool audioDone = true;
 
-            if (narrationDone)
-            {
-                if (debugLogs)
-                    Debug.Log("[UlkasseMinigameFinishT] Narration finished after all slots were completed.");
+        if (audioManager != null)
+        {
+            audioDone = !audioManager.IsAnyManagedAudioPlaying;
+        }
 
-                FinishMinigame();
-            }
+        if (audioDone)
+        {
+            if (debugLogs)
+                Debug.Log("[UlkasseMinigameFinishT] Slots are completed and audio is finished. Showing completion panel.");
+
+            FinishMinigame();
         }
     }
 
@@ -127,7 +136,6 @@ public class UlkasseMinigameFinishT : MonoBehaviour
         {
             if (debugLogs)
                 Debug.Log("[UlkasseMinigameFinishT] Minigame complete. Loading next scene directly.");
-
             LoadNextScene();
         }
     }
