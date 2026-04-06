@@ -9,6 +9,10 @@ public class slot : MonoBehaviour, IDropHandler
     // List of valid IDs this slot can accept
     public List<string> correctItemIDs = new List<string>();
 
+    [Header("Optional Order Control")]
+    [Tooltip("Only use this in minigames where slots must be filled in order.")]
+    public UlkasseSlotOrderManager slotOrderManager;
+
     [Header("Prefabs")]
     public GameObject tomatoPrefab;
     public GameObject coinPrefab;
@@ -45,45 +49,66 @@ public class slot : MonoBehaviour, IDropHandler
     public bool IsCorrectPlaced => isCorrectPlaced;
 
     public void OnDrop(PointerEventData eventData)
-{
-    if (transform.childCount != 0)
-        return;
-
-    GameObject dropped = eventData.pointerDrag;
-    draggableItemSpeach draggable = dropped.GetComponent<draggableItemSpeach>();
-
-    if (draggable == null)
-        return;
-
-    if (audioSource != null && dropSound != null)
     {
-        audioSource.PlayOneShot(dropSound);
-    }
+        if (transform.childCount != 0)
+            return;
 
-    RectTransform droppedRect = dropped.GetComponent<RectTransform>();
+        GameObject dropped = eventData.pointerDrag;
+        if (dropped == null)
+            return;
 
-    if (acceptAnyItem)
-    {
-        draggable.parentAfterDrag = transform;
-        ApplyItemTransform(droppedRect, anySlotScale);
-        return;
-    }
+        draggableItemSpeach draggable = dropped.GetComponent<draggableItemSpeach>();
+        if (draggable == null)
+            return;
 
-    if (correctItemIDs.Contains(draggable.itemID))
-    {
-        draggable.parentAfterDrag = transform;
-        draggable.LockItem();
+        RectTransform droppedRect = dropped.GetComponent<RectTransform>();
 
-        ApplyItemTransform(droppedRect, specificSlotScale);
-        HandleCorrect();
-    }
-    else
-    {
+        // If this slot accepts any item, keep old behavior
+        if (acceptAnyItem)
+        {
+            if (audioSource != null && dropSound != null)
+                audioSource.PlayOneShot(dropSound);
+
+            draggable.parentAfterDrag = transform;
+            ApplyItemTransform(droppedRect, anySlotScale);
+            return;
+        }
+
+        // IMPORTANT:
+        // If order manager exists, and this is NOT the currently active slot,
+        // then do NOTHING except send the item back.
+        // No tomato, no penalty, no wrong sound.
+        if (slotOrderManager != null && !slotOrderManager.IsSlotCurrentlyAllowed(this))
+        {
+            draggable.parentAfterDrag = draggable.originalParent;
+            return;
+        }
+
+        bool itemIsCorrectForThisSlot = correctItemIDs.Contains(draggable.itemID);
+
+        // Active slot + correct item
+        if (itemIsCorrectForThisSlot)
+        {
+            if (audioSource != null && dropSound != null)
+                audioSource.PlayOneShot(dropSound);
+
+            draggable.parentAfterDrag = transform;
+            draggable.LockItem();
+
+            ApplyItemTransform(droppedRect, specificSlotScale);
+            HandleCorrect();
+
+            if (slotOrderManager != null)
+                slotOrderManager.NotifyCorrectPlacement(this);
+
+            return;
+        }
+
+        // Active slot + wrong item = punish
         draggable.parentAfterDrag = draggable.originalParent;
         ThrowTomato(droppedRect);
         HandleWrong();
     }
-}
 
     void ApplyItemTransform(RectTransform rect, float scale)
     {
@@ -103,34 +128,21 @@ public class slot : MonoBehaviour, IDropHandler
     {
         isCorrectPlaced = true;
 
-        // Change sprite
         if (slotImage != null && correctSprite != null)
-        {
             slotImage.sprite = correctSprite;
-        }
 
-        // Play correct sound (ingen delay)
         if (audioSource != null && correctSound != null)
-        {
             audioSource.PlayOneShot(correctSound);
-        }
 
-        // Give coins
         CoinManager.EnsureExists().AddCoin(correctCoinReward);
-
-        // Throw coin visual
         ThrowCoin();
     }
 
     void HandleWrong()
     {
-        // Play wrong sound med delay
         if (audioSource != null && wrongSound != null)
-        {
             StartCoroutine(PlayWrongSoundDelayed());
-        }
 
-        // Remove coins
         CoinManager.EnsureExists().AddCoin(-wrongCoinPenalty);
     }
 

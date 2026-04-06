@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Sindssyge og Idioter
   image: {fileID: 13071145}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: 1035b77772b2f43f495886f7dd6ca761, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -564,7 +564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: "Arbejdsl\xF8n"
   image: {fileID: 29317970}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: 56185a5766ad340408e0ee6e88f1b3b0, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -1955,6 +1955,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4937060029079926, guid: 24a5f7c212479624ba65a0ad94f34342, type: 3}
   m_PrefabInstance: {fileID: 136325521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &144674231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 144674233}
+  - component: {fileID: 144674232}
+  m_Layer: 0
+  m_Name: UlkasseSlotOrderManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &144674232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144674231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15815dbedbb227145863053dfa49635d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderedSlots:
+  - {fileID: 173293093}
+  - {fileID: 1691663686}
+  - {fileID: 1214083130}
+  - {fileID: 1413077684}
+  - {fileID: 1493847944}
+  - {fileID: 1185759496}
+  - {fileID: 1266348119}
+  - {fileID: 1434126519}
+  - {fileID: 1620043501}
+  - {fileID: 1229492832}
+  debugLogs: 1
+--- !u!4 &144674233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144674231}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 907.5, y: 91.29999, z: -13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &152301242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2255,6 +2311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - Kvinder og Tyende
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -3022,7 +3079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: kommunale
   image: {fileID: 267969949}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: 7f7c1354a49214965a7322f1ea1cb43e, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -3607,7 +3664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Valgretsforeninger
   image: {fileID: 318537355}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: d9398c4cda34949b2845194d5ff82160, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -4923,6 +4980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -5327,6 +5385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -5521,6 +5580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -5801,6 +5861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -6639,7 +6700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Stemmeret
   image: {fileID: 635782209}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: 15fd6bdad6c7e48bb8b6c76d0c0d8234, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -7241,7 +7302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: tyske Kvinder
   image: {fileID: 677589049}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: bf4575bc5927e40e4bff92331658004d, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -8148,40 +8209,40 @@ MonoBehaviour:
   dragItemSource: {fileID: 804720718}
   narrationSteps:
   - note: 
-    narrationClip: {fileID: 8300000, guid: 8b5574be9fb4840d6903e9b501917d6c, type: 3}
+    narrationClip: {fileID: 8300000, guid: 7d3acd243112440afb4a78f5e1c25a3f, type: 3}
     waitForNextCorrectPlacement: 1
   - note: 
-    narrationClip: {fileID: 8300000, guid: 4235f2ba888032d478553523c7b4dc86, type: 3}
+    narrationClip: {fileID: 8300000, guid: aa43beb4ea6a745c1b6b607f27a213b4, type: 3}
     waitForNextCorrectPlacement: 1
   - note: 
-    narrationClip: {fileID: 8300000, guid: 23f06199f55d14e35b7c922844aaa9fe, type: 3}
+    narrationClip: {fileID: 8300000, guid: 9a5a44abb2cca4cc0bfe1b16c32ff279, type: 3}
     waitForNextCorrectPlacement: 1
   - note: 
-    narrationClip: {fileID: 8300000, guid: 99bfc950c1dec0a4c9f933fd81c6ebf3, type: 3}
+    narrationClip: {fileID: 8300000, guid: 09920e90d09004c619bc503a9f1c4c88, type: 3}
     waitForNextCorrectPlacement: 1
   - note: 
-    narrationClip: {fileID: 8300000, guid: 09600d9fea72342d391fc1cb5adf3eaa, type: 3}
-    waitForNextCorrectPlacement: 1
-  - note: 
-    narrationClip: {fileID: 8300000, guid: 04d949c46ee854cc9abe1f20c52fe882, type: 3}
-    waitForNextCorrectPlacement: 1
-  - note: 
-    narrationClip: {fileID: 8300000, guid: 7160508401042456e83ac7e728342ce9, type: 3}
-    waitForNextCorrectPlacement: 1
-  - note: 
-    narrationClip: {fileID: 8300000, guid: acb8db114b1c64a98b258cdf94ee3182, type: 3}
-    waitForNextCorrectPlacement: 1
-  - note: 
-    narrationClip: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
-    waitForNextCorrectPlacement: 1
-  - note: 
-    narrationClip: {fileID: 8300000, guid: 87200a0b4d8414b15987428ec3162e37, type: 3}
-    waitForNextCorrectPlacement: 1
-  - note: 
-    narrationClip: {fileID: 8300000, guid: 5b0a59dd664e64e18b61a3c247e667f9, type: 3}
+    narrationClip: {fileID: 8300000, guid: 054e2ec3fe0a84b9c8d84738f91ac009, type: 3}
     waitForNextCorrectPlacement: 0
   - note: 
-    narrationClip: {fileID: 8300000, guid: 8b5574be9fb4840d6903e9b501917d6c, type: 3}
+    narrationClip: {fileID: 8300000, guid: dbb840ec7d51247bcb62ab8a794c5fc5, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 28ece594fe2af4c9a9f557dc040a1aae, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 67f4b2ed5b75f41258c75769232e6dfb, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 8860dfa33742040b2aa60c7f4265233d, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 4a7b68abbb084470b90729329f25e094, type: 3}
+    waitForNextCorrectPlacement: 1
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 544626a70fb14410884f9e572d4a761f, type: 3}
+    waitForNextCorrectPlacement: 0
+  - note: 
+    narrationClip: {fileID: 8300000, guid: 30739299fd9424d7080ea6301ab4a5e8, type: 3}
     waitForNextCorrectPlacement: 0
   watchedSlots:
   - {fileID: 173293093}
@@ -8328,6 +8389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -10739,7 +10801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: fyldt 25 Aar
   image: {fileID: 1028332646}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: 584b286b3167642db8edb8dccc74d9c4, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -11131,7 +11193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: "\xC6gteskabslove"
   image: {fileID: 1075238728}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: a877e07c09e7e40429b5c6b51b68e823, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -12444,6 +12506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -12803,6 +12866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - kommunale
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 890028299}
@@ -13160,6 +13224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - Valgretsforeninger
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 890028299}
@@ -13580,6 +13645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - tyske Kvinder
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -13994,6 +14060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -14320,6 +14387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - politiske
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -15966,6 +16034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - "Arbejdsl\xF8n"
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -16344,6 +16413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - Sindssyge og Idioter
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 1233217664}
@@ -17306,6 +17376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - Stemmeret
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 1233217664}
@@ -17613,6 +17684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -18877,6 +18949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - "\xC6gteskabslove"
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 890028299}
@@ -20151,6 +20224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctItemIDs:
   - fyldt 25 Aar
+  slotOrderManager: {fileID: 144674232}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 2349393575554874293, guid: ca51144e4e44f4fe593458184d31501b, type: 3}
   tomatoSpawnPoint: {fileID: 1233217664}
@@ -21176,7 +21250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: politiske
   image: {fileID: 1736275972}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: 2d21ac8fc21db4c45b098a4f7b8a8299, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -21628,7 +21702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: Kvinder og Tyende
   image: {fileID: 1759907361}
-  dragSpeechClip: {fileID: 8300000, guid: 3f590c169c09033449cf806a4623b6b2, type: 3}
+  dragSpeechClip: {fileID: 8300000, guid: e9c1abe244f38459e97affd628c9e32b, type: 3}
   playSpeechOnBeginDrag: 1
   stopSpeechOnEndDrag: 0
   parentAfterDrag: {fileID: 0}
@@ -24604,6 +24678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -25749,6 +25824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctItemIDs: []
+  slotOrderManager: {fileID: 0}
   tomatoPrefab: {fileID: 6234154333440906679, guid: 383cf8309160c473f861a69cd7ddab7b, type: 3}
   coinPrefab: {fileID: 0}
   tomatoSpawnPoint: {fileID: 78855084}
@@ -25849,3 +25925,4 @@ SceneRoots:
   - {fileID: 401255550}
   - {fileID: 752062856}
   - {fileID: 804720721}
+  - {fileID: 144674233}
