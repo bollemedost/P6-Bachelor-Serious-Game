@@ -38,10 +38,21 @@ public class UlkassePart1AudioManager : MonoBehaviour
     private int completedSlotsCheckpoint = 0;
     private bool waitingForProgress = false;
     private bool sequenceFinished = false;
-    private Coroutine playRoutine;
+
+    private Coroutine narrationFlowRoutine;
+    private Coroutine dragSpeechRoutine;
 
     public bool IsSequenceFinished => sequenceFinished;
     public bool IsNarrationPlaying => narrationSource != null && narrationSource.isPlaying;
+    public bool IsAnyManagedAudioPlaying
+    {
+        get
+        {
+            bool narrationPlaying = narrationSource != null && narrationSource.isPlaying;
+            bool dragPlaying = dragItemSource != null && dragItemSource.isPlaying;
+            return narrationPlaying || dragPlaying;
+        }
+    }
 
     void Awake()
     {
@@ -80,12 +91,12 @@ public class UlkassePart1AudioManager : MonoBehaviour
             waitingForProgress = false;
 
             if (debugLogs)
-                Debug.Log("[UlkassePart1AudioManager] New correct slot completed. Continuing narration.");
+                Debug.Log("[UlkassePart1AudioManager] New correct slot completed. Continuing narration when audio is free.");
 
-            if (playRoutine != null)
-                StopCoroutine(playRoutine);
+            if (narrationFlowRoutine != null)
+                StopCoroutine(narrationFlowRoutine);
 
-            playRoutine = StartCoroutine(ContinueAfterDelay(autoContinueDelay));
+            narrationFlowRoutine = StartCoroutine(ContinueAfterDelayAndSilence(autoContinueDelay));
         }
     }
 
@@ -96,8 +107,11 @@ public class UlkassePart1AudioManager : MonoBehaviour
         waitingForProgress = false;
         sequenceFinished = false;
 
-        if (playRoutine != null)
-            StopCoroutine(playRoutine);
+        if (narrationFlowRoutine != null)
+            StopCoroutine(narrationFlowRoutine);
+
+        if (dragSpeechRoutine != null)
+            StopCoroutine(dragSpeechRoutine);
 
         PlayCurrentStep();
     }
@@ -123,6 +137,18 @@ public class UlkassePart1AudioManager : MonoBehaviour
         }
 
         NarrationStep step = narrationSteps[currentNarrationIndex];
+        int stepIndex = currentNarrationIndex;
+        currentNarrationIndex++;
+
+        if (narrationFlowRoutine != null)
+            StopCoroutine(narrationFlowRoutine);
+
+        narrationFlowRoutine = StartCoroutine(PlayNarrationStepWhenReady(step, stepIndex));
+    }
+
+    IEnumerator PlayNarrationStepWhenReady(NarrationStep step, int stepIndex)
+    {
+        yield return WaitUntilAllManagedAudioFinished();
 
         if (narrationSource != null)
         {
@@ -134,12 +160,12 @@ public class UlkassePart1AudioManager : MonoBehaviour
                 narrationSource.Play();
 
                 if (debugLogs)
-                    Debug.Log("[UlkassePart1AudioManager] Playing narration step " + currentNarrationIndex + ": " + step.narrationClip.name);
+                    Debug.Log("[UlkassePart1AudioManager] Playing narration step " + stepIndex + ": " + step.narrationClip.name);
             }
             else
             {
                 if (debugLogs)
-                    Debug.LogWarning("[UlkassePart1AudioManager] Missing narration clip at step " + currentNarrationIndex);
+                    Debug.LogWarning("[UlkassePart1AudioManager] Missing narration clip at step " + stepIndex);
             }
         }
         else
@@ -147,8 +173,6 @@ public class UlkassePart1AudioManager : MonoBehaviour
             if (debugLogs)
                 Debug.LogWarning("[UlkassePart1AudioManager] Narration source is not assigned.");
         }
-
-        currentNarrationIndex++;
 
         if (step.waitForNextCorrectPlacement)
         {
@@ -161,17 +185,24 @@ public class UlkassePart1AudioManager : MonoBehaviour
             if (step.narrationClip != null)
                 waitTime = step.narrationClip.length + autoContinueDelay;
 
-            if (playRoutine != null)
-                StopCoroutine(playRoutine);
+            if (narrationFlowRoutine != null)
+                StopCoroutine(narrationFlowRoutine);
 
-            playRoutine = StartCoroutine(ContinueAfterDelay(waitTime));
+            narrationFlowRoutine = StartCoroutine(ContinueAfterDelayAndSilence(waitTime));
         }
     }
 
-    IEnumerator ContinueAfterDelay(float delay)
+    IEnumerator ContinueAfterDelayAndSilence(float delay)
     {
         yield return new WaitForSeconds(delay);
+        yield return WaitUntilAllManagedAudioFinished();
         PlayCurrentStep();
+    }
+
+    IEnumerator WaitUntilAllManagedAudioFinished()
+    {
+        while (IsAnyManagedAudioPlaying)
+            yield return null;
     }
 
     int CountCompletedSlots()
@@ -206,9 +237,21 @@ public class UlkassePart1AudioManager : MonoBehaviour
         if (clip == null)
             return;
 
+        if (dragSpeechRoutine != null)
+            StopCoroutine(dragSpeechRoutine);
+
+        dragSpeechRoutine = StartCoroutine(PlayDraggedItemSpeechWhenReady(clip));
+    }
+
+    IEnumerator PlayDraggedItemSpeechWhenReady(AudioClip clip)
+    {
         if (stopNarrationWhenDraggingItem && narrationSource != null && narrationSource.isPlaying)
         {
             narrationSource.Stop();
+        }
+        else
+        {
+            yield return WaitUntilAllManagedAudioFinished();
         }
 
         if (dragItemSource != null)
@@ -224,6 +267,12 @@ public class UlkassePart1AudioManager : MonoBehaviour
 
     public void StopDraggedItemSpeech()
     {
+        if (dragSpeechRoutine != null)
+        {
+            StopCoroutine(dragSpeechRoutine);
+            dragSpeechRoutine = null;
+        }
+
         if (dragItemSource != null && dragItemSource.isPlaying)
         {
             dragItemSource.Stop();

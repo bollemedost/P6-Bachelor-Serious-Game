@@ -66,7 +66,7 @@ public class UlkasseMinigameFinishT : MonoBehaviour
 
             if (audioManager != null)
             {
-                narrationDone = audioManager.IsSequenceFinished && !audioManager.IsNarrationPlaying;
+                narrationDone = audioManager.IsSequenceFinished && !audioManager.IsAnyManagedAudioPlaying;
             }
 
             if (narrationDone)
