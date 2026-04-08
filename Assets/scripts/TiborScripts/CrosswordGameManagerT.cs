@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CrosswordGameManagerT : MonoBehaviour
 {
@@ -28,6 +31,7 @@ public class CrosswordGameManagerT : MonoBehaviour
     public AudioClip pickUpLetterSound;
     public AudioClip correctPlaceLetterSound;
     public AudioClip wrongPlaceLetterSound;
+    public AudioClip hintButtonClickSound;
 
     [Range(0.5f, 2f)]
     public float pickUpPitch = 1.3f;
@@ -39,6 +43,7 @@ public class CrosswordGameManagerT : MonoBehaviour
     [Header("Hint System")]
     public bool hintsPickRandomUnfilledSlot = true;
     public int hintCost = 1;
+    public float hintButtonCooldown = 1f;
 
     [Header("Layout")]
     public float gridStep = 50f;
@@ -49,6 +54,9 @@ public class CrosswordGameManagerT : MonoBehaviour
     private Dictionary<Vector2Int, CrosswordSlotT> slotMap = new Dictionary<Vector2Int, CrosswordSlotT>();
     private Dictionary<Vector2Int, string> answerMap = new Dictionary<Vector2Int, string>();
     private bool hasCompleted = false;
+    private bool canUseHint = true;
+
+    public Button hintButton;
 
     void Awake()
     {
@@ -93,6 +101,12 @@ public class CrosswordGameManagerT : MonoBehaviour
     {
         if (sfxSource != null && wrongPlaceLetterSound != null)
             sfxSource.PlayOneShot(wrongPlaceLetterSound);
+    }
+
+    public void PlayHintButtonSound()
+    {
+        if (sfxSource != null && hintButtonClickSound != null)
+            sfxSource.PlayOneShot(hintButtonClickSound);
     }
 
     void BuildBoardExact()
@@ -312,6 +326,20 @@ public class CrosswordGameManagerT : MonoBehaviour
         if (hasCompleted)
             return;
 
+        if (!canUseHint)
+            return;
+
+        canUseHint = false;
+
+        if (hintButton != null)
+        {
+            hintButton.interactable = false;
+
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+        }
+
+        PlayHintButtonSound();
+
         bool placed = PlaceOneHintLetter();
 
         if (placed)
@@ -325,8 +353,24 @@ public class CrosswordGameManagerT : MonoBehaviour
         {
             Debug.Log("No more hint letters to place.");
         }
+
+        StartCoroutine(HintButtonCooldownRoutine());
     }
 
+    IEnumerator HintButtonCooldownRoutine()
+    {
+        yield return new WaitForSeconds(hintButtonCooldown);
+
+        canUseHint = true;
+
+        if (hintButton != null)
+        {
+            hintButton.interactable = true;
+
+
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+        }
+    }
     bool PlaceOneHintLetter()
     {
         List<Vector2Int> availableHints = new List<Vector2Int>();
