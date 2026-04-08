@@ -39109,7 +39109,7 @@ AudioSource:
   m_GameObject: {fileID: 1255170524}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a7bdf74f1123cc6459fbccba1b5cbfc8, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 7864df7de86404d0b8520873859c32ae, type: 3}
   m_PlayOnAwake: 0
@@ -39217,7 +39217,7 @@ MonoBehaviour:
     duration: 5
   audioSource: {fileID: 1255170531}
   player: {fileID: 569178096}
-  hearingDistance: 3
+  hearingDistance: 5
   fadeSpeed: 2
   randomPitch: 1
   idleStateName: Idle
@@ -49265,10 +49265,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 90fbfd2242bc44a7f892107f37c57bd1, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
