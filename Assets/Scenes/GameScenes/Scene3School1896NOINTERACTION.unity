@@ -21227,10 +21227,10 @@ MonoBehaviour:
   objectiveCanvas: {fileID: 1553711949}
   objectiveCanvasGroup: {fileID: 1553711950}
   objectiveText: {fileID: 45090471}
-  objectiveDescription: Du har fri. Forlad skolen.
+  objectiveDescription: Du har nu fri fra skole.
   fadeDuration: 0.5
   fadeDelay: 0.1
-  objectiveSound: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
+  objectiveSound: {fileID: 8300000, guid: 03637dd602f5b4f59b4a1450d91cc8de, type: 3}
   soundBG: {fileID: 0}
   backgroundVolumeMultiplierDuringObjective: 0.25
 --- !u!4 &1305072633
@@ -42330,6 +42330,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eded1c902bb042f419f20306387ce410, type: 2}
   exitDelayAfterEnter: 1
   interactionCooldown: 1
+  outsideNoiseAudioSource: {fileID: 0}
+  outsideVolumeMultiplier: 1.4
+  audioTransitionDuration: 2.5
   blackboard: {fileID: 8897093225235048806}
 --- !u!4 &8897093226039892414
 Transform:
