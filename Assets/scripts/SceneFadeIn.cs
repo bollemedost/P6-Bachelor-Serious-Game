@@ -5,14 +5,17 @@ using System.Collections;
 public class SceneFadeIn : MonoBehaviour
 {
     [Header("Fade Settings")]
-    public CanvasGroup fadeCanvasGroup;       // Black overlay
-    public float fadeDuration = 1f;           // Duration of fade
-    public float startDelay = 0.1f;           // Delay before starting fade
+    public CanvasGroup fadeCanvasGroup;
+    public float fadeDuration = 1f;
+    public float startDelay = 0.1f;
 
     [Header("UI Canvases to Fade In")]
-    public CanvasGroup[] uiCanvasGroups;      // Assign all player/UI canvases here
-    public float uiFadeDuration = 0.5f;       // How long each UI fades in
-    public float uiFadeDelay = 0.2f;          // Optional delay after scene fade before UI fade
+    public CanvasGroup[] uiCanvasGroups;
+    public float uiFadeDuration = 0.5f;
+    public float uiFadeDelay = 0.2f;
+
+    [Header("Tutorial")]
+    public float tutorialShowDelay = 0.1f;
 
     public static SceneFadeIn instance;
 
@@ -65,7 +68,7 @@ public class SceneFadeIn : MonoBehaviour
         if (currentFadeRoutine != null)
             StopCoroutine(currentFadeRoutine);
 
-        currentFadeRoutine = StartCoroutine(FadeInSceneAndUI());
+        currentFadeRoutine = StartCoroutine(FadeInSceneAndUI(false));
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -79,62 +82,7 @@ public class SceneFadeIn : MonoBehaviour
         fadeCanvasGroup.alpha = 1f;
         fadeCanvasGroup.gameObject.SetActive(true);
 
-        currentFadeRoutine = StartCoroutine(FadeInSceneAndUIForScene(uiCanvasGroups));
-    }
-
-    private IEnumerator FadeInSceneAndUIForScene(CanvasGroup[] sceneUI)
-    {
-        yield return new WaitForSecondsRealtime(startDelay);
-
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.unscaledDeltaTime;
-            fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
-            yield return null;
-        }
-
-        fadeCanvasGroup.alpha = 0f;
-        fadeCanvasGroup.gameObject.SetActive(false);
-
-        TutorialUI tutorial = FindFirstObjectByType<TutorialUI>();
-        if (tutorial != null)
-        {
-            try
-            {
-                tutorial.ShowTutorial();
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError("SceneFadeIn: TutorialUI.ShowTutorial() failed: " + e.Message);
-            }
-        }
-
-        yield return new WaitForSecondsRealtime(uiFadeDelay);
-
-        if (sceneUI != null)
-        {
-            foreach (CanvasGroup cg in sceneUI)
-            {
-                if (cg != null)
-                {
-                    cg.gameObject.SetActive(true);
-                    cg.alpha = 0f;
-
-                    elapsed = 0f;
-                    while (elapsed < uiFadeDuration)
-                    {
-                        elapsed += Time.unscaledDeltaTime;
-                        cg.alpha = Mathf.Lerp(0f, 1f, elapsed / uiFadeDuration);
-                        yield return null;
-                    }
-
-                    cg.alpha = 1f;
-                }
-            }
-        }
-
-        currentFadeRoutine = null;
+        currentFadeRoutine = StartCoroutine(FadeInSceneAndUI(true));
     }
 
     public void FadeOutAndLoadScene(string sceneName)
@@ -171,13 +119,13 @@ public class SceneFadeIn : MonoBehaviour
         while (!asyncLoad.isDone)
             yield return null;
 
-        yield return null;
-
         currentLoadRoutine = null;
     }
 
-    private IEnumerator FadeInSceneAndUI()
+    private IEnumerator FadeInSceneAndUI(bool showTutorialAfterFade)
     {
+        // Let the new scene render first
+        yield return null;
         yield return new WaitForSecondsRealtime(startDelay);
 
         float elapsed = 0f;
@@ -212,6 +160,17 @@ public class SceneFadeIn : MonoBehaviour
 
                     cg.alpha = 1f;
                 }
+            }
+        }
+
+        if (showTutorialAfterFade)
+        {
+            yield return new WaitForSecondsRealtime(tutorialShowDelay);
+
+            TutorialUI tutorial = FindFirstObjectByType<TutorialUI>();
+            if (tutorial != null)
+            {
+                tutorial.ShowTutorial();
             }
         }
 
