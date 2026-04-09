@@ -16,9 +16,11 @@ public class SceneFadeIn : MonoBehaviour
 
     public static SceneFadeIn instance;
 
+    private Coroutine currentFadeRoutine;
+    private Coroutine currentLoadRoutine;
+
     private void Awake()
     {
-        // Singleton pattern
         if (instance == null)
         {
             instance = this;
@@ -32,14 +34,24 @@ public class SceneFadeIn : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
+
     private void Start()
     {
-        // Fade-in for the first scene
-        if (fadeCanvasGroup != null)
-        {
-            fadeCanvasGroup.alpha = 1f;
-            fadeCanvasGroup.gameObject.SetActive(true);
+        if (fadeCanvasGroup == null)
+            return;
 
+        fadeCanvasGroup.alpha = 1f;
+        fadeCanvasGroup.gameObject.SetActive(true);
+
+        if (uiCanvasGroups != null)
+        {
             foreach (CanvasGroup cg in uiCanvasGroups)
             {
                 if (cg != null)
@@ -48,105 +60,36 @@ public class SceneFadeIn : MonoBehaviour
                     cg.gameObject.SetActive(true);
                 }
             }
-
-            StartCoroutine(FadeInSceneAndUI());
         }
+
+        if (currentFadeRoutine != null)
+            StopCoroutine(currentFadeRoutine);
+
+        currentFadeRoutine = StartCoroutine(FadeInSceneAndUI());
     }
 
-   private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-{
-    // Only fade-in the UI canvases assigned in the inspector (if any)
-    if (fadeCanvasGroup != null)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (fadeCanvasGroup == null)
+            return;
+
+        if (currentFadeRoutine != null)
+            StopCoroutine(currentFadeRoutine);
+
         fadeCanvasGroup.alpha = 1f;
         fadeCanvasGroup.gameObject.SetActive(true);
 
-        // Start fade-in for the scene UI after the fade panel
-        StartCoroutine(FadeInSceneAndUIForScene(uiCanvasGroups));
-    }
-}
-
-// New coroutine for fading UI of a scene after the fade panel
-private IEnumerator FadeInSceneAndUIForScene(CanvasGroup[] sceneUI)
-{
-    // Wait initial fade panel fade
-    yield return new WaitForSeconds(startDelay);
-
-    // Fade out black overlay
-    float elapsed = 0f;
-    while (elapsed < fadeDuration)
-    {
-        elapsed += Time.deltaTime;
-        fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
-        yield return null;
-    }
-    fadeCanvasGroup.alpha = 0f;
-    fadeCanvasGroup.gameObject.SetActive(false);
-
-    // 👇 ADD THIS
-    FindFirstObjectByType<TutorialUI>()?.ShowTutorial();
-
-    // Wait for UI fade delay
-    yield return new WaitForSeconds(uiFadeDelay);
-
-    // Fade in all UI canvases for this scene
-    foreach (CanvasGroup cg in sceneUI)
-    {
-        if (cg != null)
-        {
-            elapsed = 0f;
-            while (elapsed < uiFadeDuration)
-            {
-                elapsed += Time.deltaTime;
-                cg.alpha = Mathf.Lerp(0f, 1f, elapsed / uiFadeDuration);
-                yield return null;
-            }
-            cg.alpha = 1f;
-        }
-    }
-}
-
-    // Call this to fade out and load a new scene
-    public void FadeOutAndLoadScene(string sceneName)
-    {
-        StartCoroutine(FadeOutThenLoad(sceneName));
+        currentFadeRoutine = StartCoroutine(FadeInSceneAndUIForScene(uiCanvasGroups));
     }
 
-    private IEnumerator FadeOutThenLoad(string sceneName)
+    private IEnumerator FadeInSceneAndUIForScene(CanvasGroup[] sceneUI)
     {
-        // Make sure fadeCanvasGroup is visible
-        fadeCanvasGroup.gameObject.SetActive(true);
-
-        // --- Fade out ---
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.deltaTime;
-            fadeCanvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeDuration);
-            yield return null;
-        }
-
-        fadeCanvasGroup.alpha = 1f;
-
-        // Load the next scene asynchronously to avoid hiccups
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        asyncLoad.allowSceneActivation = true;
-        while (!asyncLoad.isDone)
-            yield return null;
-
-        // Optional: small delay to ensure scene is rendered
-        yield return null;
-    }
-
-    private IEnumerator FadeInSceneAndUI()
-    {
-        // Original fade-in logic
-        yield return new WaitForSeconds(startDelay);
+        yield return new WaitForSecondsRealtime(startDelay);
 
         float elapsed = 0f;
         while (elapsed < fadeDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
             yield return null;
         }
@@ -154,21 +97,124 @@ private IEnumerator FadeInSceneAndUIForScene(CanvasGroup[] sceneUI)
         fadeCanvasGroup.alpha = 0f;
         fadeCanvasGroup.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(uiFadeDelay);       
-
-        foreach (CanvasGroup cg in uiCanvasGroups)
+        TutorialUI tutorial = FindFirstObjectByType<TutorialUI>();
+        if (tutorial != null)
         {
-            if (cg != null)
+            try
             {
-                elapsed = 0f;
-                while (elapsed < uiFadeDuration)
-                {
-                    elapsed += Time.deltaTime;
-                    cg.alpha = Mathf.Lerp(0f, 1f, elapsed / uiFadeDuration);
-                    yield return null;
-                }
-                cg.alpha = 1f;
+                tutorial.ShowTutorial();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("SceneFadeIn: TutorialUI.ShowTutorial() failed: " + e.Message);
             }
         }
+
+        yield return new WaitForSecondsRealtime(uiFadeDelay);
+
+        if (sceneUI != null)
+        {
+            foreach (CanvasGroup cg in sceneUI)
+            {
+                if (cg != null)
+                {
+                    cg.gameObject.SetActive(true);
+                    cg.alpha = 0f;
+
+                    elapsed = 0f;
+                    while (elapsed < uiFadeDuration)
+                    {
+                        elapsed += Time.unscaledDeltaTime;
+                        cg.alpha = Mathf.Lerp(0f, 1f, elapsed / uiFadeDuration);
+                        yield return null;
+                    }
+
+                    cg.alpha = 1f;
+                }
+            }
+        }
+
+        currentFadeRoutine = null;
+    }
+
+    public void FadeOutAndLoadScene(string sceneName)
+    {
+        if (currentLoadRoutine != null)
+            StopCoroutine(currentLoadRoutine);
+
+        currentLoadRoutine = StartCoroutine(FadeOutThenLoad(sceneName));
+    }
+
+    private IEnumerator FadeOutThenLoad(string sceneName)
+    {
+        if (fadeCanvasGroup == null)
+        {
+            SceneManager.LoadScene(sceneName);
+            yield break;
+        }
+
+        fadeCanvasGroup.gameObject.SetActive(true);
+
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            fadeCanvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeDuration);
+            yield return null;
+        }
+
+        fadeCanvasGroup.alpha = 1f;
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = true;
+
+        while (!asyncLoad.isDone)
+            yield return null;
+
+        yield return null;
+
+        currentLoadRoutine = null;
+    }
+
+    private IEnumerator FadeInSceneAndUI()
+    {
+        yield return new WaitForSecondsRealtime(startDelay);
+
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+            yield return null;
+        }
+
+        fadeCanvasGroup.alpha = 0f;
+        fadeCanvasGroup.gameObject.SetActive(false);
+
+        yield return new WaitForSecondsRealtime(uiFadeDelay);
+
+        if (uiCanvasGroups != null)
+        {
+            foreach (CanvasGroup cg in uiCanvasGroups)
+            {
+                if (cg != null)
+                {
+                    cg.gameObject.SetActive(true);
+                    cg.alpha = 0f;
+
+                    elapsed = 0f;
+                    while (elapsed < uiFadeDuration)
+                    {
+                        elapsed += Time.unscaledDeltaTime;
+                        cg.alpha = Mathf.Lerp(0f, 1f, elapsed / uiFadeDuration);
+                        yield return null;
+                    }
+
+                    cg.alpha = 1f;
+                }
+            }
+        }
+
+        currentFadeRoutine = null;
     }
 }
