@@ -6,12 +6,12 @@ using System.Collections;
 public class ObjectiveController : MonoBehaviour
 {
     [Header("Event References")]
-    public GameEvent startObjectiveEvent;   // e.g. TalkedToHomelessMan
-    public GameEvent completeObjectiveEvent; // e.g. GiveHomelessManMoney
+    public GameEvent startObjectiveEvent;
+    public GameEvent completeObjectiveEvent;
 
     [Header("UI")]
     public GameObject objectiveCanvas;
-    public CanvasGroup objectiveCanvasGroup; // optional, for fading
+    public CanvasGroup objectiveCanvasGroup;
     public TextMeshProUGUI objectiveText;
     [TextArea] public string objectiveDescription;
 
@@ -20,12 +20,13 @@ public class ObjectiveController : MonoBehaviour
     public float fadeDelay = 0.1f;
 
     [Header("Sound")]
-    public AudioClip objectiveSound;
+    public AudioClip objectiveStartSound;
+    public AudioClip objectiveAppearSound;
 
     [Header("Background Sound Ducking")]
-    public AudioSource soundBG; // Drag your SoundBG AudioSource here
+    public AudioSource soundBG;
     [Range(0f, 1f)]
-    public float backgroundVolumeMultiplierDuringObjective = 0.25f; // 25% volume = lowered by 75%
+    public float backgroundVolumeMultiplierDuringObjective = 0.25f;
 
     private EventManager eventManager;
     private AudioSource audioSource;
@@ -56,7 +57,7 @@ public class ObjectiveController : MonoBehaviour
     {
         if (eventManager == null) return;
 
-        // Show objective when start event is completed
+        // SHOW OBJECTIVE
         if (!objectiveShown && eventManager.IsEventCompleted(startObjectiveEvent))
         {
             objectiveShown = true;
@@ -64,38 +65,25 @@ public class ObjectiveController : MonoBehaviour
             if (objectiveCanvas != null)
                 objectiveCanvas.SetActive(true);
 
-            // Lower background volume by 75%
+            // Lower background volume
             if (soundBG != null)
             {
                 originalBGVolume = soundBG.volume;
                 soundBG.volume = originalBGVolume * backgroundVolumeMultiplierDuringObjective;
             }
 
-            // Play sound
-            if (audioSource != null && objectiveSound != null)
-            {
-                audioSource.PlayOneShot(objectiveSound);
-
-                if (restoreBGVolumeCoroutine != null)
-                    StopCoroutine(restoreBGVolumeCoroutine);
-
-                restoreBGVolumeCoroutine = StartCoroutine(RestoreBGVolumeAfterDelay(objectiveSound.length));
-            }
-            else
-            {
-                // If no objective sound exists, restore immediately
-                RestoreBackgroundVolume();
-            }
-
-            // Fade in UI
+            // Stop old coroutines FIRST
             if (objectiveCanvasGroup != null)
             {
                 StopAllCoroutinesExceptBG();
                 StartCoroutine(FadeInCanvas(objectiveCanvasGroup, fadeDelay, fadeDuration));
             }
+
+            // THEN start sound queue (important order)
+            StartCoroutine(PlayObjectiveSounds());
         }
 
-        // Hide objective when completion event is completed
+        // HIDE OBJECTIVE
         if (objectiveShown && eventManager.IsEventCompleted(completeObjectiveEvent))
         {
             if (objectiveCanvas != null)
@@ -103,18 +91,45 @@ public class ObjectiveController : MonoBehaviour
         }
     }
 
+    // 🎵 Sequential sound playback (NO overlap)
+    private IEnumerator PlayObjectiveSounds()
+    {
+        // First sound
+        if (objectiveStartSound != null)
+        {
+            audioSource.clip = objectiveStartSound;
+            audioSource.Play();
+
+            // Wait until finished
+            yield return new WaitWhile(() => audioSource.isPlaying);
+        }
+
+        // Second sound AFTER first finishes
+        if (objectiveAppearSound != null)
+        {
+            audioSource.clip = objectiveAppearSound;
+            audioSource.Play();
+
+            yield return new WaitWhile(() => audioSource.isPlaying);
+        }
+
+        // Restore background volume
+        RestoreBackgroundVolume();
+    }
+
+    // 🌫️ Fade using unscaled time (works when paused)
     private IEnumerator FadeInCanvas(CanvasGroup cg, float delay, float duration)
     {
         if (cg == null) yield break;
 
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
 
         float elapsed = 0f;
         float startAlpha = cg.alpha;
 
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             cg.alpha = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
             yield return null;
         }
@@ -126,7 +141,7 @@ public class ObjectiveController : MonoBehaviour
 
     private IEnumerator RestoreBGVolumeAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         RestoreBackgroundVolume();
     }
 
@@ -144,10 +159,9 @@ public class ObjectiveController : MonoBehaviour
 
         StopAllCoroutines();
 
-        if (bgRestoreWasRunning && objectiveSound != null && audioSource != null)
+        if (bgRestoreWasRunning)
         {
-            float remainingTime = objectiveSound.length;
-            restoreBGVolumeCoroutine = StartCoroutine(RestoreBGVolumeAfterDelay(remainingTime));
+            restoreBGVolumeCoroutine = StartCoroutine(RestoreBGVolumeAfterDelay(0f));
         }
     }
 }

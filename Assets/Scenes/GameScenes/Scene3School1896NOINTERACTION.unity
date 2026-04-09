@@ -13807,7 +13807,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 6a574e950507947fb9af58ebc178fb69, type: 3}
+  m_Texture: {fileID: 2800000, guid: 6847dff7dbbf641bda00c6bf28749732, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -21081,7 +21081,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1305072633}
   - component: {fileID: 1305072632}
-  - component: {fileID: 1305072631}
   - component: {fileID: 1305072630}
   m_Layer: 0
   m_Name: ObjectiveController
@@ -21187,29 +21186,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1305072631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305072629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ed451579fbc064b8a40408f6fb8e41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startObjectiveEvent: {fileID: 11400000, guid: 13d10c70b895dce4586d34d56133fb7c, type: 2}
-  completeObjectiveEvent: {fileID: 11400000, guid: 8ec57fe49dd8aa247b72de318a589b4e, type: 2}
-  objectiveCanvas: {fileID: 0}
-  objectiveCanvasGroup: {fileID: 0}
-  objectiveText: {fileID: 0}
-  objectiveDescription: "G\xE5 i skole"
-  fadeDuration: 0.5
-  fadeDelay: 0.1
-  objectiveSound: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
-  soundBG: {fileID: 0}
-  backgroundVolumeMultiplierDuringObjective: 0.25
 --- !u!114 &1305072632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21227,10 +21203,11 @@ MonoBehaviour:
   objectiveCanvas: {fileID: 1553711949}
   objectiveCanvasGroup: {fileID: 1553711950}
   objectiveText: {fileID: 45090471}
-  objectiveDescription: Du har nu fri fra skole.
+  objectiveDescription: Du har nu fri fra skole
   fadeDuration: 0.5
   fadeDelay: 0.1
-  objectiveSound: {fileID: 8300000, guid: 03637dd602f5b4f59b4a1450d91cc8de, type: 3}
+  objectiveStartSound: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
+  objectiveAppearSound: {fileID: 8300000, guid: 03637dd602f5b4f59b4a1450d91cc8de, type: 3}
   soundBG: {fileID: 0}
   backgroundVolumeMultiplierDuringObjective: 0.25
 --- !u!4 &1305072633
