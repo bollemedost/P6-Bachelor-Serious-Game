@@ -34,7 +34,6 @@ public class MovementStateManager : MonoBehaviour
     [Header("Footsteps")]
     public AudioSource footstepSource;
 
-    // NEW:
     // After interaction ends, player must release movement input once
     // before walking is allowed again.
     private bool requireInputRelease = false;
@@ -112,7 +111,6 @@ public class MovementStateManager : MonoBehaviour
             return;
         }
 
-        // IMPORTANT FIX:
         // If interaction just ended and player is still holding movement,
         // force idle until they release the input once.
         if (requireInputRelease)
@@ -204,7 +202,7 @@ public class MovementStateManager : MonoBehaviour
     {
         if (locked)
         {
-            // ✅ ONLY store if player was actually moving
+            // ONLY store if player was actually moving
             wasMovingBeforeLock = moveInput.magnitude > 0.1f;
         }
 
@@ -218,7 +216,7 @@ public class MovementStateManager : MonoBehaviour
 
         if (!locked)
         {
-            // ✅ ONLY require release IF player was moving before
+            // ONLY require release IF player was moving before
             requireInputRelease = wasMovingBeforeLock;
 
             if (anim != null)
@@ -236,5 +234,13 @@ public class MovementStateManager : MonoBehaviour
         {
             footstepSource.Stop();
         }
+    }
+
+    public void ClearPostInteractionInputRequirement()
+    {
+        requireInputRelease = false;
+        wasMovingBeforeLock = false;
+        moveInput = Vector2.zero;
+        dir = Vector3.zero;
     }
 }

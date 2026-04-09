@@ -336,11 +336,10 @@ public class NPCInteraction : Interactable
                 playerMovement.anim.SetFloat("vInput", 0f);
             }
 
-            // ?? FIX START
             playerMovement.LockMovement(false);
+            playerMovement.ClearPostInteractionInputRequirement();
             playerMovement.dir = Vector3.zero; // extra safety
             playerMovement.SwitchState(playerMovement.idle);
-            // ?? FIX END
         }
         else
         {
