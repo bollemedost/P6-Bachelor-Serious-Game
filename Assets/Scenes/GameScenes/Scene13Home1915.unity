@@ -21915,7 +21915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camFollowPos: {fileID: 786178162}
-  mouseSense: 0.1
+  mouseSense: 0.03
   smoothTime: 0.05
   verticalClamp: 15
 --- !u!1 &1710822832
@@ -23150,6 +23150,7 @@ MonoBehaviour:
   uiCanvasGroups: []
   uiFadeDuration: 0.5
   uiFadeDelay: 8
+  tutorialShowDelay: 0.1
 --- !u!114 &1840034290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23368,7 +23369,8 @@ MonoBehaviour:
   objectiveDescription: Kig ud af vinduet
   fadeDuration: 0.5
   fadeDelay: 0.1
-  objectiveSound: {fileID: 8300000, guid: 8f4aecba0c376459383c02534281664d, type: 3}
+  objectiveStartSound: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
+  objectiveAppearSound: {fileID: 8300000, guid: 8f4aecba0c376459383c02534281664d, type: 3}
   soundBG: {fileID: 0}
   backgroundVolumeMultiplierDuringObjective: 0.25
 --- !u!4 &1849842536
@@ -23839,7 +23841,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 6a574e950507947fb9af58ebc178fb69, type: 3}
+  m_Texture: {fileID: 2800000, guid: 6847dff7dbbf641bda00c6bf28749732, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

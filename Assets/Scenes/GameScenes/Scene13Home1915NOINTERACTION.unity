@@ -16779,7 +16779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camFollowPos: {fileID: 786178162}
-  mouseSense: 0.1
+  mouseSense: 0.03
   smoothTime: 0.05
   verticalClamp: 15
 --- !u!1 &1710822832
@@ -17559,6 +17559,7 @@ MonoBehaviour:
   uiCanvasGroups: []
   uiFadeDuration: 0.5
   uiFadeDelay: 1.2
+  tutorialShowDelay: 0.1
 --- !u!114 &1840034290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18005,7 +18006,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 6a574e950507947fb9af58ebc178fb69, type: 3}
+  m_Texture: {fileID: 2800000, guid: 6847dff7dbbf641bda00c6bf28749732, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -41332,22 +41333,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &5172782888893883388
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5967280304337138532}
-  m_Layer: 0
-  m_Name: CoinSpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!33 &5187458408674291725
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -44956,21 +44941,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0007778255, y: 0.0065463427, z: 0.0006549447}
     m_Extent: {x: 0.0031535693, y: 0.005030662, z: 0.0032619438}
   m_DirtyAABB: 0
---- !u!4 &5967280304337138532
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5172782888893883388}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.03805583, y: -0.6495155, z: 0.0747748, w: -0.75570494}
-  m_LocalPosition: {x: 9.413, y: 0.546, z: -21.072}
-  m_LocalScale: {x: 0.040000003, y: 0.04, z: 0.04000001}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &6002647421794816728
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -51883,7 +51853,6 @@ SceneRoots:
   - {fileID: 406438780}
   - {fileID: 1595699396}
   - {fileID: 1327621737}
-  - {fileID: 5967280304337138532}
   - {fileID: 1997210424}
   - {fileID: 281339748}
   - {fileID: 608357274}

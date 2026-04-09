@@ -3025,6 +3025,7 @@ MonoBehaviour:
   uiCanvasGroups: []
   uiFadeDuration: 0.5
   uiFadeDelay: 0.2
+  tutorialShowDelay: 0.1
 --- !u!114 &306414929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8924,7 +8925,8 @@ MonoBehaviour:
   objectiveDescription: "F\xF8lg med Kvindetoget og fejr sejren!"
   fadeDuration: 0.5
   fadeDelay: 0.1
-  objectiveSound: {fileID: 8300000, guid: fa1eac87e2c134c8b8bdbb7333eeea75, type: 3}
+  objectiveStartSound: {fileID: 8300000, guid: 753e5d7346660be45abf83f77c64c35d, type: 3}
+  objectiveAppearSound: {fileID: 8300000, guid: fa1eac87e2c134c8b8bdbb7333eeea75, type: 3}
   soundBG: {fileID: 613643675}
   backgroundVolumeMultiplierDuringObjective: 0.25
 --- !u!4 &736795526
@@ -10998,7 +11000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camFollowPos: {fileID: 1888601859}
-  mouseSense: 0.1
+  mouseSense: 0.03
   smoothTime: 0.05
   verticalClamp: 30
 --- !u!1001 &917305847
