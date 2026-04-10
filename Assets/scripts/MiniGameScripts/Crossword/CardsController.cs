@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class CardsController : MonoBehaviour
 {
@@ -41,6 +43,16 @@ public class CardsController : MonoBehaviour
     [SerializeField] private AudioClip correctMatchSound;
     [SerializeField] private AudioClip wrongMatchSound;
 
+    [Header("Google Sheets Stats")]
+    [Tooltip("Paste your deployed Google Apps Script web app URL here.")]
+    [SerializeField] private string googleScriptUrl = "";
+
+    [Tooltip("Name of this minigame shown in Google Sheets.")]
+    [SerializeField] private string minigameName = "MemoryCards";
+
+    [Tooltip("If true, tracking starts automatically in Start().")]
+    [SerializeField] private bool autoStartTracking = true;
+
     private AudioSource audioSource;
     private int currentLevel = 0;
 
@@ -55,6 +67,12 @@ public class CardsController : MonoBehaviour
 
     private bool canSelect = true;
     private int matchesFound = 0;
+
+    // Stats tracking
+    private bool trackingStarted = false;
+    private bool statsSent = false;
+    private DateTime startDateTime;
+    private string sessionId;
 
     private struct CardData
     {
@@ -80,7 +98,27 @@ public class CardsController : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 0f;
 
+        sessionId = Guid.NewGuid().ToString();
+
+        if (autoStartTracking)
+            BeginTrackingNow();
+
         StartLevel(0);
+    }
+
+    /// <summary>
+    /// Call this manually from a tutorial "Start Game" button
+    /// if you want the timer to begin only when the player actually starts playing.
+    /// </summary>
+    public void BeginTrackingNow()
+    {
+        if (trackingStarted)
+            return;
+
+        trackingStarted = true;
+        startDateTime = DateTime.Now;
+
+        Debug.Log("Minigame tracking started at: " + startDateTime.ToString("yyyy-MM-dd HH:mm:ss"));
     }
 
     private void StartLevel(int levelIndex)
@@ -124,10 +162,10 @@ public class CardsController : MonoBehaviour
                 continue;
             }
 
-            // spriteA = billede → ingen lyd
+            // spriteA = image -> no sound
             cardsToSpawn.Add(new CardData(p.matchId, p.spriteA, null));
 
-            // spriteB = tekst → får lyd
+            // spriteB = text -> has sound
             cardsToSpawn.Add(new CardData(p.matchId, p.spriteB, p.textSound));
         }
 
@@ -220,6 +258,8 @@ public class CardsController : MonoBehaviour
         {
             Debug.Log("All levels completed!");
 
+            SendCompletionStats();
+
             if (completeUI != null)
             {
                 canSelect = false;
@@ -229,6 +269,61 @@ public class CardsController : MonoBehaviour
         }
 
         StartLevel(next);
+    }
+
+    private void SendCompletionStats()
+    {
+        if (statsSent)
+            return;
+
+        statsSent = true;
+
+        if (!trackingStarted)
+        {
+            Debug.LogWarning("Tracking was not started, so no stats were sent.");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(googleScriptUrl))
+        {
+            Debug.LogWarning("Google Script URL is empty. Stats were not sent.");
+            return;
+        }
+
+        double completionSeconds = (DateTime.Now - startDateTime).TotalSeconds;
+        StartCoroutine(SendStatsToGoogleSheets(startDateTime, completionSeconds));
+    }
+
+    private IEnumerator SendStatsToGoogleSheets(DateTime startedAt, double completionSeconds)
+    {
+        string startTimeString = startedAt.ToString("yyyy-MM-dd HH:mm:ss");
+        string completionString = Mathf.RoundToInt((float)completionSeconds).ToString();
+
+        string url =
+            googleScriptUrl +
+            "?minigame=" + UnityWebRequest.EscapeURL(minigameName) +
+            "&session_id=" + UnityWebRequest.EscapeURL(sessionId) +
+            "&start_time=" + UnityWebRequest.EscapeURL(startTimeString) +
+            "&completion_seconds=" + UnityWebRequest.EscapeURL(completionString);
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.timeout = 10;
+            yield return request.SendWebRequest();
+
+#if UNITY_2020_1_OR_NEWER
+            if (request.result != UnityWebRequest.Result.Success)
+#else
+            if (request.isNetworkError || request.isHttpError)
+#endif
+            {
+                Debug.LogError("Failed to send minigame stats: " + request.error);
+            }
+            else
+            {
+                Debug.Log("Minigame stats sent successfully: " + request.downloadHandler.text);
+            }
+        }
     }
 
     private void ClearBoard()
@@ -243,7 +338,7 @@ public class CardsController : MonoBehaviour
     {
         for (int i = list.Count - 1; i > 0; i--)
         {
-            int r = Random.Range(0, i + 1);
+            int r = UnityEngine.Random.Range(0, i + 1);
             (list[i], list[r]) = (list[r], list[i]);
         }
     }
