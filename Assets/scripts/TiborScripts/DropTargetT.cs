@@ -32,7 +32,10 @@ public class DropTargetT : MonoBehaviour, IDropHandler
         else
         {
             if (CrosswordGameManagerT.Instance != null)
+            {
                 CrosswordGameManagerT.Instance.PlayWrongPlaceSound();
+                CrosswordGameManagerT.Instance.RegisterError();
+            }
 
             Debug.Log("Wrong letter");
         }

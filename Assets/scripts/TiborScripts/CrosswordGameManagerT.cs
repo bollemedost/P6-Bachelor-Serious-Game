@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 
 public class CrosswordGameManagerT : MonoBehaviour
 {
@@ -51,12 +53,29 @@ public class CrosswordGameManagerT : MonoBehaviour
     public int totalColumns = 12;
     public int totalRows = 17;
 
+    [Header("Google Sheets Stats")]
+    [Tooltip("Google Apps Script URL for Crossword stats")]
+    public string googleScriptUrl = "https://script.google.com/macros/s/AKfycbyNvbj9ACRv0OmjJXzfQBUDGWozX4UzV-wyBIpLnyS7fg2wP9qxcdAPng1GGmVC6giXpA/exec";
+
+    [Tooltip("Name written to the Google Sheet.")]
+    public string minigameName = "CrosswordT";
+
+    [Tooltip("If true, tracking starts automatically when this scene starts.")]
+    public bool autoStartTracking = true;
+
     private Dictionary<Vector2Int, CrosswordSlotT> slotMap = new Dictionary<Vector2Int, CrosswordSlotT>();
     private Dictionary<Vector2Int, string> answerMap = new Dictionary<Vector2Int, string>();
     private bool hasCompleted = false;
     private bool canUseHint = true;
 
     public Button hintButton;
+
+    // Stats
+    private DateTime startDateTime;
+    private bool trackingStarted = false;
+    private bool statsSent = false;
+    private int hintPressCount = 0;
+    private int errorCount = 0;
 
     void Awake()
     {
@@ -80,6 +99,27 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         if (pickUpSource == null)
             pickUpSource = sfxSource;
+
+        if (autoStartTracking)
+            BeginTrackingNow();
+    }
+
+    public void BeginTrackingNow()
+    {
+        if (trackingStarted)
+            return;
+
+        trackingStarted = true;
+        startDateTime = DateTime.Now;
+
+        Debug.Log("Crossword tracking started at: " + startDateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+        Debug.Log("googleScriptUrl currently = " + googleScriptUrl);
+    }
+
+    public void RegisterError()
+    {
+        errorCount++;
+        Debug.Log("Crossword error count: " + errorCount);
     }
 
     public void PlayPickUpSound()
@@ -310,6 +350,9 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         hasCompleted = true;
         Debug.Log("CROSSWORD COMPLETED!");
+        Debug.Log("CROSSWORD COMPLETED - about to send stats");
+
+        SendCompletionStats();
 
         if (completeUI != null)
         {
@@ -329,13 +372,15 @@ public class CrosswordGameManagerT : MonoBehaviour
         if (!canUseHint)
             return;
 
+        hintPressCount++;
+        Debug.Log("Hint pressed. Total hint presses = " + hintPressCount);
+
         canUseHint = false;
 
         if (hintButton != null)
         {
             hintButton.interactable = false;
-
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(null);
         }
 
         PlayHintButtonSound();
@@ -366,11 +411,10 @@ public class CrosswordGameManagerT : MonoBehaviour
         if (hintButton != null)
         {
             hintButton.interactable = true;
-
-
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
+
     bool PlaceOneHintLetter()
     {
         List<Vector2Int> availableHints = new List<Vector2Int>();
@@ -395,7 +439,7 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         if (hintsPickRandomUnfilledSlot)
         {
-            int randomIndex = Random.Range(0, availableHints.Count);
+            int randomIndex = UnityEngine.Random.Range(0, availableHints.Count);
             chosenKey = availableHints[randomIndex];
         }
         else
@@ -416,5 +460,68 @@ public class CrosswordGameManagerT : MonoBehaviour
 
         Debug.LogWarning("Hint tried to place a letter, but TryPlaceLetter returned false.");
         return false;
+    }
+
+    private void SendCompletionStats()
+    {
+        Debug.Log("SendCompletionStats called");
+
+        if (statsSent)
+        {
+            Debug.LogWarning("Stats already sent once, skipping.");
+            return;
+        }
+
+        statsSent = true;
+
+        if (!trackingStarted)
+        {
+            Debug.LogWarning("Tracking was not started, so no crossword stats were sent.");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(googleScriptUrl))
+        {
+            Debug.LogWarning("Google Script URL is empty. Crossword stats were not sent.");
+            return;
+        }
+
+        double elapsedSeconds = (DateTime.Now - startDateTime).TotalSeconds;
+        StartCoroutine(SendStatsRoutine(elapsedSeconds));
+    }
+
+    private IEnumerator SendStatsRoutine(double elapsedSeconds)
+    {
+        string startTimeString = startDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+        string elapsedString = Mathf.RoundToInt((float)elapsedSeconds).ToString();
+
+        string url =
+            googleScriptUrl +
+            "?minigame=" + UnityWebRequest.EscapeURL(minigameName) +
+            "&start_time=" + UnityWebRequest.EscapeURL(startTimeString) +
+            "&time_elapsed=" + UnityWebRequest.EscapeURL(elapsedString) +
+            "&hint_presses=" + UnityWebRequest.EscapeURL(hintPressCount.ToString()) +
+            "&errors=" + UnityWebRequest.EscapeURL(errorCount.ToString());
+
+        Debug.Log("FINAL CROSSWORD URL = " + url);
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.timeout = 10;
+            yield return request.SendWebRequest();
+
+#if UNITY_2020_1_OR_NEWER
+            if (request.result != UnityWebRequest.Result.Success)
+#else
+            if (request.isNetworkError || request.isHttpError)
+#endif
+            {
+                Debug.LogError("Failed to send crossword stats: " + request.error);
+            }
+            else
+            {
+                Debug.Log("Crossword stats sent successfully: " + request.downloadHandler.text);
+            }
+        }
     }
 }
