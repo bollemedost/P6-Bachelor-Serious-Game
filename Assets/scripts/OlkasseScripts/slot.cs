@@ -140,6 +140,9 @@ public class slot : MonoBehaviour, IDropHandler
 
     void HandleWrong()
     {
+        // Count this as an error for analytics
+        UlkasseMinigameFinishT.RegisterError();
+
         if (audioSource != null && wrongSound != null)
             StartCoroutine(PlayWrongSoundDelayed());
 

@@ -2812,6 +2812,7 @@ MonoBehaviour:
   - {fileID: 0}
   uiFadeDuration: 0.5
   uiFadeDelay: 1
+  tutorialShowDelay: 0.1
 --- !u!114 &153689989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3977,7 +3978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &282818174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4020,6 +4021,11 @@ MonoBehaviour:
   loadSpecificScene: 1
   sceneToLoad: Scene13Home1915NOINTERACTION
   useSubwayTReturnScene: 0
+  enableStatsLogging: 1
+  googleScriptUrl: https://script.google.com/macros/s/AKfycbyEJNpQBf5KjuV3dIg0IycgDfIpoSTXsrAiC85be42KmN0QZDUFqHlWIj22K4pfJtLx-A/exec
+  minigameName: Ulkassetale
+  partName: Part 2
+  debugNetworkLogs: 1
 --- !u!114 &282818176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8843,7 +8849,13 @@ MonoBehaviour:
   showCompletionMessageBeforeSceneChange: 1
   completionPanel: {fileID: 282818173}
   continueButton: {fileID: 354583354}
+  attachContinueButtonListener: 0
   finishDelay: 0.1
+  enableStatsLogging: 1
+  googleScriptUrl: https://script.google.com/macros/s/AKfycbyEJNpQBf5KjuV3dIg0IycgDfIpoSTXsrAiC85be42KmN0QZDUFqHlWIj22K4pfJtLx-A/exec
+  minigameName: Ulkassetale
+  partName: Part 2
+  debugNetworkLogs: 1
   debugLogs: 1
 --- !u!4 &663635997
 Transform:
