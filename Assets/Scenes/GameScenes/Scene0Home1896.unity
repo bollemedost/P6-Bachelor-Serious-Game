@@ -4732,7 +4732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -65, y: 205}
+  m_AnchoredPosition: {x: -76, y: 275}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1260168090
@@ -4755,14 +4755,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xC5ret er 1896. \nDu hedder Agnes, og du er 6 \xE5r gammel. For ikke
-    s\xE5 l\xE6nge siden begyndte du i skole for allerf\xF8rste gang. \n\nDu bor
-    i en lille middelklassefamilie. Din mor g\xE5r hjemme og passer huset, laver
-    mad og s\xF8rger for, at alting fungerer. Din far arbejder lange dage p\xE5 fabrikken
-    \u2013 hele 16 timer ad gangen. N\xE5r arbejdet endelig er slut, plejer han at
-    tage forbi v\xE6rtshuset og drikke \xF8l med sine kollegaer, f\xF8r han kommer
-    hjem. Lige nu er du alene derhjemme med din mor. \n\nHuset er stille. Noget fanger
-    din opm\xE6rksomhed: P\xE5 bordet ligger et papir, som du ikke har set f\xF8r. "
+  m_text: "\xC5ret er 1896. \nDu hedder Agnes, du er 6 \xE5r gammel og du er lige
+    startet i skole. \n\nDu bor i en middelklassefamilie med dine for\xE6ldre og
+    9 s\xF8skende. Din far arbejder lange dage p\xE5 fabrikken \u2013 hele 16 timer
+    ad gangen. N\xE5r arbejdet endelig er slut, plejer han at tage forbi v\xE6rtshuset
+    for at drikke pengene op, inden han kommer hjem. Din mor arbejder som syerske.
+    Det er ikke et arbejde, man tjener meget p\xE5, men hun slider hver dag for at
+    f\xE5 pengene til at r\xE6kke. Som barn er du ogs\xE5 med til at tjene penge
+    til husstanden gennem h\xE5rdt arbejde. \n\nLige nu er du alene hjemme med din
+    mor. Rummet er stille. Noget fanger din opm\xE6rksomhed: P\xE5 bordet ligger
+    et stykke papir, som du ikke har set f\xF8r. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
   m_sharedMaterial: {fileID: -5385535972088293032, guid: 3f3584ed3cf29430bad3c19f14ade5ef, type: 2}
@@ -6804,6 +6806,7 @@ MonoBehaviour:
   uiCanvasGroups: []
   uiFadeDuration: 0.5
   uiFadeDelay: 1.2
+  tutorialShowDelay: 0.1
 --- !u!114 &1840034290
 MonoBehaviour:
   m_ObjectHideFlags: 0
