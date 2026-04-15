@@ -18,7 +18,7 @@ public class NPCConversation : MonoBehaviour
     public AudioSource audioSource;
     public Transform player;
     public float hearingDistance = 15f;
-    public float fadeSpeed = 2f;
+    public float fadeSpeed = 0.5f; // slower = smoother fading
     public bool randomPitch = true;
 
     [Header("Stop Settings")]
@@ -28,8 +28,8 @@ public class NPCConversation : MonoBehaviour
     public EventManager eventManager;
     public GameEvent audioStartedEvent;
 
-    private bool audioStarted = false;      // Audio has started
-    private bool audioFinished = false;     // Audio has finished completely
+    private bool audioStarted = false;
+    private bool audioFinished = false;
     private float targetVolume = 0f;
     private Coroutine animationCoroutine;
     private bool isStopped = false;
@@ -42,6 +42,9 @@ public class NPCConversation : MonoBehaviour
             audioSource.loop = false;
             audioSource.playOnAwake = false;
             audioSource.volume = 0f;
+
+            // Optional but recommended for 3D sound
+            audioSource.spatialBlend = 1f;
 
             if (randomPitch)
                 audioSource.pitch = Random.Range(0.95f, 1.05f);
@@ -64,24 +67,31 @@ public class NPCConversation : MonoBehaviour
 
         // Start audio only once
         if (!audioStarted && distance <= hearingDistance)
-        { 
+        {
             audioSource.Play();
             audioStarted = true;
-            targetVolume = 1f;
 
             // Trigger game event
             if (eventManager != null && audioStartedEvent != null)
             {
-             eventManager.CompleteEvent(audioStartedEvent);
-             eventTriggered = true;
+                eventManager.CompleteEvent(audioStartedEvent);
+                eventTriggered = true;
             }
         }
 
-        // Fade in/out based on distance
+        // Smooth distance-based fading
         if (audioStarted && !audioFinished)
         {
-            targetVolume = distance <= hearingDistance ? 1f : 0f;
-            audioSource.volume = Mathf.MoveTowards(audioSource.volume, targetVolume, fadeSpeed * Time.deltaTime);
+            float normalizedDistance = Mathf.Clamp01(distance / hearingDistance);
+
+            // Smooth falloff curve (feels more natural)
+            targetVolume = Mathf.SmoothStep(1f, 0f, normalizedDistance);
+
+            audioSource.volume = Mathf.MoveTowards(
+                audioSource.volume,
+                targetVolume,
+                fadeSpeed * Time.deltaTime
+            );
 
             if (!audioSource.isPlaying && audioSource.volume <= 0.01f)
             {
