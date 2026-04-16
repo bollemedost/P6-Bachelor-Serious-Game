@@ -3782,7 +3782,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2010846906}
         m_TargetAssemblyTypeName: TutorialUI, Assembly-CSharp
-        m_MethodName: HideTutorial
+        m_MethodName: OnContinuePressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6545,6 +6545,7 @@ MonoBehaviour:
   uiAnimator: {fileID: 0}
   showTrigger: 
   hideTrigger: 
+  showOnStart: 1
 --- !u!114 &2010846907
 MonoBehaviour:
   m_ObjectHideFlags: 0

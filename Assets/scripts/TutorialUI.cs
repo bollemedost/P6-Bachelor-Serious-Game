@@ -10,37 +10,67 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] private string showTrigger = "Show";
     [SerializeField] private string hideTrigger = "Hide";
 
+    [Header("Settings")]
+    [SerializeField] private bool showOnStart = true;
+
+    private bool hasBeenShown = false;
+    private bool isVisible = false;
+
+    private void Start()
+    {
+        if (showOnStart)
+        {
+            ShowTutorial();
+        }
+        else if (tutorialPanel != null)
+        {
+            tutorialPanel.SetActive(false);
+        }
+    }
+
     public void ShowTutorial()
     {
+        if (hasBeenShown)
+            return;
+
+        if (tutorialPanel == null)
+            return;
+
+        hasBeenShown = true;
+        isVisible = true;
+
         tutorialPanel.SetActive(true);
 
         if (uiAnimator != null)
         {
+            uiAnimator.ResetTrigger(hideTrigger);
             uiAnimator.SetTrigger(showTrigger);
         }
 
-        // Pause game (optional but recommended)
         Time.timeScale = 0f;
     }
 
     public void OnContinuePressed()
     {
+        if (!isVisible)
+            return;
+
         if (uiAnimator != null)
         {
+            uiAnimator.ResetTrigger(showTrigger);
             uiAnimator.SetTrigger(hideTrigger);
         }
-        else
-        {
-            HideTutorial();
-        }
+
+        HideTutorial();
     }
 
-    // Call this from animation event OR directly
     public void HideTutorial()
     {
-        tutorialPanel.SetActive(false);
+        if (tutorialPanel == null)
+            return;
 
-        // Resume game
+        isVisible = false;
+        tutorialPanel.SetActive(false);
         Time.timeScale = 1f;
     }
 }
