@@ -2512,6 +2512,7 @@ MonoBehaviour:
   gravity: -9.81
   anim: {fileID: 0}
   camTransform: {fileID: 1560167479}
+  footstepSource: {fileID: 0}
 --- !u!143 &242623834
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4024,6 +4025,8 @@ MonoBehaviour:
   introDuration: 2
   blendDuration: 1.5
   rotationUnlockDelay: 0.1
+  introFOV: 80
+  gameplayFOV: 75
   introAudio: {fileID: 0}
 --- !u!114 &406438779
 MonoBehaviour:
@@ -22291,7 +22294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d1384c070f329438a64c85868025c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanel: {fileID: 1770522648}
+  fadePanelPrefab: {fileID: 0}
   fadeDuration: 2
 --- !u!4 &1614814047
 Transform:
@@ -23986,7 +23989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeCanvasGroup: {fileID: 342800553}
-  fadeDuration: 2
+  fadeDuration: 1
   startDelay: 0.1
   uiCanvasGroups:
   - {fileID: 1595699400}
@@ -23994,6 +23997,7 @@ MonoBehaviour:
   - {fileID: 2824492854636063671}
   uiFadeDuration: 0.5
   uiFadeDelay: 1.2
+  tutorialShowDelay: 0.1
 --- !u!114 &1840034290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37561,8 +37565,6 @@ MonoBehaviour:
   interactCanvas: {fileID: 0}
   playerCam: {fileID: 1560167481}
   newspaperCam: {fileID: 8754737250089887313}
-  zoomAmount: 0.007
-  zoomSpeed: 1.5
   playerUICanvasGroup: {fileID: 1595699400}
   dialogueCanvas: {fileID: 1908002035}
   timedUI:
@@ -38398,6 +38400,9 @@ MonoBehaviour:
   prerequisiteEvents: []
   exitDelayAfterEnter: 1
   interactionCooldown: 1
+  outsideNoiseAudioSource: {fileID: 0}
+  outsideVolumeMultiplier: 1.4
+  audioTransitionDuration: 2.5
   blackboard: {fileID: 0}
 --- !u!4 &1351571606689696600
 Transform:
@@ -52421,6 +52426,7 @@ MonoBehaviour:
     - timeStamp: 20
       dialogueImageObject: {fileID: 1033081668}
   currentEvent: {fileID: 11400000, guid: b3e8c8f7b9179104ba5764adb26e6924, type: 2}
+  conversationsToStopOnInteract: []
   playerCam: {fileID: 1560167481}
   npcCam: {fileID: 1307599232167248389}
   playerTransform: {fileID: 242623835}
@@ -52438,6 +52444,9 @@ MonoBehaviour:
   playerFollowDistance: 5
   animator: {fileID: 0}
   walkBoolName: isWalking
+  lockedCanvas: {fileID: 0}
+  interactCanvas: {fileID: 0}
+  prerequisiteEvents: []
   loadSceneAfterInteraction: 0
   sceneToLoad: 
   sceneLoadDelay: 0.5
