@@ -20841,7 +20841,7 @@ Transform:
   m_GameObject: {fileID: 6080347498107373985}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000030908566, y: 0.70710665, z: 0.7071069, w: -0.00000036808342}
-  m_LocalPosition: {x: 0.7739274, y: 1.0580097, z: -0.05942154}
+  m_LocalPosition: {x: 0.7739274, y: 1.0580097, z: -0.515}
   m_LocalScale: {x: -1, y: -1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22214,7 +22214,7 @@ Transform:
   m_GameObject: {fileID: 8067812837723355418}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000030908566, y: 0.70710665, z: 0.7071069, w: -0.00000036808342}
-  m_LocalPosition: {x: 0.7739274, y: 1.0580097, z: 0.018790187}
+  m_LocalPosition: {x: 0.7739274, y: 1.0580097, z: -0.437}
   m_LocalScale: {x: -1, y: -1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22578,7 +22578,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4277876568961227825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.143}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5111}
   m_LocalScale: {x: 0.0019999994, y: 0.002, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22587,7 +22587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.814, y: 1.322}
+  m_AnchoredPosition: {x: 0.751, y: 1.322}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3932332267752843399
@@ -22734,7 +22734,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &4392212825921341881
 GameObject:
   m_ObjectHideFlags: 0
@@ -22929,7 +22929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 4277876568961227825}
-  interactDistance: 1.5
+  interactDistance: 3
   playerTag: Player
   doorEvent: {fileID: 11400000, guid: 7bcf780ec8db76a4699a11461f51acf1, type: 2}
   prerequisiteEvents: []
