@@ -95,7 +95,6 @@ public class UlkasseMinigameFinishT : MonoBehaviour
                 Debug.Log("[UlkasseMinigameFinishT] Continue button listener NOT attached.");
         }
 
-        // Start tracking this scene
         GetOrCreateSessionId();
         sceneStartRealtime = Time.realtimeSinceStartup;
         sceneStartUtc = DateTime.UtcNow.ToString("o");
@@ -132,7 +131,7 @@ public class UlkasseMinigameFinishT : MonoBehaviour
 
         if (audioManager != null)
         {
-            audioDone = !audioManager.IsAnyManagedAudioPlaying;
+            audioDone = !audioManager.IsAnyManagedAudioPlayingOrQueued;
         }
 
         if (audioDone)
@@ -171,12 +170,17 @@ public class UlkasseMinigameFinishT : MonoBehaviour
 
         finished = true;
 
+        if (audioManager != null)
+        {
+            audioManager.BeginCompletionAudioLock();
+        }
+
         if (showCompletionMessageBeforeSceneChange)
         {
             waitingForContinue = true;
 
             if (debugLogs)
-                Debug.Log("[UlkasseMinigameFinishT] Minigame complete. Showing completion panel.");
+                Debug.Log("[UlkasseMinigameFinishT] Minigame complete. Audio locked. Showing completion panel.");
 
             if (completionPanel != null)
             {
@@ -275,9 +279,13 @@ public class UlkasseMinigameFinishT : MonoBehaviour
 
     void LoadNextScene()
     {
-        if (SceneTransition.Instance != null)
-            SceneTransition.Instance.FadeToScene(nextSceneName);
-        else
+        if (!string.IsNullOrWhiteSpace(nextSceneName))
+        {
             SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("[UlkasseMinigameFinishT] nextSceneName is empty.");
+        }
     }
 }
