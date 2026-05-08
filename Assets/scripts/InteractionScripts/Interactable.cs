@@ -10,10 +10,10 @@ public abstract class Interactable : MonoBehaviour
 
     protected Transform player;
 
-    // 🔒 Global interaction lock
+    //  Global interaction lock
     public static bool interactionLocked = false;
 
-    // 🔥 Static list of all interactables
+    //  Static list of all interactables
     private static List<Interactable> allInteractables = new List<Interactable>();
 
     protected virtual void Awake()
@@ -49,7 +49,7 @@ public abstract class Interactable : MonoBehaviour
             canvas.SetActive(isClosest && CanInteract() && !IsCurrentlyInteracting() && !interactionLocked);
         }
 
-        // 🚫 If interaction is locked, block all E presses
+        //  If interaction is locked, block all E presses
         if (interactionLocked)
             return;
 
@@ -87,13 +87,13 @@ public abstract class Interactable : MonoBehaviour
         return closest;
     }
 
-    // 🔓 Call this when interaction finishes
+    //  Call this when interaction finishes
     protected void UnlockInteraction()
     {
         interactionLocked = false;
     }
 
-    // 🔒 Call this when interaction starts
+    //  Call this when interaction starts
     protected void LockInteraction()
     {
         interactionLocked = true;

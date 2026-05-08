@@ -59,3 +59,7 @@ public class UlkasseSlotOrderManager : MonoBehaviour
         return orderedSlots != null && currentRequiredIndex >= orderedSlots.Length;
     }
 }
+
+
+////References:
+//Troublshooting/inspiration with chatgpt

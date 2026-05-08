@@ -81,3 +81,6 @@ public static class ReturnToPreviousSceneT
         PlayerPrefs.Save();
     }
 }
+
+//References:
+//Troublshooting/inspiration with chatgpt

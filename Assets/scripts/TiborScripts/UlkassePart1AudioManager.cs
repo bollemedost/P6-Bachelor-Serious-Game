@@ -456,3 +456,9 @@ public class UlkassePart1AudioManager : MonoBehaviour
         }
     }
 }
+
+
+//References:
+//Troublshooting/inspiration with chatgpt
+//https://www.youtube.com/watch?v=6OT43pvUyfY
+//https://www.youtube.com/watch?v=g5WT91Sn3hg

@@ -160,3 +160,7 @@ public class MinigameCompleteUI : MonoBehaviour
         }
     }
 }
+
+//References:
+//Troublshooting/inspiration with chatgpt
+//https://www.youtube.com/watch?v=WM7f4yN4ZHA

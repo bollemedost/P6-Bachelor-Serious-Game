@@ -44,7 +44,7 @@ public class InteractLoadSceneT : MonoBehaviour
         {
             isLoading = true;
 
-            // ✅ SAVE where we came from + exact player position BEFORE loading minigame
+            // SAVE where we came from + exact player position BEFORE loading minigame
             ReturnToPreviousSceneT.SaveReturnPoint(player);
 
             // Load minigame scene
@@ -122,7 +122,7 @@ public class InteractLoadSceneT : MonoBehaviour
         {
             isLoading = true;
 
-            // ✅ SAVE where we came from + exact player position BEFORE loading minigame
+            // SAVE where we came from + exact player position BEFORE loading minigame
             ReturnToPreviousSceneT.SaveReturnPoint(player);
 
             // Load minigame scene
@@ -149,3 +149,6 @@ public class InteractLoadSceneT : MonoBehaviour
             playerInTrigger = false;
     }
 }
+
+//References:
+//Troublshooting/inspiration with chatgpt

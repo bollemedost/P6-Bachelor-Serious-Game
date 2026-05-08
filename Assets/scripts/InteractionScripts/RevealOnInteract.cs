@@ -52,7 +52,7 @@ public class RevealOnInteract : Interactable
 
     protected override bool IsCurrentlyInteracting()
     {
-        // 🔒 Prevent canvas from ever showing again after interaction
+        //  Prevent canvas from ever showing again after interaction
         if (interactOnlyOnce && hasInteracted)
             return true;
 

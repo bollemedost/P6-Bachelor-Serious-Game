@@ -79,3 +79,7 @@ public class DraggableLetterT : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         DragLetterDataT.CurrentDragVisual = null;
     }
 }
+
+
+////References:
+//Troublshooting/inspiration with chatgpt

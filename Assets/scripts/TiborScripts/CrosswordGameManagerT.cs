@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using UnityEditor.Compilation;
 
 public class CrosswordGameManagerT : MonoBehaviour
 {
@@ -525,3 +526,10 @@ public class CrosswordGameManagerT : MonoBehaviour
         }
     }
 }
+
+
+
+
+//References:
+//Troublshooting/inspiration with chatgpt
+//https://www.youtube.com/watch?v=c_OXvAGodlo

@@ -91,7 +91,7 @@ public class ObjectiveController : MonoBehaviour
         }
     }
 
-    // 🎵 Sequential sound playback (NO overlap)
+    //  Sequential sound playback (NO overlap)
     private IEnumerator PlayObjectiveSounds()
     {
         // First sound
@@ -117,7 +117,7 @@ public class ObjectiveController : MonoBehaviour
         RestoreBackgroundVolume();
     }
 
-    // 🌫️ Fade using unscaled time (works when paused)
+    //  Fade using unscaled time (works when paused)
     private IEnumerator FadeInCanvas(CanvasGroup cg, float delay, float duration)
     {
         if (cg == null) yield break;
