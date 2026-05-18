@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
-using UnityEditor.Compilation;
 
 public class CrosswordGameManagerT : MonoBehaviour
 {
